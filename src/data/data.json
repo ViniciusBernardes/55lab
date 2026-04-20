@@ -1,0 +1,164 @@
+{
+  "Header": {
+    "title": "Desenvolvimento de software com rigor de engenharia",
+    "paragraph": "Sistemas sob medida, integrações entre plataformas e evolução de produtos digitais — com foco em qualidade de código, segurança e prazos transparentes."
+  },
+  "About": {
+    "paragraph": "Atuamos como extensão do seu time de tecnologia, desde o desenho da arquitetura até a entrega em produção. Combinamos boas práticas de desenvolvimento (revisão de código, testes automatizados e documentação) com proximidade comercial para reduzir retrabalho e incerteza.",
+    "Why": [
+      "Discovery e refinamento de backlog junto ao negócio",
+      "Integração contínua e ambientes de homologação",
+      "Observabilidade básica e plano de sustentação",
+      "Comunicação objetiva em cada sprint"
+    ],
+    "Why2": [
+      "Contratos de API versionados e monitorados",
+      "Boas práticas de segurança e controle de acesso",
+      "Handover para sua equipe interna quando fizer sentido",
+      "Transparência de escopo, riscos e entregas"
+    ]
+  },
+  "Gallery": [
+    {
+      "title": "Portal corporativo responsivo",
+      "largeImage": "img/portfolio/01-large.jpg",
+      "smallImage": "img/portfolio/01-small.jpg"
+    },
+    {
+      "title": "Integração ERP e e-commerce",
+      "largeImage": "img/portfolio/02-large.jpg",
+      "smallImage": "img/portfolio/02-small.jpg"
+    },
+    {
+      "title": "Dashboard operacional em tempo real",
+      "largeImage": "img/portfolio/03-large.jpg",
+      "smallImage": "img/portfolio/03-small.jpg"
+    },
+    {
+      "title": "API de faturamento e conciliação",
+      "largeImage": "img/portfolio/04-large.jpg",
+      "smallImage": "img/portfolio/04-small.jpg"
+    },
+    {
+      "title": "Aplicativo web para times internos",
+      "largeImage": "img/portfolio/05-large.jpg",
+      "smallImage": "img/portfolio/05-small.jpg"
+    },
+    {
+      "title": "Automação de fluxos administrativos",
+      "largeImage": "img/portfolio/06-large.jpg",
+      "smallImage": "img/portfolio/06-small.jpg"
+    },
+    {
+      "title": "Camada de dados para BI",
+      "largeImage": "img/portfolio/07-large.jpg",
+      "smallImage": "img/portfolio/07-small.jpg"
+    },
+    {
+      "title": "Migração assistida de legado",
+      "largeImage": "img/portfolio/08-large.jpg",
+      "smallImage": "img/portfolio/08-small.jpg"
+    },
+    {
+      "title": "Infraestrutura como código (IaC)",
+      "largeImage": "img/portfolio/09-large.jpg",
+      "smallImage": "img/portfolio/09-small.jpg"
+    }
+  ],
+  "Services": [
+    {
+      "icon": "fa fa-code",
+      "name": "Desenvolvimento de software",
+      "text": "Back-end, front-end e APIs com padrões de arquitetura alinhados ao tamanho e à criticidade do seu produto."
+    },
+    {
+      "icon": "fa fa-plug",
+      "name": "Integração de sistemas",
+      "text": "Conectores entre ERP, CRM, PDV e canais digitais, com filas, retries e tratamento de inconsistências."
+    },
+    {
+      "icon": "fa fa-cogs",
+      "name": "Automação de processos",
+      "text": "Orquestração de etapas repetitivas, aprovações e notificações, reduzindo erro manual e tempo de ciclo."
+    },
+    {
+      "icon": "fa fa-cloud",
+      "name": "Cloud e DevOps",
+      "text": "Pipelines de deploy, ambientes segregados e boas práticas de configuração para maior previsibilidade de release."
+    },
+    {
+      "icon": "fa fa-shield",
+      "name": "Qualidade e segurança",
+      "text": "Testes automatizados, revisão de código e hardening básico (autenticação, autorização, logs e segredos)."
+    },
+    {
+      "icon": "fa fa-line-chart",
+      "name": "Evolução e sustentação",
+      "text": "Roadmap técnico, correções, melhorias incrementais e suporte à operação após o go-live."
+    }
+  ],
+  "Testimonials": [
+    {
+      "img": "img/testimonials/01.jpg",
+      "text": "\"Equipe técnica sólida: entregas previsíveis, documentação clara e boa integração com nosso time interno.\"",
+      "name": "Diretora de Operações, varejo"
+    },
+    {
+      "img": "img/testimonials/02.jpg",
+      "text": "\"A integração entre nosso ERP e o e-commerce saiu em tempo hábil, com monitoração e tratamento de falhas bem pensados.\"",
+      "name": "Gerente de TI, indústria"
+    },
+    {
+      "img": "img/testimonials/03.jpg",
+      "text": "\"Gostamos da postura consultiva: ajudaram a cortar escopo desnecessário e priorizar o que gerava valor.\"",
+      "name": "Head de Produto, SaaS B2B"
+    },
+    {
+      "img": "img/testimonials/04.jpg",
+      "text": "\"Code review e testes fizeram diferença na qualidade do release; o handover para nosso time foi tranquilo.\"",
+      "name": "CTO, healthtech"
+    },
+    {
+      "img": "img/testimonials/05.jpg",
+      "text": "\"Comunicação direta com quem desenvolve acelerou decisões e reduziu idas e vindas na homologação.\"",
+      "name": "Coordenador de Projetos, serviços"
+    },
+    {
+      "img": "img/testimonials/06.jpg",
+      "text": "\"Ambiente de homologação espelhando produção evitou surpresas no go-live — recomendamos.\"",
+      "name": "Analista de sistemas, financeiro"
+    }
+  ],
+  "Contact": {
+    "sectionTitle": "Contato",
+    "sectionLead": "Fale conosco pelo WhatsApp com o contexto do seu projeto (sistemas, prazo e resultado esperado). Retornamos em horário comercial.",
+    "address": "Montes Claros, MG — atendimento remoto para todo o Brasil",
+    "phone": "",
+    "whatsappDisplay": "(38) 99209-9888",
+    "whatsappUrl": "https://wa.me/5538992099888?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%2055LAB%20e%20gostaria%20de%20falar%20sobre%20um%20projeto.",
+    "linkedin": "https://www.linkedin.com/company/55lab",
+    "instagram": "https://www.instagram.com/55lab"
+  },
+  "Features": [
+    {
+      "icon": "fa fa-code",
+      "title": "Engenharia orientada a domínio",
+      "text": "Modelagem próxima ao negócio, para que regras e integrações fiquem explícitas e testáveis."
+    },
+    {
+      "icon": "fa fa-sitemap",
+      "title": "Arquitetura evolutiva",
+      "text": "Decisões documentadas, limites claros entre serviços e caminho para escalar sem reescrever tudo."
+    },
+    {
+      "icon": "fa fa-flask",
+      "title": "Qualidade embutida",
+      "text": "Pirâmide de testes, revisões de código e critérios de aceite alinhados a risco e impacto."
+    },
+    {
+      "icon": "fa fa-exchange",
+      "title": "Entrega contínua",
+      "text": "Integração e deploy automatizados, com ambientes estáveis para homologação e rollback planejado."
+    }
+  ]
+}

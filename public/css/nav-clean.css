@@ -1,0 +1,252 @@
+/* Navegação clara: fundo claro, contraste alto (boas práticas de menus em sites B2B). */
+#menu.navbar-clean.navbar-default {
+  background-color: rgba(255, 255, 255, 0.96);
+  border-color: rgba(15, 23, 42, 0.06);
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.06), 0 8px 24px rgba(15, 23, 42, 0.04);
+  backdrop-filter: saturate(180%) blur(12px);
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+#menu.navbar-clean > .container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+@media (min-width: 768px) {
+  #menu.navbar-clean .navbar-header {
+    float: none;
+    flex: 0 0 auto;
+    margin: 0;
+    margin-right: 16px;
+    text-align: left;
+  }
+
+  #menu.navbar-clean .navbar-collapse {
+    flex: 1 1 auto;
+    display: flex !important;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: auto;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  #menu.navbar-clean .navbar-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    float: none;
+    margin: 0;
+  }
+
+  #menu.navbar-clean .navbar-nav > li {
+    float: none;
+  }
+}
+
+#menu.navbar-clean a.navbar-brand {
+  color: #0f172a !important;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  display: block;
+  float: none;
+  height: auto;
+  padding: 0 0 0 2px;
+  margin: 0 !important;
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+#menu.navbar-clean a.navbar-brand:hover,
+#menu.navbar-clean a.navbar-brand:focus {
+  color: #0a2540 !important;
+}
+
+#menu.navbar-clean .navbar-brand img {
+  height: 72px;
+  width: auto;
+  max-width: min(100%, 360px);
+  display: block;
+  object-fit: contain;
+  object-position: left center;
+  filter: drop-shadow(0 1px 2px rgba(15, 23, 42, 0.1));
+}
+
+@media (max-width: 767px) {
+  #menu.navbar-clean .navbar-header {
+    float: left;
+    margin-right: 0;
+  }
+
+  #menu.navbar-clean .navbar-brand img {
+    height: 54px;
+    max-width: calc(100vw - 88px);
+  }
+
+  #menu.navbar-clean a.navbar-brand {
+    font-size: 1.1rem;
+    padding-left: 0;
+  }
+
+  #menu.navbar-clean > .container {
+    display: block;
+  }
+
+  #menu.navbar-clean .navbar-collapse {
+    margin-top: 10px;
+    margin-left: 0;
+  }
+}
+
+#menu.navbar-clean.navbar-default .navbar-nav > li > a {
+  color: #475569 !important;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.03em;
+  text-transform: none;
+}
+
+#menu.navbar-clean.navbar-default .navbar-nav > li > a:hover,
+#menu.navbar-clean.navbar-default .navbar-nav > li > a:focus {
+  color: #0f172a !important;
+}
+
+#menu.navbar-clean.navbar-default .navbar-nav > li > a:after {
+  background: linear-gradient(90deg, #1e90ff, #0a2540);
+  height: 2px;
+  bottom: 2px;
+}
+
+#menu.navbar-clean .navbar-toggle {
+  border-color: rgba(15, 23, 42, 0.12);
+}
+
+#menu.navbar-clean .navbar-toggle .icon-bar {
+  background-color: #334155;
+}
+
+#menu.navbar-clean.navbar-default .navbar-nav > .active > a,
+#menu.navbar-clean.navbar-default .navbar-nav > .active > a:hover,
+#menu.navbar-clean.navbar-default .navbar-nav > .active > a:focus {
+  color: #0f172a !important;
+  background-color: transparent !important;
+}
+
+#menu.navbar-clean.navbar-default
+  .navbar-nav
+  > .active
+  > a:after,
+#menu.navbar-clean.navbar-default
+  .navbar-nav
+  > .active
+  > a:hover:after,
+#menu.navbar-clean.navbar-default
+  .navbar-nav
+  > .active
+  > a:focus:after {
+  background: linear-gradient(90deg, #1e90ff, #0a2540) !important;
+}
+
+#testimonials .section-title p {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* WhatsApp na área de contato */
+#contact .contact-whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  background: #25d366;
+  color: #fff !important;
+  font-weight: 600;
+  font-size: 15px;
+  transition: filter 0.2s, transform 0.15s;
+}
+
+#contact .contact-whatsapp-btn:hover,
+#contact .contact-whatsapp-btn:focus {
+  color: #fff !important;
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+
+#contact .contact-whatsapp-num {
+  margin-top: 8px;
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+#contact .contact-phone-link {
+  color: #fff !important;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+#contact .contact-phone-link:hover {
+  color: #e0f2fe !important;
+}
+
+#contact .contact-whatsapp-only {
+  padding-bottom: 20px;
+}
+
+#contact .contact-whatsapp-btn--hero {
+  font-size: 17px;
+  padding: 16px 28px;
+  margin-top: 8px;
+}
+
+#contact .contact-whatsapp-num--hero {
+  margin-top: 14px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+#contact .contact-address-line,
+#contact .contact-phone-line {
+  margin-top: 28px;
+  font-size: 15px;
+  opacity: 0.95;
+}
+
+#contact .contact-phone-line a {
+  color: #fff !important;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+#contact .contact-phone-line a:hover {
+  color: #e0f2fe !important;
+}
+
+/* Ancoras: compensar menu fixo (logo em duas linhas + barra) */
+#features,
+#about,
+#services,
+#portfolio,
+#testimonials,
+#contact {
+  scroll-margin-top: 112px;
+}
+
+@media (max-width: 767px) {
+  #features,
+  #about,
+  #services,
+  #portfolio,
+  #testimonials,
+  #contact {
+    scroll-margin-top: 92px;
+  }
+}
