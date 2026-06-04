@@ -79,11 +79,42 @@ openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 
 Para produção, prefira sempre Let's Encrypt com domínio real.
 
+## Site não carrega (HTTPS timeout)
+
+Sintoma: `http://` redireciona, mas `https://` não abre ou fica carregando.
+
+**Causa mais comum na AWS:** Security Group libera só a porta **80**, não a **443**.
+
+### Corrigir no console AWS
+
+1. **EC2** → instância → **Security** → clique no **Security Group**
+2. **Edit inbound rules** → **Add rule**
+3. Tipo **HTTPS**, porta **443**, origem **0.0.0.0/0** (e ::/0 se usar IPv6)
+4. Confirme também regra **HTTP** porta **80**
+5. Salve e teste: `curl -sI https://55lab.com.br`
+
+### No servidor
+
+```bash
+chmod +x scripts/diagnose-site.sh
+./scripts/diagnose-site.sh
+```
+
+Se **UFW** estiver ativo:
+
+```bash
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw reload
+```
+
 ## Problemas comuns
 
 | Erro | Solução |
 |------|---------|
 | `Connection refused` na validação | DNS ainda não propagou ou porta 80 fechada |
+| HTTPS timeout / site não abre | Liberar porta **443** no Security Group da EC2 |
+| DNS aponta para IP errado | Registro A do domínio = IP público da instância |
 | `too many certificates` | Limite Let's Encrypt (5/semana por domínio) — aguarde ou use staging |
 | Nginx não sobe em HTTPS | Rode `./scripts/init-ssl.sh` de novo ou verifique `docker compose logs web` |
 

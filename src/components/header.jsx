@@ -1,4 +1,5 @@
 import React from "react";
+import { CodeTyping } from "./codeTyping";
 
 export const Header = (props) => {
   const d = props.data;
@@ -33,34 +34,8 @@ export const Header = (props) => {
               <span className="lab-code__dot lab-code__dot--g" />
               <span className="lab-code__file">deploy.ts</span>
             </div>
-            <div className="lab-code__body">
-              <pre>
-                <code>
-                  <span className="kw">const</span> entrega ={" "}
-                  <span className="kw">await</span>{" "}
-                  <span className="fn">buildSistema</span>
-                  {"({\n"}
-                  {"  "}
-                  <span className="key">stack</span>: [
-                  <span className="str">'Node'</span>,{" "}
-                  <span className="str">'React'</span>,{" "}
-                  <span className="str">'PostgreSQL'</span>],
-                  {"\n  "}
-                  <span className="key">integracoes</span>: [
-                  <span className="str">'ERP'</span>,{" "}
-                  <span className="str">'APIs'</span>],
-                  {"\n  "}
-                  <span className="key">qualidade</span>:{" "}
-                  <span className="str">'testes + code review'</span>,
-                  {"\n  "}
-                  <span className="key">deploy</span>:{" "}
-                  <span className="str">'CI/CD → produção'</span>,
-                  {"\n});\n\n"}
-                  <span className="cm">
-                    {"// 55LAB — software que escala com o negócio"}
-                  </span>
-                </code>
-              </pre>
+            <div className="lab-code__body lab-code__body--typing">
+              <CodeTyping />
             </div>
           </div>
         </div>
