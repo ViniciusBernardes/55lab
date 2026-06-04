@@ -47,17 +47,16 @@ npm start
 docker compose up -d --build
 ```
 
-## HTTPS / certificado SSL (produção)
-
-Certificado gratuito **Let's Encrypt** com renovação automática. Guia completo: [docs/SSL.md](docs/SSL.md).
+## Produção (HTTPS + Certbot)
 
 ```bash
 cp .env.example .env
-# Edite DOMAIN e CERTBOT_EMAIL
+# DOMAIN=55lab.com.br e CERTBOT_EMAIL=...
 
+docker compose --profile production up -d --build
 ./scripts/init-ssl.sh
 ```
 
-Requisitos: domínio apontando para o servidor (DNS A) e portas 80/443 abertas.
+Guia: [docs/SSL.md](docs/SSL.md). Se aparecer *orphan certbot*, use `--profile production` ou `--remove-orphans`.
 
 # 55lab (template original)

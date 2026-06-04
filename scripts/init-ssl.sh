@@ -5,7 +5,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-COMPOSE="docker compose -f compose.prod.yaml"
+COMPOSE="docker compose --profile production"
 
 if [ ! -f .env ]; then
   echo "Crie o arquivo .env a partir de .env.example (DOMAIN e CERTBOT_EMAIL são obrigatórios)."

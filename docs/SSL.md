@@ -29,25 +29,40 @@ O script:
 
 ```bash
 # Subir produção (após certificado criado)
-docker compose -f compose.prod.yaml up -d
+docker compose --profile production up -d
 
 # Ver certificados
-docker compose -f compose.prod.yaml run --rm --entrypoint certbot certbot certificates
+docker compose --profile production run --rm --entrypoint certbot certbot certificates
 
 # Renovar manualmente (também roda automaticamente no container certbot)
-docker compose -f compose.prod.yaml run --rm --entrypoint certbot certbot renew
+docker compose --profile production run --rm --entrypoint certbot certbot renew
 
 # Logs
-docker compose -f compose.prod.yaml logs -f web
+docker compose logs -f web
 ```
 
 ## Desenvolvimento local
 
-Sem SSL — use o compose padrão:
+Sem SSL e sem container certbot:
 
 ```bash
 docker compose up -d --build
 # http://localhost
+```
+
+## Aviso "orphan containers (certbot)"
+
+Aparece se você subiu só `docker compose up` sem o profile `production`, mas o certbot ainda existia de um deploy anterior. Corrija com:
+
+```bash
+docker compose --profile production up -d --remove-orphans
+```
+
+Ou, para parar tudo e subir produção limpa:
+
+```bash
+docker compose down
+docker compose --profile production up -d --build
 ```
 
 ## Certificado autoassinado (apenas testes)
