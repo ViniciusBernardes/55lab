@@ -67,13 +67,12 @@
 }
 
 #menu.navbar-clean .navbar-brand img {
-  height: 72px;
+  height: 56px;
   width: auto;
-  max-width: min(100%, 360px);
+  max-width: min(100%, 280px);
   display: block;
   object-fit: contain;
   object-position: left center;
-  filter: drop-shadow(0 1px 2px rgba(15, 23, 42, 0.1));
 }
 
 @media (max-width: 767px) {
@@ -104,9 +103,10 @@
 
 #menu.navbar-clean.navbar-default .navbar-nav > li > a {
   color: #475569 !important;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif !important;
   font-weight: 500;
-  font-size: 16px;
-  letter-spacing: 0.03em;
+  font-size: 0.875rem;
+  letter-spacing: -0.01em;
   text-transform: none;
 }
 
@@ -116,9 +116,10 @@
 }
 
 #menu.navbar-clean.navbar-default .navbar-nav > li > a:after {
-  background: linear-gradient(90deg, #1e90ff, #0a2540);
+  background: #1e90ff;
   height: 2px;
-  bottom: 2px;
+  bottom: 4px;
+  border-radius: 1px;
 }
 
 #menu.navbar-clean .navbar-toggle {
@@ -148,7 +149,7 @@
   .navbar-nav
   > .active
   > a:focus:after {
-  background: linear-gradient(90deg, #1e90ff, #0a2540) !important;
+  background: #1e90ff !important;
 }
 
 #testimonials .section-title p {
@@ -163,20 +164,21 @@
   align-items: center;
   gap: 10px;
   margin-top: 6px;
-  padding: 12px 18px;
+  padding: 13px 22px;
   border-radius: 8px;
   background: #25d366;
   color: #fff !important;
   font-weight: 600;
-  font-size: 15px;
-  transition: filter 0.2s, transform 0.15s;
+  font-size: 0.875rem;
+  letter-spacing: -0.01em;
+  transition: filter 0.2s ease;
 }
 
 #contact .contact-whatsapp-btn:hover,
 #contact .contact-whatsapp-btn:focus {
   color: #fff !important;
-  filter: brightness(1.06);
-  transform: translateY(-1px);
+  filter: brightness(1.05);
+  transform: none;
 }
 
 #contact .contact-whatsapp-num {
@@ -237,7 +239,7 @@
 #portfolio,
 #testimonials,
 #contact {
-  scroll-margin-top: 112px;
+  scroll-margin-top: 96px;
 }
 
 @media (max-width: 767px) {
@@ -247,6 +249,6 @@
   #portfolio,
   #testimonials,
   #contact {
-    scroll-margin-top: 92px;
+    scroll-margin-top: 84px;
   }
 }

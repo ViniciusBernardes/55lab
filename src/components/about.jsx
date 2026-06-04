@@ -1,46 +1,29 @@
 import React from "react";
 
 export const About = (props) => {
+  const d = props.data;
+  if (!d) return null;
+
   return (
-    <div id="about">
-      <div className="container">
-        <div className="row">
-          <div className="col-xs-12 col-md-6">
-            <img
-              src="img/about.jpg"
-              className="img-responsive"
-              alt="Ambiente de trabalho e colaboração em projeto de software"
-            />
-          </div>
-          <div className="col-xs-12 col-md-6">
-            <div className="about-text">
-              <h2>Sobre a 55LAB</h2>
-              <p>{props.data ? props.data.paragraph : "Carregando…"}</p>
-              <h3>Por que trabalhar conosco</h3>
-              <div className="list-style">
-                <div className="col-lg-6 col-sm-6 col-xs-12">
-                  <ul>
-                    {props.data
-                      ? props.data.Why.map((item, i) => (
-                          <li key={`${item}-${i}`}>{item}</li>
-                        ))
-                      : null}
-                  </ul>
-                </div>
-                <div className="col-lg-6 col-sm-6 col-xs-12">
-                  <ul>
-                    {props.data
-                      ? props.data.Why2.map((item, i) => (
-                          <li key={`${item}-${i}`}>{item}</li>
-                        ))
-                      : null}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+    <section id="sobre" className="lab-section lab-section--dark">
+      <div className="lab-container lab-about__grid">
+        <div className="lab-about__visual">
+          <img
+            src="img/about.jpg"
+            alt="Equipe em revisão de arquitetura e código"
+          />
+        </div>
+        <div>
+          <span className="lab-eyebrow">{d.eyebrow}</span>
+          <h2 className="lab-heading">{d.title}</h2>
+          <p className="lab-lead">{d.paragraph}</p>
+          <ul className="lab-checklist">
+            {d.highlights.map((item, i) => (
+              <li key={`${item}-${i}`}>{item}</li>
+            ))}
+          </ul>
         </div>
       </div>
-    </div>
+    </section>
   );
 };

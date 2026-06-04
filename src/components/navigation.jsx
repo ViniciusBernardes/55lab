@@ -1,68 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 
 export const Navigation = (props) => {
   const logoSrc = props.logoSrc || "img/55lab-logo.svg";
-  return (
-    <nav
-      id="menu"
-      className="navbar navbar-default navbar-fixed-top navbar-clean"
-    >
-      <div className="container">
-        <div className="navbar-header">
-          <button
-            type="button"
-            className="navbar-toggle collapsed"
-            data-toggle="collapse"
-            data-target="#bs-example-navbar-collapse-1"
-          >
-            <span className="sr-only">Abrir ou fechar o menu</span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-            <span className="icon-bar"></span>
-          </button>
-          <a className="navbar-brand page-scroll" href="#page-top">
-            <img src={logoSrc} alt="55LAB" width="340" height="74" />
-          </a>
-        </div>
+  const [open, setOpen] = useState(false);
 
-        <div
-          className="collapse navbar-collapse"
-          id="bs-example-navbar-collapse-1"
+  const close = () => setOpen(false);
+
+  return (
+    <header className="lab-nav">
+      <div className="lab-container lab-nav__inner">
+        <a className="lab-nav__brand" href="#page-top" onClick={close}>
+          <img src={logoSrc} alt="55LAB" width="220" height="44" />
+        </a>
+        <button
+          type="button"
+          className="lab-nav__toggle"
+          aria-expanded={open}
+          aria-label="Abrir ou fechar menu"
+          onClick={() => setOpen(!open)}
         >
-          <ul className="nav navbar-nav navbar-right">
-            <li>
-              <a href="#features" className="page-scroll">
-                Capacidades
-              </a>
-            </li>
-            <li>
-              <a href="#about" className="page-scroll">
-                Sobre
-              </a>
-            </li>
-            <li>
-              <a href="#services" className="page-scroll">
-                Serviços
-              </a>
-            </li>
-            <li>
-              <a href="#portfolio" className="page-scroll">
-                Projetos
-              </a>
-            </li>
-            <li>
-              <a href="#testimonials" className="page-scroll">
-                Depoimentos
-              </a>
-            </li>
-            <li>
-              <a href="#contact" className="page-scroll">
-                Contato
-              </a>
-            </li>
-          </ul>
-        </div>
+          <span />
+          <span />
+          <span />
+        </button>
+        <nav
+          className={`lab-nav__menu${open ? " is-open" : ""}`}
+          aria-label="Principal"
+        >
+          <a href="#servicos" onClick={close}>
+            Serviços
+          </a>
+          <a href="#stack" onClick={close}>
+            Stack
+          </a>
+          <a href="#processo" onClick={close}>
+            Processo
+          </a>
+          <a href="#sobre" onClick={close}>
+            Sobre
+          </a>
+          <a href="#projetos" onClick={close}>
+            Projetos
+          </a>
+          <a href="#contato" className="lab-nav__cta" onClick={close}>
+            Contato
+          </a>
+        </nav>
       </div>
-    </nav>
+    </header>
   );
 };

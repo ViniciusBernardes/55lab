@@ -1,36 +1,35 @@
-import { Image } from "./image";
 import React from "react";
 
 export const Gallery = (props) => {
   return (
-    <div id="portfolio" className="text-center">
-      <div className="container">
-        <div className="section-title">
-          <h2>Projetos</h2>
-          <p>
-            Seleção de entregas em portais, integrações, APIs e automação —
-            imagens ilustrativas; detalhes de caso sob demanda.
+    <section id="projetos" className="lab-section lab-section--dark">
+      <div className="lab-container">
+        <header className="lab-header-block lab-header-block--center">
+          <span className="lab-eyebrow">Portfólio</span>
+          <h2 className="lab-heading">Projetos e entregas</h2>
+          <p className="lab-lead lab-lead--center">
+            Amostra de sistemas, integrações e automações — detalhes sob NDA
+            mediante solicitação.
           </p>
-        </div>
-        <div className="row">
-          <div className="portfolio-items">
-            {props.data
-              ? props.data.map((d, i) => (
-                  <div
-                    key={`${d.title}-${i}`}
-                    className="col-sm-6 col-md-4 col-lg-4"
-                  >
-                    <Image
-                      title={d.title}
-                      largeImage={d.largeImage}
-                      smallImage={d.smallImage}
-                    />
+        </header>
+        <div className="lab-projects__grid">
+          {props.data
+            ? props.data.map((d, i) => (
+                <article key={`${d.title}-${i}`} className="lab-project">
+                  <div className="lab-project__img">
+                    <img src={d.smallImage} alt={d.title} loading="lazy" />
                   </div>
-                ))
-              : "Carregando…"}
-          </div>
+                  <div className="lab-project__body">
+                    {d.tag ? (
+                      <div className="lab-project__tag">{d.tag}</div>
+                    ) : null}
+                    <h3 className="lab-project__title">{d.title}</h3>
+                  </div>
+                </article>
+              ))
+            : "Carregando…"}
         </div>
       </div>
-    </div>
+    </section>
   );
 };

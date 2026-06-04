@@ -32,4 +32,32 @@ If you need the contact form to work, you also need to create an EmailJS account
 <a href="https://www.free-css.com/assets/files/free-css-templates/preview/page234/interact/">Free-CSS.com </a>
 
 ##### Issaaf kattan
-# 55lab
+# 55LAB — Site institucional
+
+## Desenvolvimento
+
+```bash
+npm install
+npm start
+```
+
+## Docker (local, HTTP)
+
+```bash
+docker compose up -d --build
+```
+
+## HTTPS / certificado SSL (produção)
+
+Certificado gratuito **Let's Encrypt** com renovação automática. Guia completo: [docs/SSL.md](docs/SSL.md).
+
+```bash
+cp .env.example .env
+# Edite DOMAIN e CERTBOT_EMAIL
+
+./scripts/init-ssl.sh
+```
+
+Requisitos: domínio apontando para o servidor (DNS A) e portas 80/443 abertas.
+
+# 55lab (template original)

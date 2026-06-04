@@ -8,10 +8,16 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-# Servir em :80
+# Servir (HTTP local ou HTTPS em produção via entrypoint)
 FROM nginx:1.27-alpine
-COPY --from=build /app/build /usr/share/nginx/html
-COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+RUN apk add --no-cache gettext
 
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+COPY --from=build /app/build /usr/share/nginx/html
+COPY docker/nginx.conf /etc/nginx/nginx.dev.conf
+COPY docker/nginx.http-bootstrap.conf /etc/nginx/nginx.http-bootstrap.conf
+COPY docker/nginx.ssl.conf.template /etc/nginx/nginx.ssl.conf.template
+COPY docker/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+EXPOSE 80 443
+ENTRYPOINT ["/entrypoint.sh"]
