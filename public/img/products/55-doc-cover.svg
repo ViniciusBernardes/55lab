@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="title">
+  <title id="title">55DOC  licenciamento urbanístico</title>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f18"/>
+      <stop offset="50%" stop-color="#0c1222"/>
+      <stop offset="100%" stop-color="#132a4a"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#1e90ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#bg)"/>
+  <path d="M0 320 Q160 280 320 300 T640 260 L640 400 L0 400Z" fill="#1e90ff" opacity="0.08"/>
+  <rect x="40" y="40" width="360" height="320" rx="12" fill="#111827" stroke="#1e3a5f"/>
+  <rect x="40" y="40" width="360" height="36" rx="12" fill="#151d2e"/>
+  <text x="60" y="64" fill="#94a3b8" font-size="11" font-family="system-ui,sans-serif">Processo #2026-1847  Alvará</text>
+  <rect x="56" y="92" width="328" height="48" rx="8" fill="#0c1222" stroke="#334155"/>
+  <circle cx="80" cy="116" r="14" fill="url(#blue)" opacity="0.35"/>
+  <path d="M74 116h12M80 110v12" stroke="#38bdf8" stroke-width="2"/>
+  <rect x="104" y="106" width="160" height="8" rx="2" fill="#475569"/>
+  <rect x="104" y="120" width="120" height="6" rx="2" fill="#334155"/>
+  <rect x="56" y="152" width="328" height="8" rx="2" fill="#1e3a5f"/>
+  <rect x="56" y="168" width="100" height="72" rx="6" fill="#0c1222" stroke="#22c55e" stroke-width="2"/>
+  <text x="68" y="192" fill="#4ade80" font-size="9" font-family="system-ui,sans-serif">Aprovado</text>
+  <rect x="68" y="204" width="76" height="6" rx="2" fill="#334155"/>
+  <rect x="68" y="216" width="60" height="6" rx="2" fill="#334155"/>
+  <rect x="168" y="168" width="100" height="72" rx="6" fill="#0c1222" stroke="url(#gold)" stroke-width="2"/>
+  <text x="180" y="192" fill="#fbbf24" font-size="9" font-family="system-ui,sans-serif">Análise</text>
+  <rect x="180" y="204" width="76" height="6" rx="2" fill="#334155"/>
+  <rect x="280" y="168" width="104" height="72" rx="6" fill="#0c1222" stroke="#334155"/>
+  <text x="292" y="192" fill="#64748b" font-size="9" font-family="system-ui,sans-serif">Protocolo</text>
+  <rect x="56" y="256" width="328" height="88" rx="8" fill="#0c1222"/>
+  <rect x="72" y="272" width="48" height="56" rx="4" fill="#151d2e" stroke="#475569"/>
+  <rect x="80" y="284" width="32" height="4" rx="1" fill="#64748b"/>
+  <rect x="80" y="292" width="24" height="4" rx="1" fill="#475569"/>
+  <rect x="132" y="272" width="48" height="56" rx="4" fill="#151d2e" stroke="#475569"/>
+  <rect x="192" y="272" width="48" height="56" rx="4" fill="#151d2e" stroke="#1e90ff" opacity="0.5"/>
+  <rect x="252" y="280" width="116" height="8" rx="2" fill="#334155"/>
+  <rect x="252" y="296" width="96" height="6" rx="2" fill="#1e3a5f"/>
+  <rect x="252" y="310" width="108" height="6" rx="2" fill="#1e3a5f"/>
+  <rect x="420" y="56" width="180" height="288" rx="12" fill="#0f172a" stroke="#1e3a5f"/>
+  <text x="440" y="88" fill="#64748b" font-size="10" font-family="system-ui,sans-serif">Portal do cidadão</text>
+  <rect x="436" y="100" width="148" height="100" rx="8" fill="#0c1222"/>
+  <rect x="452" y="116" width="116" height="10" rx="2" fill="url(#blue)" opacity="0.4"/>
+  <rect x="452" y="134" width="100" height="6" rx="2" fill="#334155"/>
+  <rect x="452" y="148" width="110" height="6" rx="2" fill="#334155"/>
+  <rect x="452" y="168" width="80" height="20" rx="4" fill="url(#blue)" opacity="0.3"/>
+  <rect x="436" y="216" width="148" height="56" rx="8" fill="#0c1222" stroke="#334155"/>
+  <path d="M448 244h124" stroke="#38bdf8" stroke-width="2" opacity="0.5"/>
+  <circle cx="468" cy="244" r="6" fill="#38bdf8"/>
+  <circle cx="508" cy="244" r="6" fill="#1e90ff"/>
+  <circle cx="548" cy="244" r="6" fill="url(#gold)"/>
+  <rect x="436" y="288" width="148" height="40" rx="8" fill="url(#blue)" opacity="0.15"/>
+  <text x="510" y="314" text-anchor="middle" fill="#7dd3fc" font-size="11" font-family="system-ui,sans-serif">Enviar documentos</text>
+</svg>

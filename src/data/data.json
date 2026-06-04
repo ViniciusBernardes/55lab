@@ -5,7 +5,30 @@
     "titleAccent": "operações que não podem parar",
     "paragraph": "Construímos APIs, integrações, portais e automações com arquitetura clara, testes e deploy previsível — do discovery ao go-live.",
     "ctaPrimary": "Solicitar orçamento",
-    "ctaSecondary": "Ver entregas"
+    "ctaSecondary": "Ver produtos",
+    "techLabel": "Principais tecnologias",
+    "techStack": [
+      "TypeScript",
+      "JavaScript",
+      "React",
+      "React Native",
+      "Angular",
+      "Node.js",
+      "Laravel",
+      "PHP",
+      ".NET",
+      "Java",
+      "Flutter",
+      "PostgreSQL",
+      "MySQL",
+      "Redis",
+      "Docker",
+      "AWS",
+      "S3",
+      "Git",
+      "REST",
+      "GraphQL"
+    ]
   },
   "Stats": [
     { "value": "API-first", "label": "Integrações e microsserviços" },
@@ -49,6 +72,41 @@
       "name": "Sustentação evolutiva",
       "text": "Correções, refatoração guiada por métricas e roadmap técnico alinhado ao produto.",
       "tags": ["SLA", "Observabilidade", "Suporte"]
+    }
+  ],
+  "ProductsSection": {
+    "eyebrow": "Portfólio de produtos",
+    "title": "Soluções em operação no mercado",
+    "lead": "Plataformas SaaS da 55LAB para administração pública: educação, finanças e processos urbanísticos — multi-tenant, em nuvem e com governança de acesso.",
+    "note": "Implantação, integração com legados e sustentação evolutiva disponíveis para órgãos municipais e parceiros."
+  },
+  "Products": [
+    {
+      "slug": "educacao",
+      "icon": "fa fa-graduation-cap",
+      "name": "55 Educação",
+      "text": "ERP educacional multi-tenant para secretarias: matrículas, turmas, diário, merenda, transporte e indicadores com RBAC e auditoria.",
+      "tags": ["Laravel", "React", "PostgreSQL", "Redis"],
+      "domain": "55educacao.com.br",
+      "url": "https://55educacao.com.br"
+    },
+    {
+      "slug": "conta",
+      "icon": "fa fa-line-chart",
+      "name": "55Conta",
+      "text": "Automação financeira e contábil: extratos, classificação de receitas, conciliação e integrações bancárias para tesouraria municipal.",
+      "tags": ["Laravel", "React", "MySQL", "Docker"],
+      "domain": "55conta.com.br",
+      "url": "https://www.55conta.com.br"
+    },
+    {
+      "slug": "doc",
+      "icon": "fa fa-file-text-o",
+      "name": "55DOC",
+      "text": "Licenciamento urbanístico e portal do cidadão: fluxos de processo, exigências, documentos em nuvem e filas para relatórios.",
+      "tags": ["Laravel", "React", "PostgreSQL", "MinIO"],
+      "domain": "55doc.com.br",
+      "url": "https://55doc.com.br"
     }
   ],
   "TechStack": {

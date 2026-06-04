@@ -3,6 +3,7 @@ import { Navigation } from "./components/navigation";
 import { Header } from "./components/header";
 import { Stats } from "./components/stats";
 import { Services } from "./components/services";
+import { Products } from "./components/products";
 import { TechStack } from "./components/techStack";
 import { Process } from "./components/process";
 import { About } from "./components/about";
@@ -30,6 +31,7 @@ const App = () => {
       <Header data={data.Header} />
       <Stats data={data.Stats} />
       <Services data={data.Services} />
+      <Products data={data.ProductsSection} items={data.Products} />
       <TechStack data={data.TechStack} />
       <Process data={data.Process} />
       <About data={data.About} />

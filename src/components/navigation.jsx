@@ -30,6 +30,9 @@ export const Navigation = (props) => {
           <a href="#servicos" onClick={close}>
             Serviços
           </a>
+          <a href="#produtos" onClick={close}>
+            Produtos
+          </a>
           <a href="#stack" onClick={close}>
             Stack
           </a>

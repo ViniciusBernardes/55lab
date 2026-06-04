@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="title">
+  <title id="title">55 Educação  gestão escolar municipal</title>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c1222"/>
+      <stop offset="100%" stop-color="#0f2744"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#1e90ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#bg)"/>
+  <g opacity="0.08" stroke="#38bdf8" stroke-width="1">
+    <path d="M0 80h640M0 160h640M0 240h640M0 320h640"/>
+    <path d="M80 0v400M160 0v400M240 0v400M320 0v400M400 0v400M480 0v400M560 0v400"/>
+  </g>
+  <rect x="48" y="56" width="544" height="288" rx="12" fill="#111827" stroke="#1e3a5f" stroke-width="1"/>
+  <rect x="48" y="56" width="544" height="40" rx="12" fill="#151d2e"/>
+  <circle cx="72" cy="76" r="5" fill="#f87171"/>
+  <circle cx="90" cy="76" r="5" fill="#fbbf24"/>
+  <circle cx="108" cy="76" r="5" fill="#4ade80"/>
+  <text x="128" y="80" fill="#64748b" font-family="system-ui,sans-serif" font-size="11" font-weight="500">55educacao.com.br  painel</text>
+  <rect x="72" y="120" width="140" height="88" rx="8" fill="#0c1222" stroke="#1e3a5f"/>
+  <rect x="88" y="136" width="60" height="8" rx="2" fill="url(#accent)"/>
+  <rect x="88" y="152" width="108" height="6" rx="2" fill="#334155"/>
+  <rect x="88" y="166" width="90" height="6" rx="2" fill="#334155"/>
+  <path d="M88 188h108" stroke="#38bdf8" stroke-width="2" fill="none" opacity="0.5"/>
+  <polyline points="88,188 108,172 128,180 148,158 168,164 196,188" fill="none" stroke="#38bdf8" stroke-width="2"/>
+  <rect x="232" y="120" width="160" height="200" rx="8" fill="#0c1222" stroke="#1e3a5f"/>
+  <rect x="248" y="140" width="128" height="10" rx="2" fill="#475569"/>
+  <rect x="248" y="160" width="100" height="8" rx="2" fill="#1e3a5f"/>
+  <rect x="248" y="176" width="110" height="8" rx="2" fill="#1e3a5f"/>
+  <rect x="248" y="192" width="95" height="8" rx="2" fill="#1e3a5f"/>
+  <rect x="248" y="220" width="128" height="72" rx="6" fill="#151d2e"/>
+  <rect x="260" y="232" width="40" height="48" rx="4" fill="url(#accent)" opacity="0.35"/>
+  <rect x="308" y="240" width="40" height="40" rx="4" fill="#1e90ff" opacity="0.25"/>
+  <rect x="356" y="248" width="40" height="32" rx="4" fill="#38bdf8" opacity="0.2"/>
+  <rect x="408" y="120" width="160" height="96" rx="8" fill="#0c1222" stroke="#1e3a5f"/>
+  <circle cx="448" cy="168" r="28" fill="none" stroke="#38bdf8" stroke-width="6" stroke-dasharray="120 40" opacity="0.7"/>
+  <text x="448" y="174" text-anchor="middle" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="14" font-weight="700">94%</text>
+  <text x="448" y="200" text-anchor="middle" fill="#64748b" font-family="system-ui,sans-serif" font-size="10">Frequência</text>
+  <rect x="408" y="232" width="160" height="88" rx="8" fill="#0c1222" stroke="#1e3a5f"/>
+  <path d="M424 290h128" stroke="#334155" stroke-width="8" stroke-linecap="round"/>
+  <path d="M424 290v-40" stroke="#38bdf8" stroke-width="8" stroke-linecap="round"/>
+  <path d="M488 290v-56" stroke="#1e90ff" stroke-width="8" stroke-linecap="round"/>
+  <path d="M552 290v-28" stroke="#93c5fd" stroke-width="8" stroke-linecap="round"/>
+  <g transform="translate(520 300)">
+    <path d="M0-20 L12 0 L0 14 L-12 0 Z" fill="url(#accent)" opacity="0.9"/>
+    <rect x="-18" y="14" width="36" height="24" rx="4" fill="#1e90ff" opacity="0.4"/>
+  </g>
+</svg>

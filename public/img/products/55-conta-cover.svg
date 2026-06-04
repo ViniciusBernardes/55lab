@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="title">
+  <title id="title">55Conta  finanças municipais</title>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#061018"/>
+      <stop offset="100%" stop-color="#0a2540"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#1e90ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#bg)"/>
+  <circle cx="520" cy="80" r="120" fill="#10b981" opacity="0.06"/>
+  <circle cx="100" cy="320" r="80" fill="#1e90ff" opacity="0.06"/>
+  <rect x="56" y="48" width="528" height="304" rx="14" fill="#0f172a" stroke="#1e3a5f"/>
+  <rect x="56" y="48" width="528" height="44" rx="14" fill="#111827"/>
+  <text x="80" y="76" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="11">55conta.com.br  conciliação</text>
+  <rect x="80" y="112" width="200" height="112" rx="10" fill="#0c1222" stroke="#1e3a5f"/>
+  <text x="96" y="136" fill="#64748b" font-size="10" font-family="system-ui,sans-serif">Saldo consolidado</text>
+  <text x="96" y="168" fill="#ecfdf5" font-size="22" font-weight="700" font-family="system-ui,sans-serif">R$ 2,4M</text>
+  <rect x="96" y="184" width="72" height="22" rx="4" fill="url(#green)" opacity="0.2"/>
+  <text x="108" y="200" fill="#34d399" font-size="11" font-family="system-ui,sans-serif">+12,4%</text>
+  <rect x="300" y="112" width="260" height="112" rx="10" fill="#0c1222" stroke="#1e3a5f"/>
+  <polyline points="316,200 356,168 396,178 436,148 476,158 516,132 556,140" fill="none" stroke="url(#line)" stroke-width="2.5"/>
+  <polyline points="316,200 356,185 396,190 436,175 476,182 516,168 556,172" fill="none" stroke="url(#green)" stroke-width="2" opacity="0.8"/>
+  <rect x="80" y="244" width="480" height="88" rx="10" fill="#0c1222" stroke="#1e3a5f"/>
+  <rect x="96" y="260" width="100" height="8" rx="2" fill="#334155"/>
+  <rect x="96" y="276" width="80" height="8" rx="2" fill="#1e3a5f"/>
+  <rect x="96" y="292" width="90" height="8" rx="2" fill="#1e3a5f"/>
+  <rect x="96" y="308" width="70" height="8" rx="2" fill="#1e3a5f"/>
+  <rect x="220" y="260" width="100" height="8" rx="2" fill="#334155"/>
+  <rect x="220" y="276" width="85" height="8" rx="2" fill="#1e3a5f"/>
+  <rect x="220" y="292" width="95" height="8" rx="2" fill="#1e3a5f"/>
+  <rect x="344" y="260" width="100" height="8" rx="2" fill="#334155"/>
+  <rect x="344" y="276" width="75" height="8" rx="2" fill="#1e3a5f"/>
+  <rect x="468" y="256" width="76" height="28" rx="6" fill="url(#green)" opacity="0.25"/>
+  <text x="480" y="275" fill="#6ee7b7" font-size="10" font-family="system-ui,sans-serif">Conciliado</text>
+  <rect x="500" y="300" width="44" height="24" rx="4" fill="#151d2e" stroke="#334155"/>
+  <rect x="508" y="308" width="28" height="4" rx="1" fill="#64748b"/>
+  <rect x="508" y="316" width="20" height="4" rx="1" fill="#475569"/>
+</svg>
