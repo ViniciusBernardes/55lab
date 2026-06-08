@@ -1,16 +1,21 @@
 #!/bin/sh
 set -e
 
-# Docker pode criar .env como diretório quando o bind mount não existe no host
-if [ -d .env ]; then
-  rm -rf .env
-fi
+PERSIST_DIR="/persist"
+PERSIST_ENV="${PERSIST_DIR}/.env"
 
-if [ ! -f .env ] || [ ! -s .env ]; then
+mkdir -p "$PERSIST_DIR" storage/framework/{cache,sessions,views} storage/logs bootstrap/cache
+chmod -R 775 storage bootstrap/cache 2>/dev/null || true
+
+if [ -f "$PERSIST_ENV" ]; then
+  cp "$PERSIST_ENV" .env
+elif [ -d .env ]; then
+  rm -rf .env
+  cp .env.example .env
+elif [ ! -f .env ] || [ ! -s .env ]; then
   cp .env.example .env
 fi
 
-# Sincroniza variáveis do compose (produção)
 sync_env() {
   key="$1"
   val="$2"
@@ -40,8 +45,7 @@ elif ! grep -qE '^APP_KEY=base64:.+' .env; then
   php artisan key:generate --force
 fi
 
-mkdir -p storage/framework/{cache,sessions,views} storage/logs bootstrap/cache
-chmod -R 775 storage bootstrap/cache 2>/dev/null || true
+cp .env "$PERSIST_ENV"
 
 php artisan migrate --force
 

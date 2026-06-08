@@ -16,10 +16,11 @@ docker compose up -d mysql api queue
 
 Na primeira subida, migrations rodam automaticamente.
 
-**Produção (Ubuntu/AWS):** `api` e `queue` compartilham o volume Docker `backend_dotenv` (`.env` + `APP_KEY`). Não é necessário criar `backend/.env` no host.
+**Produção (Ubuntu/AWS):** `api` e `queue` compartilham o volume `backend_config` montado em `/persist` (`.env` persistido em `/persist/.env`). Não monte volume diretamente em `/var/www/html/.env` — o Docker cria uma **pasta** e o Laravel quebra.
 
 ```bash
 # Na raiz do projeto no servidor
+git pull
 docker compose up -d --build mysql api queue web
 
 # Se api/queue ficarem em Restarting:
@@ -27,7 +28,7 @@ docker compose up -d --build mysql api queue web
 docker compose logs api --tail 50
 ```
 
-**Causa comum:** `backend/.env` virou **pasta** no host (bind mount antigo sem arquivo). Remova com `sudo rm -rf backend/.env` e suba de novo.
+**Causa comum:** volume ou bind mount em `.env` virou **diretório**. Remova `sudo rm -rf backend/.env` (se for pasta no host) e `docker volume rm 55lab_backend_dotenv` (volume antigo).
 
 Se a análise falhar com "Credenciais OpenAI não configuradas", salve a API Key em `/editais/credenciais`.
 

@@ -12,11 +12,15 @@ echo "=== Logs queue (últimas 20 linhas) ==="
 docker compose logs queue --tail 20 2>/dev/null || docker-compose logs queue --tail 20
 
 echo ""
-echo "=== Removendo bind mount .env incorreto (se existir como pasta) ==="
+echo "=== Removendo .env incorreto no host (se existir como pasta) ==="
 if [ -d backend/.env ]; then
   echo "ATENÇÃO: backend/.env é um diretório — removendo..."
   sudo rm -rf backend/.env
 fi
+
+echo ""
+echo "=== Removendo volume corrompido backend_dotenv (se existir) ==="
+docker volume rm 55lab_backend_dotenv 2>/dev/null || true
 
 echo ""
 echo "=== Recriando api e queue ==="
