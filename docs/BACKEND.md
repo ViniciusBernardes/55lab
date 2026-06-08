@@ -16,15 +16,20 @@ docker compose up -d mysql api queue
 
 Na primeira subida, migrations rodam automaticamente.
 
-**Importante:** `api` e `queue` compartilham o mesmo `backend/.env` (principalmente `APP_KEY`). Sem isso, a API Key criptografada no banco não é lida pelo worker da fila. Após subir:
+**Produção (Ubuntu/AWS):** `api` e `queue` compartilham o volume Docker `backend_dotenv` (`.env` + `APP_KEY`). Não é necessário criar `backend/.env` no host.
 
 ```bash
-cp backend/.env.example backend/.env
-docker compose up -d mysql api queue
-docker compose exec api php artisan key:generate
+# Na raiz do projeto no servidor
+docker compose up -d --build mysql api queue web
+
+# Se api/queue ficarem em Restarting:
+./scripts/fix-api-restart.sh
+docker compose logs api --tail 50
 ```
 
-Se a análise falhar com "Credenciais OpenAI não configuradas", salve a API Key novamente em `/editais/credenciais`.
+**Causa comum:** `backend/.env` virou **pasta** no host (bind mount antigo sem arquivo). Remova com `sudo rm -rf backend/.env` e suba de novo.
+
+Se a análise falhar com "Credenciais OpenAI não configuradas", salve a API Key em `/editais/credenciais`.
 
 ### Worker de fila (análise assíncrona)
 

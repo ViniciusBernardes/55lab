@@ -54,7 +54,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./backend/.env:/var/www/html/.env
+      - backend_dotenv:/var/www/html/.env
       - backend_storage:/var/www/html/storage/app
 
   queue:
@@ -77,7 +77,7 @@ services:
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
     command: ["php", "artisan", "queue:work", "--sleep=3", "--tries=3", "--timeout=360"]
     volumes:
-      - ./backend/.env:/var/www/html/.env
+      - backend_dotenv:/var/www/html/.env
       - backend_storage:/var/www/html/storage/app
 
   web:
@@ -111,4 +111,5 @@ volumes:
   certbot_etc:
   certbot_www:
   mysql_data:
+  backend_dotenv:
   backend_storage:
