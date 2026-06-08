@@ -1,17 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Navigation } from "./components/navigation";
-import { Header } from "./components/header";
-import { Stats } from "./components/stats";
-import { Services } from "./components/services";
-import { Products } from "./components/products";
-import { TechStack } from "./components/techStack";
-import { Process } from "./components/process";
-import { About } from "./components/about";
-import { Gallery } from "./components/gallery";
-import { Testimonials } from "./components/testimonials";
-import { Contact } from "./components/contact";
-import JsonData from "./data/data.json";
+import React from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SmoothScroll from "smooth-scroll";
+import { EditaisPage } from "./pages/EditaisPage";
+import { EditalDetailPage } from "./pages/EditalDetailPage";
+import { LandingPage } from "./pages/LandingPage";
+import { OpenAiCredentialsPage } from "./pages/OpenAiCredentialsPage";
 
 new SmoothScroll('a[href*="#"]', {
   speed: 800,
@@ -19,26 +12,18 @@ new SmoothScroll('a[href*="#"]', {
 });
 
 const App = () => {
-  const [data, setData] = useState({});
-
-  useEffect(() => {
-    setData(JsonData);
-  }, []);
-
   return (
-    <div className="lab-site">
-      <Navigation logoSrc="img/55lab-logo.svg" />
-      <Header data={data.Header} />
-      <Stats data={data.Stats} />
-      <Services data={data.Services} />
-      <Products data={data.ProductsSection} items={data.Products} />
-      <TechStack data={data.TechStack} />
-      <Process data={data.Process} />
-      <About data={data.About} />
-      <Gallery data={data.Gallery} />
-      <Testimonials data={data.Testimonials} />
-      <Contact data={data.Contact} />
-    </div>
+    <BrowserRouter>
+      <div className="lab-site">
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/editais" element={<EditaisPage />} />
+          <Route path="/editais/credenciais" element={<OpenAiCredentialsPage />} />
+          <Route path="/editais/:id" element={<EditalDetailPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 };
 

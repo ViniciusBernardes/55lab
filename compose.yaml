@@ -1,7 +1,11 @@
 # Projeto único: 55lab
 #
-# Desenvolvimento (só HTTP, porta 80):
-#   docker compose up -d --build
+# Site (só HTTP, porta 80):
+#   docker compose up -d --build web
+#
+# Backend API + MySQL + fila de IA:
+#   docker compose up -d mysql api queue
+#   API: http://localhost:8000
 #
 # Produção com HTTPS + renovação SSL:
 #   cp .env.example .env   # DOMAIN e CERTBOT_EMAIL
@@ -10,6 +14,72 @@
 name: 55lab
 
 services:
+  mysql:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-55lab}
+      MYSQL_USER: ${MYSQL_USER:-55lab}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-55lab_secret}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_secret}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u${MYSQL_USER:-55lab}", "-p${MYSQL_PASSWORD:-55lab_secret}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: ${MYSQL_DATABASE:-55lab}
+      DB_USERNAME: ${MYSQL_USER:-55lab}
+      DB_PASSWORD: ${MYSQL_PASSWORD:-55lab_secret}
+      QUEUE_CONNECTION: database
+      EDITAL_AI_ENABLED: "true"
+      EDITAL_AI_PROVIDER: ${EDITAL_AI_PROVIDER:-mock}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/.env:/var/www/html/.env
+      - backend_storage:/var/www/html/storage/app
+
+  queue:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      APP_ENV: local
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: ${MYSQL_DATABASE:-55lab}
+      DB_USERNAME: ${MYSQL_USER:-55lab}
+      DB_PASSWORD: ${MYSQL_PASSWORD:-55lab_secret}
+      QUEUE_CONNECTION: database
+      EDITAL_AI_ENABLED: "true"
+      EDITAL_AI_PROVIDER: ${EDITAL_AI_PROVIDER:-mock}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+    command: ["php", "artisan", "queue:work", "--sleep=3", "--tries=3", "--timeout=360"]
+    volumes:
+      - ./backend/.env:/var/www/html/.env
+      - backend_storage:/var/www/html/storage/app
+
   web:
     build: .
     restart: unless-stopped
@@ -40,3 +110,5 @@ services:
 volumes:
   certbot_etc:
   certbot_www:
+  mysql_data:
+  backend_storage:

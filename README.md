@@ -41,11 +41,23 @@ npm install
 npm start
 ```
 
+Módulo de editais: http://localhost:3000/editais (requer API em `localhost:8000` — ver [docs/BACKEND.md](docs/BACKEND.md)).
+
 ## Docker (local, HTTP)
 
 ```bash
-docker compose up -d --build
+docker compose up -d --build web
 ```
+
+## Backend API — Licitação (Laravel + MySQL)
+
+```bash
+docker compose up -d mysql api queue
+```
+
+API em http://localhost:8000 — cadastro de editais, configuração de IA e análise assíncrona.
+
+Documentação completa: [docs/BACKEND.md](docs/BACKEND.md)
 
 ## Produção (HTTPS + Certbot)
 

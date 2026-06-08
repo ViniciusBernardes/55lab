@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 export const Navigation = (props) => {
-  const logoSrc = props.logoSrc || "img/55lab-logo.svg";
+  const logoSrc = props.logoSrc || "/img/55lab-logo.svg";
   const [open, setOpen] = useState(false);
 
   const close = () => setOpen(false);
@@ -44,6 +44,9 @@ export const Navigation = (props) => {
           </a>
           <a href="#projetos" onClick={close}>
             Projetos
+          </a>
+          <a href="/editais" onClick={close}>
+            Editais
           </a>
           <a href="#contato" className="lab-nav__cta" onClick={close}>
             Contato

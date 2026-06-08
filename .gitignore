@@ -1,5 +1,14 @@
 # Dependencies
 node_modules/
+backend/vendor/
+
+# Laravel
+backend/.env
+backend/storage/*.key
+backend/storage/logs/*
+!backend/storage/logs/.gitignore
+backend/bootstrap/cache/*
+!backend/bootstrap/cache/.gitignore
 
 # Build
 build/
