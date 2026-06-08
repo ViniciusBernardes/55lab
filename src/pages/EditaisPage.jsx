@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getOpenAiCredentials, importEdital, listEditais } from "../api/licitacaoApi";
+import { DeleteEditalButton } from "../components/editais/DeleteEditalButton";
+import { EditalArquivoLink } from "../components/editais/EditalArquivoLink";
 import { EditalUploadPanel } from "../components/editais/EditalUploadPanel";
 import { EditaisNav } from "../components/editais/EditaisNav";
 import { StatusBadge } from "../components/editais/StatusBadge";
@@ -155,6 +157,7 @@ export const EditaisPage = () => {
                       <th>Órgão</th>
                       <th>Status</th>
                       <th>Análise IA</th>
+                      <th>Arquivo</th>
                       <th>Atualizado</th>
                       <th />
                     </tr>
@@ -169,11 +172,6 @@ export const EditaisPage = () => {
                               {edital.modalidade}
                             </span>
                           ) : null}
-                          {edital.arquivo_nome_original ? (
-                            <span className="lab-editais-table__meta">
-                              {edital.arquivo_nome_original}
-                            </span>
-                          ) : null}
                         </td>
                         <td>{edital.orgao || "—"}</td>
                         <td>
@@ -186,14 +184,28 @@ export const EditaisPage = () => {
                             <span className="lab-editais-muted">Sem análise</span>
                           )}
                         </td>
+                        <td>
+                          {edital.arquivo_nome_original ? (
+                            <EditalArquivoLink edital={edital} variant="inline" />
+                          ) : (
+                            <span className="lab-editais-muted">—</span>
+                          )}
+                        </td>
                         <td>{formatDate(edital.updated_at)}</td>
                         <td>
-                          <Link
-                            to={`/editais/${edital.id}`}
-                            className="lab-editais-link"
-                          >
-                            Abrir <i className="fa fa-arrow-right" aria-hidden="true" />
-                          </Link>
+                          <div className="lab-editais-table__actions">
+                            <Link
+                              to={`/editais/${edital.id}`}
+                              className="lab-editais-link"
+                            >
+                              Ver edital
+                            </Link>
+                            <DeleteEditalButton
+                              edital={edital}
+                              onDeleted={loadEditais}
+                              label="Excluir"
+                            />
+                          </div>
                         </td>
                       </tr>
                     ))}

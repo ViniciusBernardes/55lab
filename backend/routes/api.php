@@ -14,6 +14,7 @@ Route::prefix('licitacao')->group(function () {
     Route::post('editais/importar', [EditalController::class, 'importar']);
     Route::apiResource('editais', EditalController::class);
 
+    Route::get('editais/{edital}/arquivo', [EditalController::class, 'downloadArquivo']);
     Route::post('editais/{edital}/arquivo', [EditalController::class, 'uploadArquivo']);
 
     Route::get('editais/{edital}/config-ia', [EditalAiConfigController::class, 'show']);

@@ -6,9 +6,10 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libpng-dev \
     libonig-dev \
+    poppler-utils \
     && docker-php-ext-install pdo_mysql zip \
     && rm -rf /var/lib/apt/lists/* \
-    && printf "upload_max_filesize=64M\npost_max_size=64M\nmemory_limit=256M\nmax_execution_time=360\n" \
+    && printf "upload_max_filesize=64M\npost_max_size=64M\nmemory_limit=512M\nmax_execution_time=360\n" \
        > /usr/local/etc/php/conf.d/uploads.ini
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer

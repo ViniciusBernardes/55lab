@@ -1357,6 +1357,141 @@ img {
   border: 1px solid var(--border);
 }
 
+.lab-editais-file--pending {
+  margin-top: 12px;
+}
+
+.lab-editais-file > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.lab-editais-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.lab-editais-arquivo-btn {
+  white-space: nowrap;
+}
+
+.lab-editais-arquivo-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  max-width: 220px;
+}
+
+.lab-editais-arquivo-inline span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lab-editais-arquivo-inline em {
+  color: var(--muted);
+  font-style: normal;
+  font-size: 0.75rem;
+}
+
+.lab-editais-table__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lab-btn--danger {
+  background: rgba(248, 113, 113, 0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(248, 113, 113, 0.35);
+}
+
+.lab-btn--danger:hover {
+  background: rgba(248, 113, 113, 0.25);
+  color: #fecaca;
+}
+
+.lab-editais-delete-btn {
+  font-size: 0.8125rem;
+  padding: 8px 12px;
+}
+
+.lab-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(6, 11, 20, 0.72);
+  backdrop-filter: blur(4px);
+}
+
+.lab-modal__dialog {
+  width: 100%;
+  max-width: 440px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+  animation: lab-modal-in 0.18s ease-out;
+}
+
+@keyframes lab-modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.lab-modal__header {
+  padding: 20px 24px 0;
+}
+
+.lab-modal__title {
+  margin: 0;
+  font-size: 1.125rem;
+  color: var(--heading);
+}
+
+.lab-modal__body {
+  padding: 16px 24px 0;
+  color: var(--text-strong);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.lab-modal__body p {
+  margin: 0 0 12px;
+}
+
+.lab-modal__body p:last-child {
+  margin-bottom: 0;
+}
+
+.lab-modal__hint {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.lab-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 20px 24px 24px;
+}
+
 .lab-editais-file .fa {
   font-size: 1.75rem;
   color: var(--accent);

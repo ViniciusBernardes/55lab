@@ -12,6 +12,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class EditalController extends Controller
 {
@@ -52,29 +53,29 @@ class EditalController extends Controller
         );
     }
 
-    public function show(Edital $edital): JsonResponse
+    public function show(Edital $editai): JsonResponse
     {
         return response()->json(
-            $edital->load(['aiConfig', 'analises', 'ultimaAnalise']),
+            $editai->load(['aiConfig', 'analises', 'ultimaAnalise']),
         );
     }
 
-    public function update(UpdateEditalRequest $request, Edital $edital): JsonResponse
+    public function update(UpdateEditalRequest $request, Edital $editai): JsonResponse
     {
-        $edital->update($request->validated());
+        $editai->update($request->validated());
 
         return response()->json(
-            $edital->fresh()->load(['aiConfig', 'ultimaAnalise']),
+            $editai->fresh()->load(['aiConfig', 'ultimaAnalise']),
         );
     }
 
-    public function destroy(Edital $edital): JsonResponse
+    public function destroy(Edital $editai): JsonResponse
     {
-        if ($edital->arquivo_path) {
-            Storage::disk('local')->delete($edital->arquivo_path);
+        if ($editai->arquivo_path) {
+            Storage::disk('local')->delete($editai->arquivo_path);
         }
 
-        $edital->delete();
+        $editai->delete();
 
         return response()->json(['message' => 'Edital removido.']);
     }
@@ -117,10 +118,29 @@ class EditalController extends Controller
         ], 201);
     }
 
+    public function downloadArquivo(Edital $edital): StreamedResponse
+    {
+        if (! $edital->arquivo_path || ! Storage::disk('local')->exists($edital->arquivo_path)) {
+            abort(404, 'Arquivo não encontrado.');
+        }
+
+        $nome = $edital->arquivo_nome_original ?: 'edital.pdf';
+        $mime = $edital->arquivo_mime ?: Storage::disk('local')->mimeType($edital->arquivo_path);
+
+        return Storage::disk('local')->response(
+            $edital->arquivo_path,
+            $nome,
+            [
+                'Content-Type' => $mime,
+                'Content-Disposition' => 'inline; filename="'.addslashes($nome).'"',
+            ],
+        );
+    }
+
     public function uploadArquivo(Request $request, Edital $edital): JsonResponse
     {
         $request->validate([
-            'arquivo' => ['required', 'file', 'mimes:pdf,txt,doc,docx', 'max:20480'],
+            'arquivo' => ['required', 'file', 'mimes:pdf,txt,doc,docx', 'max:51200'],
         ]);
 
         if ($edital->arquivo_path) {

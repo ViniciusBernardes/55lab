@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   getEdital,
   listAnalises,
   triggerAnalise,
   uploadEditalArquivo,
 } from "../api/licitacaoApi";
+import { DeleteEditalButton } from "../components/editais/DeleteEditalButton";
+import { EditalArquivoLink } from "../components/editais/EditalArquivoLink";
 import { EditalAnalysisView } from "../components/editais/EditalAnalysisView";
 import { EditalUploadPanel } from "../components/editais/EditalUploadPanel";
 import { EditaisNav } from "../components/editais/EditaisNav";
@@ -13,6 +15,7 @@ import { StatusBadge } from "../components/editais/StatusBadge";
 
 export const EditalDetailPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [edital, setEdital] = useState(null);
   const [analises, setAnalises] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -130,19 +133,30 @@ export const EditalDetailPage = () => {
                 {edital.modalidade ? <span>{edital.modalidade}</span> : null}
               </div>
             </div>
-            <button
-              type="button"
-              className="lab-btn lab-btn--primary"
-              onClick={handleAnalyze}
-              disabled={analyzing || isProcessing}
-            >
-              <i className="fa fa-magic" aria-hidden="true" />
-              {isProcessing
-                ? "Analisando…"
-                : analyzing
-                  ? "Enfileirando…"
-                  : "Reanalisar com IA"}
-            </button>
+            <div className="lab-editais-detail-actions">
+              {edital.arquivo_nome_original ? (
+                <EditalArquivoLink edital={edital} />
+              ) : null}
+              <button
+                type="button"
+                className="lab-btn lab-btn--primary"
+                onClick={handleAnalyze}
+                disabled={analyzing || isProcessing || !edital.arquivo_path}
+              >
+                <i className="fa fa-magic" aria-hidden="true" />
+                {isProcessing
+                  ? "Analisando…"
+                  : analyzing
+                    ? "Enfileirando…"
+                    : "Reanalisar com IA"}
+              </button>
+              <DeleteEditalButton
+                edital={edital}
+                variant="danger"
+                label="Excluir edital"
+                onDeleted={() => navigate("/editais")}
+              />
+            </div>
           </header>
 
           {error ? (
@@ -170,8 +184,13 @@ export const EditalDetailPage = () => {
                         : "Arquivo anexado"}
                     </span>
                   </div>
+                  <EditalArquivoLink edital={edital} />
                 </div>
-              ) : null}
+              ) : (
+                <p className="lab-editais-muted">
+                  Nenhum arquivo anexado. Envie o PDF do edital abaixo.
+                </p>
+              )}
               <EditalUploadPanel
                 onUpload={handleReupload}
                 label="Substituir arquivo e reanalisar"

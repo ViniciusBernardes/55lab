@@ -9,10 +9,12 @@ export const EditalUploadPanel = ({
   const inputRef = useRef(null);
   const [dragging, setDragging] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState("");
 
   const handleFile = async (file) => {
     if (!file) return;
+    setSelectedFile(file);
     setUploading(true);
     setError("");
 
@@ -22,6 +24,7 @@ export const EditalUploadPanel = ({
       setError(err.message || "Falha no envio do arquivo.");
     } finally {
       setUploading(false);
+      setSelectedFile(null);
     }
   };
 
@@ -69,6 +72,19 @@ export const EditalUploadPanel = ({
           hidden
         />
       </div>
+      {selectedFile ? (
+        <div className="lab-editais-file lab-editais-file--pending">
+          <i className="fa fa-file-pdf-o" aria-hidden="true" />
+          <div>
+            <strong>{selectedFile.name}</strong>
+            <span>
+              {uploading
+                ? "Enviando e iniciando análise…"
+                : `${Math.round(selectedFile.size / 1024)} KB`}
+            </span>
+          </div>
+        </div>
+      ) : null}
       {error ? (
         <div className="lab-editais-alert lab-editais-alert--error">{error}</div>
       ) : null}

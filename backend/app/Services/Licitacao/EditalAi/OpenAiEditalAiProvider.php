@@ -2,6 +2,7 @@
 
 namespace App\Services\Licitacao\EditalAi;
 
+use App\Exceptions\PdfSecuredException;
 use App\Models\Licitacao\Edital;
 use App\Models\Licitacao\EditalAiConfig;
 use App\Support\EditalAnalysisPrompt;
@@ -15,6 +16,7 @@ class OpenAiEditalAiProvider implements EditalAiProvider
     public function __construct(
         private readonly IaCredencialService $credencialService,
         private readonly EditalDocumentExtractor $documentExtractor,
+        private readonly OpenAiPdfAnalyzer $pdfAnalyzer,
     ) {}
 
     public function analyzeEdital(Edital $edital, EditalAiConfig $config): array
@@ -27,32 +29,16 @@ class OpenAiEditalAiProvider implements EditalAiProvider
         }
 
         $systemPrompt = $config->system_prompt ?: EditalAnalysisPrompt::SYSTEM;
-        $extractedText = $this->documentExtractor->extract($edital);
-        $userContent = EditalAnalysisPrompt::buildUserContent($extractedText);
+        $model = $config->model ?: $credencial->model;
+        $baseUrl = rtrim($credencial->base_url, '/');
 
-        $response = Http::withToken($apiKey)
-            ->baseUrl(rtrim($credencial->base_url, '/'))
-            ->timeout(300)
-            ->post('/chat/completions', [
-                'model' => $config->model ?: $credencial->model,
-                'temperature' => 0.1,
-                'response_format' => ['type' => 'json_object'],
-                'messages' => [
-                    ['role' => 'system', 'content' => $systemPrompt],
-                    ['role' => 'user', 'content' => $userContent],
-                ],
-            ]);
-
-        if (! $response->successful()) {
-            throw new RuntimeException('Falha na API OpenAI: '.$response->body());
-        }
-
-        $content = data_get($response->json(), 'choices.0.message.content');
-        $decoded = is_string($content) ? json_decode($content, true) : null;
-
-        if (! is_array($decoded)) {
-            throw new RuntimeException('Resposta inválida da IA.');
-        }
+        $decoded = $this->analyzeDocument(
+            $edital,
+            $apiKey,
+            $baseUrl,
+            $model,
+            $systemPrompt,
+        );
 
         return [
             'documentType' => 'EDITAL_LICITACAO',
@@ -72,6 +58,82 @@ class OpenAiEditalAiProvider implements EditalAiProvider
             'fieldConfidences' => is_array($result['fieldConfidences'] ?? null) ? $result['fieldConfidences'] : [],
             'raw' => is_array($result['raw'] ?? null) ? $result['raw'] : [],
         ];
+    }
+
+    /** @return array<string, mixed> */
+    private function analyzeDocument(
+        Edital $edital,
+        string $apiKey,
+        string $baseUrl,
+        string $model,
+        string $systemPrompt,
+    ): array {
+        try {
+            $extractedText = $this->documentExtractor->extract($edital);
+            $userContent = EditalAnalysisPrompt::buildUserContent($extractedText);
+
+            return $this->requestJsonCompletion($apiKey, $baseUrl, $model, $systemPrompt, $userContent);
+        } catch (PdfSecuredException|RuntimeException $e) {
+            if (! $this->isSecuredPdfFailure($e) || ! $this->documentExtractor->isPdf($edital)) {
+                throw $e;
+            }
+
+            return $this->pdfAnalyzer->analyze(
+                $apiKey,
+                $baseUrl,
+                $model,
+                $systemPrompt,
+                $this->documentExtractor->absolutePath($edital),
+                $edital->arquivo_nome_original ?: 'edital.pdf',
+            );
+        }
+    }
+
+    private function isSecuredPdfFailure(\Throwable $e): bool
+    {
+        if ($e instanceof PdfSecuredException) {
+            return true;
+        }
+
+        $message = strtolower($e->getMessage());
+
+        return str_contains($message, 'secured pdf')
+            || str_contains($message, 'pdf protegido');
+    }
+
+    /** @return array<string, mixed> */
+    private function requestJsonCompletion(
+        string $apiKey,
+        string $baseUrl,
+        string $model,
+        string $systemPrompt,
+        string $userContent,
+    ): array {
+        $response = Http::withToken($apiKey)
+            ->baseUrl($baseUrl)
+            ->timeout(300)
+            ->post('/chat/completions', [
+                'model' => $model,
+                'temperature' => 0.1,
+                'response_format' => ['type' => 'json_object'],
+                'messages' => [
+                    ['role' => 'system', 'content' => $systemPrompt],
+                    ['role' => 'user', 'content' => $userContent],
+                ],
+            ]);
+
+        if (! $response->successful()) {
+            throw new RuntimeException('Falha na API OpenAI: '.$response->body());
+        }
+
+        $content = data_get($response->json(), 'choices.0.message.content');
+        $decoded = is_string($content) ? json_decode($content, true) : null;
+
+        if (! is_array($decoded)) {
+            throw new RuntimeException('Resposta inválida da IA.');
+        }
+
+        return $decoded;
     }
 
     /** @param  array<string, mixed>  $decoded */

@@ -83,6 +83,10 @@ export function deleteEdital(id) {
   return request(`/api/licitacao/editais/${id}`, { method: "DELETE" });
 }
 
+export function getEditalArquivoUrl(id) {
+  return `${API_BASE}/api/licitacao/editais/${id}/arquivo`;
+}
+
 export function uploadEditalArquivo(id, file) {
   const form = new FormData();
   form.append("arquivo", file);
