@@ -51,6 +51,8 @@ services:
       EDITAL_AI_ENABLED: "true"
       EDITAL_AI_PROVIDER: ${EDITAL_AI_PROVIDER:-mock}
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      EXTERNAL_HELPDESK_API_KEY: ${EXTERNAL_HELPDESK_API_KEY:-}
+      EXTERNAL_HELPDESK_WEBHOOK_URL: ${EXTERNAL_HELPDESK_WEBHOOK_URL:-}
     ports:
       - "8000:8000"
     volumes:
@@ -75,6 +77,8 @@ services:
       EDITAL_AI_ENABLED: "true"
       EDITAL_AI_PROVIDER: ${EDITAL_AI_PROVIDER:-mock}
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      EXTERNAL_HELPDESK_API_KEY: ${EXTERNAL_HELPDESK_API_KEY:-}
+      EXTERNAL_HELPDESK_WEBHOOK_URL: ${EXTERNAL_HELPDESK_WEBHOOK_URL:-}
     command: ["php", "artisan", "queue:work", "--sleep=3", "--tries=3", "--timeout=360"]
     volumes:
       - backend_config:/persist

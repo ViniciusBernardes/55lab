@@ -1955,6 +1955,14 @@ img {
   --app-accent-strong: #0ea5e9;
   --app-sidebar-bg: #060b14;
   --app-sidebar-text: #94a3b8;
+  --app-input-bg: #ffffff;
+  --app-input-border: #cbd5e1;
+  --app-input-border-hover: #94a3b8;
+  --app-input-focus: #0ea5e9;
+  --app-input-focus-ring: rgba(14, 165, 233, 0.2);
+  --app-input-radius: 10px;
+  --app-input-height: 42px;
+  --app-input-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
   display: flex;
   min-height: 100vh;
   background: var(--app-bg);
@@ -2223,51 +2231,191 @@ img {
   display: flex;
   align-items: center;
   gap: 10px;
+  min-height: var(--app-input-height);
   padding: 0 14px;
-  background: var(--app-surface);
-  border: 1px solid var(--app-border);
-  border-radius: 10px;
+  background: var(--app-input-bg);
+  border: 1px solid var(--app-input-border);
+  border-radius: var(--app-input-radius);
+  box-shadow: var(--app-input-shadow);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.lab-app-search .fa {
+  flex-shrink: 0;
+  color: var(--app-muted);
+  font-size: 0.875rem;
+}
+
+.lab-app-search:hover {
+  border-color: var(--app-input-border-hover);
+}
+
+.lab-app-search:focus-within {
+  border-color: var(--app-input-focus);
+  box-shadow: var(--app-input-shadow), 0 0 0 3px var(--app-input-focus-ring);
 }
 
 .lab-app-search input {
   flex: 1;
+  min-width: 0;
   border: 0;
   background: transparent;
-  padding: 11px 0;
+  padding: 10px 0;
   font: inherit;
+  font-size: 0.9375rem;
   color: var(--app-heading);
+}
+
+.lab-app-search input::placeholder {
+  color: #94a3b8;
 }
 
 .lab-app-search input:focus {
   outline: none;
 }
 
-.lab-app-select {
-  padding: 11px 14px;
-  background: var(--app-surface);
-  border: 1px solid var(--app-border);
-  border-radius: 10px;
+.lab-app-select,
+.lab-app-input,
+.lab-app-field input:not([type="checkbox"]):not([type="radio"]),
+.lab-app-field textarea,
+.lab-app-field select,
+.lab-app-filter input:not([type="checkbox"]):not([type="radio"]),
+.lab-app-filter select {
+  width: 100%;
+  min-height: var(--app-input-height);
+  padding: 0 14px;
+  background: var(--app-input-bg);
+  border: 1px solid var(--app-input-border);
+  border-radius: var(--app-input-radius);
+  box-shadow: var(--app-input-shadow);
   font: inherit;
+  font-size: 0.9375rem;
+  line-height: 1.4;
   color: var(--app-heading);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.lab-app-field textarea {
+  min-height: 108px;
+  padding: 12px 14px;
+  resize: vertical;
+}
+
+.lab-app-field select,
+.lab-app-filter select,
+.lab-app-select {
+  appearance: none;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  cursor: pointer;
+}
+
+.lab-app-field input:not([type="checkbox"]):not([type="radio"])::placeholder,
+.lab-app-field textarea::placeholder,
+.lab-app-input::placeholder,
+.lab-app-filter input::placeholder {
+  color: #94a3b8;
+}
+
+.lab-app-field input:not([type="checkbox"]):not([type="radio"]):hover,
+.lab-app-field textarea:hover,
+.lab-app-field select:hover,
+.lab-app-input:hover,
+.lab-app-select:hover,
+.lab-app-filter input:hover,
+.lab-app-filter select:hover {
+  border-color: var(--app-input-border-hover);
+}
+
+.lab-app-field input:not([type="checkbox"]):not([type="radio"]):focus,
+.lab-app-field textarea:focus,
+.lab-app-field select:focus,
+.lab-app-input:focus,
+.lab-app-select:focus,
+.lab-app-filter input:focus,
+.lab-app-filter select:focus {
+  outline: none;
+  border-color: var(--app-input-focus);
+  box-shadow: var(--app-input-shadow), 0 0 0 3px var(--app-input-focus-ring);
+}
+
+.lab-app-field input:not([type="checkbox"]):not([type="radio"]):disabled,
+.lab-app-field textarea:disabled,
+.lab-app-field select:disabled,
+.lab-app-input:disabled,
+.lab-app-select:disabled {
+  background: #f8fafc;
+  color: #94a3b8;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.lab-app-field input[type="date"],
+.lab-app-field input[type="time"],
+.lab-app-field input[type="datetime-local"],
+.lab-app-filter input[type="date"],
+.lab-app-input[type="date"],
+.lab-app-input[type="time"] {
+  color-scheme: light;
+}
+
+.lab-app-field input[type="number"],
+.lab-app-input[type="number"] {
+  appearance: textfield;
+}
+
+.lab-app-field input[type="number"]::-webkit-outer-spin-button,
+.lab-app-field input[type="number"]::-webkit-inner-spin-button,
+.lab-app-input[type="number"]::-webkit-outer-spin-button,
+.lab-app-input[type="number"]::-webkit-inner-spin-button {
+  margin: 0;
+  appearance: none;
+}
+
+.lab-app-field input:-webkit-autofill,
+.lab-app-field textarea:-webkit-autofill,
+.lab-app-field select:-webkit-autofill,
+.lab-app-input:-webkit-autofill,
+.lab-app-select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  -webkit-text-fill-color: var(--app-heading);
 }
 
 .lab-app-date {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 0 12px;
-  background: var(--app-surface);
-  border: 1px solid var(--app-border);
-  border-radius: 10px;
+  min-height: var(--app-input-height);
+  padding: 0 14px;
+  background: var(--app-input-bg);
+  border: 1px solid var(--app-input-border);
+  border-radius: var(--app-input-radius);
+  box-shadow: var(--app-input-shadow);
   font-size: 0.8125rem;
   color: var(--app-muted);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.lab-app-date:hover {
+  border-color: var(--app-input-border-hover);
+}
+
+.lab-app-date:focus-within {
+  border-color: var(--app-input-focus);
+  box-shadow: var(--app-input-shadow), 0 0 0 3px var(--app-input-focus-ring);
 }
 
 .lab-app-date input {
+  flex: 1;
+  min-width: 0;
   border: 0;
   background: transparent;
   padding: 10px 0;
   font: inherit;
+  font-size: 0.9375rem;
   color: var(--app-heading);
 }
 
@@ -2555,53 +2703,65 @@ img {
 .lab-app-field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .lab-app-field--full {
   grid-column: 1 / -1;
 }
 
-.lab-app-field--checkbox {
+.lab-app-field--checkbox,
+.lab-app-checkbox {
   flex-direction: row;
   align-items: center;
   gap: 10px;
+  padding-top: 4px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.lab-app-field--checkbox {
   padding-top: 28px;
 }
 
 .lab-app-field span {
   font-size: 0.8125rem;
   font-weight: 600;
-  color: var(--app-muted);
+  letter-spacing: 0.01em;
+  color: #475569;
 }
 
-.lab-app-field textarea {
-  width: 100%;
-  padding: 11px 12px;
-  background: var(--app-bg);
-  border: 1px solid var(--app-border);
-  border-radius: 10px;
-  color: var(--app-heading);
-  font: inherit;
-  resize: vertical;
-  min-height: 88px;
+.lab-app-field input[type="checkbox"],
+.lab-app-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--app-accent-strong);
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
-.lab-app-field select {
-  width: 100%;
-  padding: 11px 12px;
-  background: var(--app-bg);
-  border: 1px solid var(--app-border);
-  border-radius: 10px;
-  color: var(--app-heading);
-  font: inherit;
+.lab-app-field--checkbox span,
+.lab-app-checkbox span {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--app-text);
+}
+
+.lab-app-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .lab-app-form__actions {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   gap: 10px;
-  margin-top: 20px;
+  margin-top: 24px;
+  padding-top: 4px;
 }
 
 .lab-app .lab-editais-dropzone,
@@ -2617,12 +2777,40 @@ img {
   border-radius: 10px;
 }
 
-.lab-app .lab-editais-field input,
+.lab-app .lab-editais-field input:not([type="checkbox"]):not([type="radio"]),
 .lab-app .lab-editais-field textarea,
 .lab-app .lab-editais-field select {
-  background: var(--app-bg);
-  border-color: var(--app-border);
+  background: var(--app-input-bg);
+  border: 1px solid var(--app-input-border);
+  border-radius: var(--app-input-radius);
+  box-shadow: var(--app-input-shadow);
   color: var(--app-heading);
+  min-height: var(--app-input-height);
+  padding: 0 14px;
+  font-size: 0.9375rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.lab-app .lab-editais-field textarea {
+  min-height: 108px;
+  padding: 12px 14px;
+}
+
+.lab-app .lab-editais-field select {
+  appearance: none;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+
+.lab-app .lab-editais-field input:not([type="checkbox"]):not([type="radio"]):focus,
+.lab-app .lab-editais-field textarea:focus,
+.lab-app .lab-editais-field select:focus {
+  outline: none;
+  border-color: var(--app-input-focus);
+  box-shadow: var(--app-input-shadow), 0 0 0 3px var(--app-input-focus-ring);
 }
 
 .lab-app .lab-analysis-kv__row {
@@ -2680,25 +2868,16 @@ img {
 .lab-app-filter {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  min-width: 140px;
+  gap: 8px;
+  min-width: 148px;
 }
 
 .lab-app-filter span {
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.6875rem;
+  font-weight: 700;
   color: var(--app-muted);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.lab-app-input {
-  padding: 10px 12px;
-  background: var(--app-surface);
-  border: 1px solid var(--app-border);
-  border-radius: 10px;
-  font: inherit;
-  color: var(--app-heading);
+  letter-spacing: 0.06em;
 }
 
 .lab-app-btn--danger {
@@ -3220,4 +3399,96 @@ img {
     flex: 1;
     text-align: center;
   }
+}
+
+.lab-ticket-panels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.lab-ticket-interaction-form {
+  margin-bottom: 24px;
+}
+
+.lab-ticket-interactions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lab-ticket-interaction {
+  padding: 16px 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.lab-ticket-interaction--internal {
+  background: #fff7ed;
+  border-color: #fed7aa;
+}
+
+.lab-ticket-interaction header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 8px;
+}
+
+.lab-ticket-interaction header strong {
+  color: #0f172a;
+}
+
+.lab-ticket-interaction header span,
+.lab-ticket-interaction header em {
+  font-size: 0.8125rem;
+  color: #64748b;
+  font-style: normal;
+}
+
+.lab-ticket-interaction__tag {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  color: #475569 !important;
+}
+
+.lab-ticket-interaction__tag--public {
+  background: #dbeafe;
+  color: #1d4ed8 !important;
+}
+
+.lab-ticket-interaction p {
+  margin: 0;
+  color: #334155;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 900px) {
+  .lab-ticket-panels {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lab-helpdesk-webhook-cell {
+  max-width: 280px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  font-size: 0.8125rem;
+  color: #64748b;
+}
+
+.lab-app code {
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: #f1f5f9;
+  color: #0f172a;
+  font-size: 0.8125rem;
 }

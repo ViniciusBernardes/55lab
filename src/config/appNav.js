@@ -18,6 +18,18 @@ export const appNavItems = [
   },
   {
     type: "link",
+    label: "Helpdesk",
+    to: "/app/tickets",
+    icon: "fa-life-ring",
+  },
+  {
+    type: "link",
+    label: "Integrações",
+    to: "/app/tickets/integracoes",
+    icon: "fa-plug",
+  },
+  {
+    type: "link",
     label: "OpenAI",
     to: "/app/editais/credenciais",
     icon: "fa-key",

@@ -59,6 +59,120 @@ docker compose up -d queue
 | GET | `/analises/{id}` | Detalhe da análise |
 | POST | `/analises/{id}/revisar` | Aprova/rejeita (`approved: true/false`) |
 
+## Endpoints — `/api/helpdesk`
+
+### Integração externa (API key)
+
+Header obrigatório: `X-API-KEY: {EXTERNAL_HELPDESK_API_KEY}`
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| POST | `/tickets/external` | Recebe ticket do sistema externo |
+
+### Painel interno (sessão autenticada)
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| GET | `/external-systems` | Lista sistemas externos e webhooks |
+| POST | `/external-systems` | Cadastra sistema externo |
+| GET | `/external-systems/{id}` | Detalhe |
+| PUT | `/external-systems/{id}` | Atualiza |
+| DELETE | `/external-systems/{id}` | Remove |
+| POST | `/external-systems/{id}/test` | Testa webhook |
+| GET | `/tickets` | Lista tickets (`?status=`, `?type=`, `?priority=`, `?q=`) |
+| GET | `/tickets/{id}` | Detalhe com interações e histórico |
+| POST | `/tickets/{id}/interactions` | Adiciona comentário (`internal_only: true/false`) |
+| PATCH | `/tickets/{id}/status` | Altera status (`status`, `message` opcional) |
+| PATCH | `/tickets/{id}/assign` | Atribui responsável (`assigned_to`) |
+| GET | `/tickets/{id}/history` | Histórico de status |
+| GET | `/tickets/{id}/attachment` | Baixar/visualizar anexo do ticket |
+
+### Status disponíveis
+
+`received`, `triage`, `in_progress`, `waiting_external`, `resolved`, `closed`, `cancelled`
+
+### Variáveis de ambiente
+
+| Variável | Descrição |
+|----------|-----------|
+| `EXTERNAL_HELPDESK_API_KEY` | Token para `POST /tickets/external` |
+| `EXTERNAL_HELPDESK_WEBHOOK_URL` | URL fallback (opcional) se o sistema não estiver cadastrado no painel |
+| `EXTERNAL_HELPDESK_WEBHOOK_TIMEOUT` | Timeout HTTP do webhook (padrão: 15s) |
+| `EXTERNAL_HELPDESK_WEBHOOK_RETRIES` | Tentativas do job de webhook (padrão: 3) |
+
+### Webhooks por sistema externo
+
+Cadastre cada integração em **Helpdesk → Integrações** (`/app/tickets/integracoes`) ou via API.
+O campo `code` deve ser **idêntico** ao `external_system` enviado na criação do ticket.
+Ao notificar status, o sistema usa o webhook cadastrado para aquele `external_system`.
+Se não houver cadastro, usa `EXTERNAL_HELPDESK_WEBHOOK_URL` como fallback.
+
+### Exemplo — receber ticket externo
+
+```bash
+curl -X POST http://localhost:8000/api/helpdesk/tickets/external \
+  -H "Content-Type: application/json" \
+  -H "X-API-KEY: sua-chave-secreta" \
+  -d '{
+    "external_id": "12345",
+    "title": "Erro ao salvar pedido",
+    "description": "Usuário relata erro ao salvar pedido no sistema",
+    "type": "bug",
+    "priority": "alta",
+    "requester": {
+      "name": "João Silva",
+      "email": "joao@email.com"
+    },
+    "external_system": "sistema-cliente"
+  }'
+```
+
+### Anexo opcional no ticket externo
+
+O campo `attachment` é opcional. Envie o arquivo em base64:
+
+```json
+{
+  "external_id": "550e8400-e29b-41d4-a716-446655440000",
+  "title": "Erro ao salvar pedido",
+  "description": "Usuário relata erro ao salvar pedido no sistema",
+  "type": "bug",
+  "priority": "alta",
+  "requester": {
+    "name": "João Silva",
+    "email": "joao@email.com"
+  },
+  "external_system": "55conta",
+  "attachment": {
+    "filename": "evidencia.pdf",
+    "mime": "application/pdf",
+    "size": 12345,
+    "content": "JVBERi0xLjQgZmFrZSBjb250ZW50..."
+  }
+}
+```
+
+- Tipos permitidos: PDF, imagens (JPEG/PNG/GIF/WebP), TXT, DOC/DOCX, XLS/XLSX, ZIP
+- Tamanho máximo padrão: 10 MB (`EXTERNAL_HELPDESK_ATTACHMENT_MAX_BYTES`)
+- O conteúdo base64 **não** é salvo em `payload_original` (apenas metadados do anexo)
+- No painel: `GET /api/helpdesk/tickets/{id}/attachment` (autenticado)
+
+### Webhook enviado ao sistema externo
+
+Quando o status muda (ou comentário público é adicionado), o job `SendTicketWebhookJob` envia:
+
+```json
+{
+  "external_id": "12345",
+  "ticket_id": 10,
+  "status": "in_progress",
+  "message": "Seu chamado está em atendimento",
+  "updated_at": "2026-06-08T10:00:00Z"
+}
+```
+
+Falhas de webhook são registradas em `ticket_webhook_logs` e não impedem a alteração de status.
+
 ## Fluxo da IA
 
 1. Ao criar edital, uma config padrão de IA é criada automaticamente.

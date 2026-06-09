@@ -10,6 +10,9 @@ import { EditalDetailPage } from "./pages/EditalDetailPage";
 import { LandingPage } from "./pages/LandingPage";
 import { LoginPage } from "./pages/LoginPage";
 import { OpenAiCredentialsPage } from "./pages/OpenAiCredentialsPage";
+import { HelpdeskIntegrationsPage } from "./pages/HelpdeskIntegrationsPage";
+import { TicketDetailPage } from "./pages/TicketDetailPage";
+import { TicketsPage } from "./pages/TicketsPage";
 
 new SmoothScroll('a[href*="#"]', {
   speed: 800,
@@ -42,6 +45,9 @@ const App = () => {
               <Route path="editais" element={<EditaisPage />} />
               <Route path="editais/credenciais" element={<OpenAiCredentialsPage />} />
               <Route path="editais/:id" element={<EditalDetailPage />} />
+              <Route path="tickets" element={<TicketsPage />} />
+              <Route path="tickets/integracoes" element={<HelpdeskIntegrationsPage />} />
+              <Route path="tickets/:id" element={<TicketDetailPage />} />
             </Route>
 
             <Route path="/editais" element={<Navigate to="/app/editais" replace />} />

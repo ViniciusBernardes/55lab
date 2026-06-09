@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\Helpdesk\HelpdeskExternalSystemController;
+use App\Http\Controllers\Api\Helpdesk\ExternalTicketController;
+use App\Http\Controllers\Api\Helpdesk\TicketController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\Licitacao\EditalAiConfigController;
@@ -39,4 +42,26 @@ Route::prefix('licitacao')->middleware(['web', 'auth'])->group(function () {
 
     Route::get('analises/{analise}', [EditalAnaliseController::class, 'show']);
     Route::post('analises/{analise}/revisar', [EditalAnaliseController::class, 'review']);
+});
+
+Route::prefix('helpdesk')->group(function () {
+    Route::post('tickets/external', [ExternalTicketController::class, 'store'])
+        ->middleware('helpdesk.external_api');
+});
+
+Route::prefix('helpdesk')->middleware(['web', 'auth'])->group(function () {
+    Route::get('external-systems', [HelpdeskExternalSystemController::class, 'index']);
+    Route::post('external-systems', [HelpdeskExternalSystemController::class, 'store']);
+    Route::get('external-systems/{helpdesk_external_system}', [HelpdeskExternalSystemController::class, 'show']);
+    Route::put('external-systems/{helpdesk_external_system}', [HelpdeskExternalSystemController::class, 'update']);
+    Route::delete('external-systems/{helpdesk_external_system}', [HelpdeskExternalSystemController::class, 'destroy']);
+    Route::post('external-systems/{helpdesk_external_system}/test', [HelpdeskExternalSystemController::class, 'test']);
+
+    Route::get('tickets', [TicketController::class, 'index']);
+    Route::get('tickets/{ticket}', [TicketController::class, 'show']);
+    Route::post('tickets/{ticket}/interactions', [TicketController::class, 'storeInteraction']);
+    Route::patch('tickets/{ticket}/status', [TicketController::class, 'updateStatus']);
+    Route::patch('tickets/{ticket}/assign', [TicketController::class, 'assign']);
+    Route::get('tickets/{ticket}/history', [TicketController::class, 'history']);
+    Route::get('tickets/{ticket}/attachment', [TicketController::class, 'downloadAttachment']);
 });
