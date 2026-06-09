@@ -42,4 +42,22 @@ export const ticketPriorityLabel = (priority) =>
     critica: "Crítica",
   })[priority] || priority;
 
+export function formatExternalId(id) {
+  if (!id) return "—";
+  if (id.length <= 18) return id;
+  return `${id.slice(0, 8)}…${id.slice(-6)}`;
+}
+
+export function ticketCountLabel(count) {
+  if (count === 1) return "1 ticket encontrado";
+  return `${count} tickets encontrados`;
+}
+
+export function requesterInitials(name) {
+  if (!name) return "?";
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
+}
+
 export { formatDate, formatDateTime };

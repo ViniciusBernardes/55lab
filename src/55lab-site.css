@@ -3485,6 +3485,356 @@ img {
   color: #64748b;
 }
 
+/* Helpdesk — listagem */
+.lab-helpdesk-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.lab-helpdesk-stats__card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.lab-helpdesk-stats__card--highlight {
+  border-color: #fecaca;
+  background: #fffbfb;
+}
+
+.lab-helpdesk-stats__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 1rem;
+}
+
+.lab-helpdesk-stats__card--highlight .lab-helpdesk-stats__icon {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.lab-helpdesk-stats__value {
+  display: block;
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--app-heading);
+}
+
+.lab-helpdesk-stats__label {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--app-muted);
+}
+
+.lab-helpdesk-list__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+
+.lab-helpdesk-list__count {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--app-heading);
+}
+
+.lab-helpdesk-list__hint {
+  font-size: 0.8125rem;
+  color: var(--app-muted);
+}
+
+.lab-helpdesk-table th {
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.lab-helpdesk-table__row {
+  transition: background 0.15s ease;
+}
+
+.lab-helpdesk-table__row:hover {
+  background: #f8fafc;
+}
+
+.lab-helpdesk-ticket-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.lab-helpdesk-ticket-link__title {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--app-heading);
+  margin-bottom: 8px;
+}
+
+.lab-helpdesk-ticket-link:hover .lab-helpdesk-ticket-link__title {
+  color: var(--app-accent-strong);
+}
+
+.lab-helpdesk-ticket-link__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.lab-helpdesk-ref {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: #f1f5f9;
+  color: #334155;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.lab-helpdesk-system {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.lab-helpdesk-ext-id {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.lab-helpdesk-attachment {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.lab-helpdesk-assignee {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #0369a1;
+}
+
+.lab-helpdesk-requester {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.lab-helpdesk-requester__avatar {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e0f2fe, #dbeafe);
+  color: #0369a1;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.lab-helpdesk-requester__info {
+  min-width: 0;
+}
+
+.lab-helpdesk-requester__info strong {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--app-heading);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lab-helpdesk-requester__info span {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--app-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lab-helpdesk-table__date {
+  white-space: nowrap;
+  font-size: 0.8125rem;
+  color: #64748b;
+}
+
+.lab-helpdesk-open {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  color: #64748b;
+  background: transparent;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.lab-helpdesk-open:hover {
+  background: #eff6ff;
+  color: #0369a1;
+}
+
+.lab-helpdesk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.lab-helpdesk-badge .fa {
+  font-size: 0.625rem;
+  opacity: 0.9;
+}
+
+.lab-helpdesk-badge__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.lab-helpdesk-badge--type.lab-helpdesk-badge--info {
+  background: #f8fafc;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+.lab-helpdesk-badge--type.lab-helpdesk-badge--danger {
+  background: #fff5f5;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.lab-helpdesk-badge--type.lab-helpdesk-badge--success {
+  background: #f0fdf4;
+  color: #047857;
+  border: 1px solid #bbf7d0;
+}
+
+.lab-helpdesk-badge--type.lab-helpdesk-badge--warning {
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.lab-helpdesk-badge--priority.lab-helpdesk-badge--muted {
+  background: #f8fafc;
+  color: #64748b;
+}
+
+.lab-helpdesk-badge--priority.lab-helpdesk-badge--info {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.lab-helpdesk-badge--priority.lab-helpdesk-badge--warning {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.lab-helpdesk-badge--priority.lab-helpdesk-badge--danger {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.lab-helpdesk-badge--status.lab-helpdesk-badge--info {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.lab-helpdesk-badge--status.lab-helpdesk-badge--warning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.lab-helpdesk-badge--status.lab-helpdesk-badge--success {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.lab-helpdesk-badge--status.lab-helpdesk-badge--muted {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.lab-helpdesk-badge--status.lab-helpdesk-badge--danger {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+@media (max-width: 1100px) {
+  .lab-helpdesk-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .lab-helpdesk-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .lab-helpdesk-list__hint {
+    display: none;
+  }
+
+  .lab-helpdesk-table th:nth-child(3),
+  .lab-helpdesk-table td:nth-child(3) {
+    display: none;
+  }
+}
+
 .lab-app code {
   padding: 2px 6px;
   border-radius: 6px;

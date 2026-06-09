@@ -1,14 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { listTickets } from "../api/helpdeskApi";
-import { AppActionButton } from "../components/app/AppActionButton";
 import { AppPageHeader } from "../components/app/AppPageHeader";
-import { StatusBadge } from "../components/editais/StatusBadge";
+import { TicketBadge } from "../components/helpdesk/TicketBadge";
+import { TicketListStats } from "../components/helpdesk/TicketListStats";
 import {
   TICKET_PRIORITIES,
   TICKET_STATUSES,
   TICKET_TYPES,
   formatDateTime,
+  formatExternalId,
+  requesterInitials,
+  ticketCountLabel,
   ticketPriorityLabel,
   ticketStatusLabel,
   ticketTypeLabel,
@@ -67,6 +70,8 @@ export const TicketsPage = () => {
           </Link>
         }
       />
+
+      <TicketListStats tickets={tickets} loading={loading} />
 
       <section className="lab-app-panel lab-app-panel--filters">
         <div className="lab-app-filters">
@@ -147,12 +152,16 @@ export const TicketsPage = () => {
 
       {error ? <div className="lab-app-alert lab-app-alert--error">{error}</div> : null}
 
-      <section className="lab-app-panel lab-app-panel--flush">
-        <div className="lab-app-panel__toolbar">
-          <div>
-            <strong>{loading ? "—" : tickets.length}</strong>
-            <span> tickets encontrados</span>
+      <section className="lab-app-panel lab-app-panel--flush lab-helpdesk-list">
+        <div className="lab-app-panel__toolbar lab-helpdesk-list__toolbar">
+          <div className="lab-helpdesk-list__count">
+            {loading ? "Carregando…" : ticketCountLabel(tickets.length)}
           </div>
+          {!loading && tickets.length > 0 ? (
+            <span className="lab-helpdesk-list__hint">
+              Clique no ticket para ver detalhes e histórico
+            </span>
+          ) : null}
         </div>
 
         {loading ? (
@@ -172,10 +181,10 @@ export const TicketsPage = () => {
           </div>
         ) : (
           <div className="lab-app-table-wrap">
-            <table className="lab-app-table lab-app-table--data">
+            <table className="lab-app-table lab-app-table--data lab-helpdesk-table">
               <thead>
                 <tr>
-                  <th>Ticket</th>
+                  <th>Chamado</th>
                   <th>Solicitante</th>
                   <th>Tipo</th>
                   <th>Prioridade</th>
@@ -186,45 +195,83 @@ export const TicketsPage = () => {
               </thead>
               <tbody>
                 {tickets.map((ticket) => (
-                  <tr key={ticket.id}>
-                    <td className="lab-app-table__primary">
-                      <Link to={`/app/tickets/${ticket.id}`} className="lab-edital-row__link">
-                        <strong>{truncateText(ticket.title, 88)}</strong>
-                        <span>
-                          #{ticket.external_id} · {ticket.external_system}
-                          {ticket.attachment_filename ? " · Com anexo" : ""}
+                  <tr key={ticket.id} className="lab-helpdesk-table__row">
+                    <td className="lab-helpdesk-table__ticket">
+                      <Link
+                        to={`/app/tickets/${ticket.id}`}
+                        className="lab-helpdesk-ticket-link"
+                      >
+                        <span className="lab-helpdesk-ticket-link__title">
+                          {truncateText(ticket.title, 88)}
+                        </span>
+                        <span className="lab-helpdesk-ticket-link__meta">
+                          <span className="lab-helpdesk-ref">#{ticket.id}</span>
+                          {ticket.external_system ? (
+                            <span className="lab-helpdesk-system">
+                              {ticket.external_system}
+                            </span>
+                          ) : null}
+                          <span
+                            className="lab-helpdesk-ext-id"
+                            title={ticket.external_id}
+                          >
+                            {formatExternalId(ticket.external_id)}
+                          </span>
+                          {ticket.attachment_filename ? (
+                            <span
+                              className="lab-helpdesk-attachment"
+                              title={ticket.attachment_filename}
+                            >
+                              <i className="fa fa-paperclip" aria-hidden="true" />
+                              Anexo
+                            </span>
+                          ) : null}
                         </span>
                         {ticket.assignee ? (
-                          <em>Responsável: {ticket.assignee.name}</em>
+                          <span className="lab-helpdesk-assignee">
+                            <i className="fa fa-user" aria-hidden="true" />
+                            {ticket.assignee.name}
+                          </span>
                         ) : null}
                       </Link>
                     </td>
                     <td>
-                      <strong>{ticket.requester_name}</strong>
-                      <span className="lab-app-muted">{ticket.requester_email}</span>
-                    </td>
-                    <td>
-                      <StatusBadge status={ticket.type} />
-                    </td>
-                    <td>
-                      <StatusBadge status={ticket.priority} />
-                    </td>
-                    <td>
-                      <StatusBadge status={ticket.status} />
-                    </td>
-                    <td>{formatDateTime(ticket.updated_at) || "—"}</td>
-                    <td className="lab-app-table__actions-cell">
-                      <div className="lab-app-table__actions">
-                        <AppActionButton
-                          as={Link}
-                          to={`/app/tickets/${ticket.id}`}
-                          variant="view"
-                          title="Abrir ticket"
-                          aria-label="Abrir ticket"
+                      <div className="lab-helpdesk-requester">
+                        <span
+                          className="lab-helpdesk-requester__avatar"
+                          aria-hidden="true"
                         >
-                          Abrir
-                        </AppActionButton>
+                          {requesterInitials(ticket.requester_name)}
+                        </span>
+                        <div className="lab-helpdesk-requester__info">
+                          <strong>{ticket.requester_name}</strong>
+                          <span>{ticket.requester_email}</span>
+                        </div>
                       </div>
+                    </td>
+                    <td>
+                      <TicketBadge kind="type" value={ticket.type} />
+                    </td>
+                    <td>
+                      <TicketBadge kind="priority" value={ticket.priority} />
+                    </td>
+                    <td>
+                      <TicketBadge kind="status" value={ticket.status} />
+                    </td>
+                    <td className="lab-helpdesk-table__date">
+                      <time dateTime={ticket.updated_at}>
+                        {formatDateTime(ticket.updated_at) || "—"}
+                      </time>
+                    </td>
+                    <td className="lab-app-table__actions-cell">
+                      <Link
+                        to={`/app/tickets/${ticket.id}`}
+                        className="lab-helpdesk-open"
+                        title="Abrir ticket"
+                        aria-label={`Abrir ticket ${ticket.id}`}
+                      >
+                        <i className="fa fa-angle-right" aria-hidden="true" />
+                      </Link>
                     </td>
                   </tr>
                 ))}
