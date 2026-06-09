@@ -54,6 +54,7 @@ fi
 
 cp .env "$PERSIST_ENV"
 
+php artisan config:clear --quiet 2>/dev/null || true
 php artisan migrate --force
 
 exec "$@"
