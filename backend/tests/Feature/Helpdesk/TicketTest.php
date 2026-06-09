@@ -88,10 +88,51 @@ class TicketTest extends TestCase
 
         Http::assertSent(function ($request) use ($ticket) {
             return $request->url() === 'https://external.example/webhook'
+                && $request->hasHeader('X-API-KEY', self::API_KEY)
                 && $request['external_id'] === '12345'
                 && $request['ticket_id'] === $ticket->id
                 && $request['status'] === 'received';
         });
+    }
+
+    public function test_external_ticket_rejects_invalid_type_with_validation_errors(): void
+    {
+        $response = $this->postJson('/api/helpdesk/tickets/external', [
+            ...$this->externalPayload(),
+            'type' => 'suporte',
+        ], [
+            'X-API-KEY' => self::API_KEY,
+        ]);
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['type']);
+    }
+
+    public function test_external_ticket_accepts_csv_attachment(): void
+    {
+        Storage::fake('local');
+
+        Http::fake([
+            'https://external.example/webhook' => Http::response(['ok' => true], 200),
+        ]);
+
+        $content = base64_encode("coluna1,coluna2\nvalor1,valor2");
+
+        $response = $this->postJson('/api/helpdesk/tickets/external', [
+            ...$this->externalPayload('csv-attachment-1'),
+            'attachment' => [
+                'filename' => 'dados.csv',
+                'mime' => 'text/csv',
+                'size' => strlen(base64_decode($content)),
+                'content' => $content,
+            ],
+        ], [
+            'X-API-KEY' => self::API_KEY,
+        ]);
+
+        $response->assertCreated()
+            ->assertJsonPath('attachment_filename', 'dados.csv')
+            ->assertJsonPath('attachment_mime', 'text/csv');
     }
 
     public function test_external_ticket_rejects_invalid_api_key(): void

@@ -164,7 +164,9 @@ export const HelpdeskIntegrationsPage = () => {
             </h2>
             <p className="lab-app-panel__subtitle">
               O identificador deve ser igual ao campo{" "}
-              <code>external_system</code> enviado na criação do ticket.
+              <code>external_system</code> enviado na criação do ticket. O webhook
+              de status recebe o header <code>X-API-KEY</code> com o valor de{" "}
+              <code>EXTERNAL_HELPDESK_API_KEY</code> do servidor 55LAB.
             </p>
           </div>
           {editingId ? (

@@ -4,10 +4,25 @@ namespace App\Services\Helpdesk;
 
 use App\Models\Helpdesk\HelpdeskExternalSystem;
 use App\Models\Helpdesk\Ticket;
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 
 class HelpdeskExternalSystemService
 {
+    public function webhookHttpClient(): PendingRequest
+    {
+        $client = Http::timeout(config('helpdesk.webhook_timeout', 15))
+            ->acceptJson()
+            ->asJson();
+
+        $apiKey = config('helpdesk.external_api_key');
+        if (filled($apiKey)) {
+            $client = $client->withHeaders(['X-API-KEY' => $apiKey]);
+        }
+
+        return $client;
+    }
+
     public function resolveWebhookUrl(Ticket $ticket): ?string
     {
         $system = HelpdeskExternalSystem::query()
@@ -47,10 +62,7 @@ class HelpdeskExternalSystemService
     public function testWebhook(HelpdeskExternalSystem $system): array
     {
         try {
-            $response = Http::timeout(config('helpdesk.webhook_timeout', 15))
-                ->acceptJson()
-                ->asJson()
-                ->post($system->webhook_url, [
+            $response = $this->webhookHttpClient()->post($system->webhook_url, [
                     'external_id' => 'teste-helpdesk',
                     'ticket_id' => 0,
                     'status' => 'received',

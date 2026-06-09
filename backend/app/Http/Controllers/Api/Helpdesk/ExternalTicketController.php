@@ -35,7 +35,12 @@ class ExternalTicketController extends Controller
                 $request->attachmentPayload(),
             );
         } catch (InvalidArgumentException $exception) {
-            return response()->json(['message' => $exception->getMessage()], 422);
+            return response()->json([
+                'message' => $exception->getMessage(),
+                'errors' => [
+                    'attachment' => [$exception->getMessage()],
+                ],
+            ], 422);
         }
 
         return response()->json($ticket, 201);

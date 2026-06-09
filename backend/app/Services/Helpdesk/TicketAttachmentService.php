@@ -13,7 +13,7 @@ class TicketAttachmentService
     public function storeFromPayload(Ticket $ticket, array $attachment): Ticket
     {
         $filename = $this->sanitizeFilename((string) ($attachment['filename'] ?? ''));
-        $mime = (string) ($attachment['mime'] ?? '');
+        $mime = $this->normalizeMime((string) ($attachment['mime'] ?? ''));
         $content = $this->decodeBase64((string) ($attachment['content'] ?? ''));
 
         $this->validateMime($mime);
@@ -90,6 +90,15 @@ class TicketAttachmentService
         }
 
         return Str::limit($filename, 255, '');
+    }
+
+    private function normalizeMime(string $mime): string
+    {
+        return match (strtolower(trim($mime))) {
+            'image/jpg' => 'image/jpeg',
+            'text/comma-separated-values', 'application/csv' => 'text/csv',
+            default => trim($mime),
+        };
     }
 
     private function validateMime(string $mime): void

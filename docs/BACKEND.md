@@ -152,7 +152,11 @@ O campo `attachment` é opcional. Envie o arquivo em base64:
 }
 ```
 
-- Tipos permitidos: PDF, imagens (JPEG/PNG/GIF/WebP), TXT, DOC/DOCX, XLS/XLSX, ZIP
+- `type`: `ajuda`, `duvida`, `bug`, `melhoria`, `correcao`
+- `priority`: `baixa`, `media`, `alta`, `critica`
+- `external_system`: deve ser igual ao `code` cadastrado em Integrações (ex.: `55conta`)
+- Tipos de anexo permitidos: PDF, imagens (JPEG/PNG/GIF/WebP), TXT, CSV, DOC/DOCX, XLS/XLSX, ZIP
+- Resposta **422** inclui `errors` com o campo rejeitado (ex.: `type`, `priority`, `attachment.mime`)
 - Tamanho máximo padrão: 10 MB (`EXTERNAL_HELPDESK_ATTACHMENT_MAX_BYTES`)
 - O conteúdo base64 **não** é salvo em `payload_original` (apenas metadados do anexo)
 - No painel: `GET /api/helpdesk/tickets/{id}/attachment` (autenticado)

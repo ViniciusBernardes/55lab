@@ -12,6 +12,29 @@ class StoreExternalTicketRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        $attachment = $this->input('attachment');
+
+        if (! is_array($attachment)) {
+            return;
+        }
+
+        $mime = $attachment['mime'] ?? null;
+        if (! is_string($mime) || $mime === '') {
+            return;
+        }
+
+        $normalizedMime = match (strtolower($mime)) {
+            'image/jpg' => 'image/jpeg',
+            'text/comma-separated-values', 'application/csv' => 'text/csv',
+            default => $mime,
+        };
+
+        $attachment['mime'] = $normalizedMime;
+        $this->merge(['attachment' => $attachment]);
+    }
+
     public function rules(): array
     {
         return [
@@ -34,6 +57,28 @@ class StoreExternalTicketRequest extends FormRequest
             ],
             'attachment.size' => ['nullable', 'integer', 'min:1'],
             'attachment.content' => ['required_with:attachment', 'string'],
+        ];
+    }
+
+    /** @return array<string, string> */
+    public function messages(): array
+    {
+        return [
+            'external_id.required' => 'O campo external_id é obrigatório.',
+            'title.required' => 'O campo title é obrigatório.',
+            'description.required' => 'O campo description é obrigatório.',
+            'type.required' => 'O campo type é obrigatório.',
+            'type.in' => 'O type deve ser: ajuda, duvida, bug, melhoria ou correcao.',
+            'priority.required' => 'O campo priority é obrigatório.',
+            'priority.in' => 'O priority deve ser: baixa, media, alta ou critica.',
+            'requester.required' => 'O objeto requester é obrigatório.',
+            'requester.name.required' => 'O campo requester.name é obrigatório.',
+            'requester.email.required' => 'O campo requester.email é obrigatório.',
+            'requester.email.email' => 'O campo requester.email deve ser um e-mail válido.',
+            'external_system.required' => 'O campo external_system é obrigatório.',
+            'attachment.mime.in' => 'Tipo de arquivo do anexo não permitido.',
+            'attachment.filename.required_with' => 'O campo attachment.filename é obrigatório quando há anexo.',
+            'attachment.content.required_with' => 'O campo attachment.content é obrigatório quando há anexo.',
         ];
     }
 

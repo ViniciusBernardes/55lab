@@ -4,7 +4,6 @@ namespace App\Services\Helpdesk;
 
 use App\Models\Helpdesk\Ticket;
 use App\Models\Helpdesk\TicketWebhookLog;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class ExternalHelpdeskWebhookService
@@ -31,10 +30,7 @@ class ExternalHelpdeskWebhookService
         $payload = $this->buildPayload($ticket, $message);
 
         try {
-            $response = Http::timeout(config('helpdesk.webhook_timeout', 15))
-                ->acceptJson()
-                ->asJson()
-                ->post($url, $payload);
+            $response = $this->externalSystemService->webhookHttpClient()->post($url, $payload);
 
             if ($response->successful()) {
                 $this->logSuccess($ticket, $payload, $response->status(), $response->body());

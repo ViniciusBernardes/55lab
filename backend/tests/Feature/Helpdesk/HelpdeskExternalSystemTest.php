@@ -15,11 +15,16 @@ class HelpdeskExternalSystemTest extends TestCase
 {
     use RefreshDatabase;
 
+    private const API_KEY = 'test-helpdesk-key';
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        config(['helpdesk.webhook_url' => null]);
+        config([
+            'helpdesk.external_api_key' => self::API_KEY,
+            'helpdesk.webhook_url' => null,
+        ]);
         $this->withoutMiddleware(ValidateCsrfToken::class);
     }
 
@@ -82,5 +87,10 @@ class HelpdeskExternalSystemTest extends TestCase
 
         $response->assertOk()
             ->assertJsonPath('success', true);
+
+        Http::assertSent(function ($request) {
+            return $request->url() === 'https://erp.example/hooks/helpdesk'
+                && $request->hasHeader('X-API-KEY', self::API_KEY);
+        });
     }
 }
