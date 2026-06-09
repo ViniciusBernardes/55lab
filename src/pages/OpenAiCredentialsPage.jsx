@@ -4,7 +4,7 @@ import {
   testOpenAiCredentials,
   updateOpenAiCredentials,
 } from "../api/licitacaoApi";
-import { EditaisNav } from "../components/editais/EditaisNav";
+import { AppPageHeader } from "../components/app/AppPageHeader";
 
 export const OpenAiCredentialsPage = () => {
   const [form, setForm] = useState({
@@ -100,104 +100,92 @@ export const OpenAiCredentialsPage = () => {
   };
 
   return (
-    <div className="lab-site lab-editais">
-      <EditaisNav />
+    <>
+      <AppPageHeader
+        title="Credenciais OpenAI"
+        description="Configure a API Key e o modelo usados nas análises de editais."
+      />
 
-      <main className="lab-editais-main">
-        <div className="lab-container lab-container--narrow">
-          <header className="lab-editais-header">
-            <div>
-              <span className="lab-eyebrow">Integração IA</span>
-              <h1 className="lab-heading">Credenciais OpenAI</h1>
-              <p className="lab-lead">
-                Configure a API Key e o modelo usados para analisar editais e
-                extrair automaticamente todas as informações do documento.
-              </p>
+      {loading ? (
+        <p className="lab-app-empty">Carregando…</p>
+      ) : (
+        <section className="lab-app-panel lab-app-panel--narrow">
+          <form className="lab-app-form" onSubmit={handleSave}>
+            {error ? (
+              <div className="lab-app-alert lab-app-alert--error">{error}</div>
+            ) : null}
+            {message ? (
+              <div className="lab-app-alert lab-app-alert--success">{message}</div>
+            ) : null}
+
+            <div className="lab-app-form__grid">
+              <label className="lab-app-field lab-app-field--full">
+                <span>API Key {meta.has_api_key ? "(configurada)" : "*"}</span>
+                <input
+                  name="api_key"
+                  type="password"
+                  value={form.api_key}
+                  onChange={handleChange}
+                  placeholder={
+                    meta.api_key_masked
+                      ? `Atual: ${meta.api_key_masked} — deixe em branco para manter`
+                      : "sk-..."
+                  }
+                  autoComplete="off"
+                />
+              </label>
+
+              <label className="lab-app-field lab-app-field--full">
+                <span>Base URL</span>
+                <input
+                  name="base_url"
+                  value={form.base_url}
+                  onChange={handleChange}
+                  placeholder="https://api.openai.com/v1"
+                />
+              </label>
+
+              <label className="lab-app-field">
+                <span>Modelo</span>
+                <input
+                  name="model"
+                  value={form.model}
+                  onChange={handleChange}
+                  placeholder="gpt-4o-mini"
+                />
+              </label>
+
+              <label className="lab-app-field lab-app-field--checkbox">
+                <input
+                  name="is_active"
+                  type="checkbox"
+                  checked={form.is_active}
+                  onChange={handleChange}
+                />
+                <span>Credencial ativa</span>
+              </label>
             </div>
-          </header>
 
-          {loading ? (
-            <p className="lab-editais-empty">Carregando…</p>
-          ) : (
-            <section className="lab-editais-panel">
-              <form className="lab-editais-form" onSubmit={handleSave}>
-                {error ? (
-                  <div className="lab-editais-alert lab-editais-alert--error">{error}</div>
-                ) : null}
-                {message ? (
-                  <div className="lab-editais-alert lab-editais-alert--success">{message}</div>
-                ) : null}
-
-                <div className="lab-editais-form__grid">
-                  <label className="lab-editais-field lab-editais-field--full">
-                    <span>API Key {meta.has_api_key ? "(configurada)" : "*"}</span>
-                    <input
-                      name="api_key"
-                      type="password"
-                      value={form.api_key}
-                      onChange={handleChange}
-                      placeholder={
-                        meta.api_key_masked
-                          ? `Atual: ${meta.api_key_masked} — deixe em branco para manter`
-                          : "sk-..."
-                      }
-                      autoComplete="off"
-                    />
-                  </label>
-
-                  <label className="lab-editais-field lab-editais-field--full">
-                    <span>Base URL</span>
-                    <input
-                      name="base_url"
-                      value={form.base_url}
-                      onChange={handleChange}
-                      placeholder="https://api.openai.com/v1"
-                    />
-                  </label>
-
-                  <label className="lab-editais-field">
-                    <span>Modelo</span>
-                    <input
-                      name="model"
-                      value={form.model}
-                      onChange={handleChange}
-                      placeholder="gpt-4o-mini"
-                    />
-                  </label>
-
-                  <label className="lab-editais-field lab-editais-field--checkbox">
-                    <input
-                      name="is_active"
-                      type="checkbox"
-                      checked={form.is_active}
-                      onChange={handleChange}
-                    />
-                    <span>Credencial ativa</span>
-                  </label>
-                </div>
-
-                <div className="lab-editais-form__actions">
-                  <button
-                    type="button"
-                    className="lab-btn lab-btn--ghost"
-                    onClick={handleTest}
-                    disabled={testing || !meta.has_api_key}
-                  >
-                    {testing ? "Testando…" : "Testar conexão"}
-                  </button>
-                  <button
-                    type="submit"
-                    className="lab-btn lab-btn--primary"
-                    disabled={saving}
-                  >
-                    {saving ? "Salvando…" : "Salvar credenciais"}
-                  </button>
-                </div>
-              </form>
-            </section>
-          )}
-        </div>
-      </main>
-    </div>
+            <div className="lab-app-form__actions">
+              <button
+                type="button"
+                className="lab-app-btn lab-app-btn--ghost"
+                onClick={handleTest}
+                disabled={testing || !meta.has_api_key}
+              >
+                {testing ? "Testando…" : "Testar conexão"}
+              </button>
+              <button
+                type="submit"
+                className="lab-app-btn lab-app-btn--primary"
+                disabled={saving}
+              >
+                {saving ? "Salvando…" : "Salvar credenciais"}
+              </button>
+            </div>
+          </form>
+        </section>
+      )}
+    </>
   );
 };

@@ -45,11 +45,11 @@ export const Navigation = (props) => {
           <a href="#projetos" onClick={close}>
             Projetos
           </a>
-          <a href="/editais" onClick={close}>
-            Editais
-          </a>
           <a href="#contato" className="lab-nav__cta" onClick={close}>
             Contato
+          </a>
+          <a href="/editais/login" onClick={close}>
+            Entrar
           </a>
         </nav>
       </div>

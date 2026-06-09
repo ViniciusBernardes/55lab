@@ -1,16 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getOpenAiCredentials, importEdital, listEditais } from "../api/licitacaoApi";
+import { AppPageHeader } from "../components/app/AppPageHeader";
+import { AppActionButton } from "../components/app/AppActionButton";
 import { DeleteEditalButton } from "../components/editais/DeleteEditalButton";
-import { EditalArquivoLink } from "../components/editais/EditalArquivoLink";
-import { EditalUploadPanel } from "../components/editais/EditalUploadPanel";
-import { EditaisNav } from "../components/editais/EditaisNav";
 import { StatusBadge } from "../components/editais/StatusBadge";
-
-const formatDate = (value) => {
-  if (!value) return "—";
-  return new Date(value).toLocaleDateString("pt-BR");
-};
+import { EditalUploadPanel } from "../components/editais/EditalUploadPanel";
+import {
+  formatCurrency,
+  formatDate,
+  formatPrazo,
+  truncateText,
+} from "../utils/editalFormat";
 
 export const EditaisPage = () => {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ export const EditaisPage = () => {
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
   const [hasCredentials, setHasCredentials] = useState(false);
   const [showUpload, setShowUpload] = useState(false);
 
@@ -31,6 +34,8 @@ export const EditaisPage = () => {
         listEditais({
           q: search || undefined,
           status: statusFilter || undefined,
+          data_de: dateFrom || undefined,
+          data_ate: dateTo || undefined,
         }),
         getOpenAiCredentials(),
       ]);
@@ -41,7 +46,7 @@ export const EditaisPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [search, statusFilter]);
+  }, [search, statusFilter, dateFrom, dateTo]);
 
   useEffect(() => {
     loadEditais();
@@ -49,173 +54,229 @@ export const EditaisPage = () => {
 
   const handleImport = async (file) => {
     const result = await importEdital(file);
-    navigate(`/editais/${result.edital.id}`);
+    navigate(`/app/editais/${result.edital.id}`);
   };
 
+  const hasActiveFilters = Boolean(search || statusFilter || dateFrom || dateTo);
+
   return (
-    <div className="lab-site lab-editais">
-      <EditaisNav />
+    <>
+      <AppPageHeader
+        title="Editais"
+        description="Gestão de licitações com importação de PDF e análise assistida por IA."
+        actions={
+          <button
+            type="button"
+            className="lab-app-btn lab-app-btn--primary"
+            onClick={() => setShowUpload(true)}
+            disabled={!hasCredentials}
+          >
+            <i className="fa fa-plus" aria-hidden="true" /> Importar edital
+          </button>
+        }
+      />
 
-      <main className="lab-editais-main">
-        <div className="lab-container">
-          <header className="lab-editais-header">
-            <div>
-              <span className="lab-eyebrow">Módulo de licitação</span>
-              <h1 className="lab-heading">Editais</h1>
-              <p className="lab-lead">
-                Envie o PDF do edital e a IA extrai automaticamente objeto, órgão,
-                valores, riscos, documentação e análise completa.
-              </p>
-            </div>
-            <button
-              type="button"
-              className="lab-btn lab-btn--primary"
-              onClick={() => setShowUpload(true)}
-              disabled={!hasCredentials}
-            >
-              <i className="fa fa-plus" aria-hidden="true" /> Novo edital
-            </button>
-          </header>
+      {!hasCredentials ? (
+        <div className="lab-app-alert lab-app-alert--warning">
+          Configure as credenciais OpenAI antes de importar editais.{" "}
+          <Link to="/app/editais/credenciais">Ir para credenciais</Link>
+        </div>
+      ) : null}
 
-          {!hasCredentials ? (
-            <div className="lab-editais-alert lab-editais-alert--warning">
-              Configure as credenciais OpenAI antes de importar editais.{" "}
-              <Link to="/editais/credenciais">Ir para credenciais</Link>
-            </div>
-          ) : null}
+      <section className="lab-app-panel lab-app-panel--filters">
+        <div className="lab-app-filters">
+          <label className="lab-app-search lab-app-search--wide">
+            <i className="fa fa-search" aria-hidden="true" />
+            <input
+              type="search"
+              placeholder="Buscar por título, número ou órgão…"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </label>
 
-          <div className="lab-editais-toolbar">
-            <label className="lab-editais-search">
-              <i className="fa fa-search" aria-hidden="true" />
-              <input
-                type="search"
-                placeholder="Buscar por título, número ou órgão…"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </label>
+          <label className="lab-app-filter">
+            <span>Status</span>
             <select
-              className="lab-editais-select"
+              className="lab-app-select"
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
             >
-              <option value="">Todos os status</option>
+              <option value="">Todos</option>
               <option value="rascunho">Rascunho</option>
               <option value="publicado">Publicado</option>
               <option value="encerrado">Encerrado</option>
               <option value="cancelado">Cancelado</option>
             </select>
-          </div>
+          </label>
 
-          {error ? (
-            <div className="lab-editais-alert lab-editais-alert--error">{error}</div>
+          <label className="lab-app-filter">
+            <span>Abertura de</span>
+            <input
+              className="lab-app-input"
+              type="date"
+              value={dateFrom}
+              onChange={(e) => setDateFrom(e.target.value)}
+            />
+          </label>
+
+          <label className="lab-app-filter">
+            <span>Abertura até</span>
+            <input
+              className="lab-app-input"
+              type="date"
+              value={dateTo}
+              min={dateFrom || undefined}
+              onChange={(e) => setDateTo(e.target.value)}
+            />
+          </label>
+
+          {hasActiveFilters ? (
+            <button
+              type="button"
+              className="lab-app-btn lab-app-btn--ghost"
+              onClick={() => {
+                setSearch("");
+                setStatusFilter("");
+                setDateFrom("");
+                setDateTo("");
+              }}
+            >
+              Limpar filtros
+            </button>
           ) : null}
-
-          {showUpload ? (
-            <section className="lab-editais-panel">
-              <div className="lab-editais-panel__head">
-                <h2 className="lab-editais-panel__title">Importar edital</h2>
-                <button
-                  type="button"
-                  className="lab-btn lab-btn--ghost"
-                  onClick={() => setShowUpload(false)}
-                >
-                  Fechar
-                </button>
-              </div>
-              <EditalUploadPanel
-                onUpload={handleImport}
-                disabled={!hasCredentials}
-                label="Arraste o PDF ou clique para enviar"
-              />
-            </section>
-          ) : null}
-
-          <section className="lab-editais-panel">
-            {loading ? (
-              <p className="lab-editais-empty">Carregando editais…</p>
-            ) : editais.length === 0 ? (
-              <div className="lab-editais-empty">
-                <i className="fa fa-file-text-o" aria-hidden="true" />
-                <p>Nenhum edital importado ainda.</p>
-                {hasCredentials ? (
-                  <button
-                    type="button"
-                    className="lab-btn lab-btn--ghost"
-                    onClick={() => setShowUpload(true)}
-                  >
-                    Importar primeiro edital
-                  </button>
-                ) : null}
-              </div>
-            ) : (
-              <div className="lab-editais-table-wrap">
-                <table className="lab-editais-table">
-                  <thead>
-                    <tr>
-                      <th>Edital</th>
-                      <th>Órgão</th>
-                      <th>Status</th>
-                      <th>Análise IA</th>
-                      <th>Arquivo</th>
-                      <th>Atualizado</th>
-                      <th />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {editais.map((edital) => (
-                      <tr key={edital.id}>
-                        <td>
-                          <strong>{edital.titulo}</strong>
-                          {edital.modalidade ? (
-                            <span className="lab-editais-table__meta">
-                              {edital.modalidade}
-                            </span>
-                          ) : null}
-                        </td>
-                        <td>{edital.orgao || "—"}</td>
-                        <td>
-                          <StatusBadge status={edital.status} />
-                        </td>
-                        <td>
-                          {edital.ultima_analise ? (
-                            <StatusBadge status={edital.ultima_analise.status} />
-                          ) : (
-                            <span className="lab-editais-muted">Sem análise</span>
-                          )}
-                        </td>
-                        <td>
-                          {edital.arquivo_nome_original ? (
-                            <EditalArquivoLink edital={edital} variant="inline" />
-                          ) : (
-                            <span className="lab-editais-muted">—</span>
-                          )}
-                        </td>
-                        <td>{formatDate(edital.updated_at)}</td>
-                        <td>
-                          <div className="lab-editais-table__actions">
-                            <Link
-                              to={`/editais/${edital.id}`}
-                              className="lab-editais-link"
-                            >
-                              Ver edital
-                            </Link>
-                            <DeleteEditalButton
-                              edital={edital}
-                              onDeleted={loadEditais}
-                              label="Excluir"
-                            />
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </section>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {error ? <div className="lab-app-alert lab-app-alert--error">{error}</div> : null}
+
+      {showUpload ? (
+        <section className="lab-app-panel">
+          <div className="lab-app-panel__head">
+            <div>
+              <h2 className="lab-app-panel__title">Importar edital</h2>
+              <p className="lab-app-panel__subtitle">
+                Envie o PDF para extração automática dos dados e análise completa.
+              </p>
+            </div>
+            <button
+              type="button"
+              className="lab-app-btn lab-app-btn--ghost"
+              onClick={() => setShowUpload(false)}
+            >
+              Fechar
+            </button>
+          </div>
+          <EditalUploadPanel
+            onUpload={handleImport}
+            disabled={!hasCredentials}
+            label="Arraste o PDF ou clique para enviar"
+          />
+        </section>
+      ) : null}
+
+      <section className="lab-app-panel lab-app-panel--flush">
+        <div className="lab-app-panel__toolbar">
+          <div>
+            <strong>{loading ? "—" : editais.length}</strong>
+            <span> editais encontrados</span>
+          </div>
+        </div>
+
+        {loading ? (
+          <div className="lab-app-loading-block">
+            <i className="fa fa-spinner fa-spin" aria-hidden="true" />
+            <span>Carregando editais…</span>
+          </div>
+        ) : editais.length === 0 ? (
+          <div className="lab-app-empty lab-app-empty--large">
+            <i className="fa fa-folder-open-o" aria-hidden="true" />
+            <h3>Nenhum edital encontrado</h3>
+            <p>
+              {hasActiveFilters
+                ? "Ajuste os filtros ou importe um novo edital."
+                : "Importe o primeiro PDF para iniciar a gestão de licitações."}
+            </p>
+            {hasCredentials ? (
+              <button
+                type="button"
+                className="lab-app-btn lab-app-btn--primary"
+                onClick={() => setShowUpload(true)}
+              >
+                Importar edital
+              </button>
+            ) : null}
+          </div>
+        ) : (
+          <div className="lab-app-table-wrap">
+            <table className="lab-app-table lab-app-table--data">
+              <thead>
+                <tr>
+                  <th>Edital</th>
+                  <th>Prazo</th>
+                  <th>Valor</th>
+                  <th>Status</th>
+                  <th>Análise IA</th>
+                  <th aria-label="Ações" />
+                </tr>
+              </thead>
+              <tbody>
+                {editais.map((edital) => (
+                  <tr key={edital.id}>
+                    <td className="lab-app-table__primary">
+                      <Link to={`/app/editais/${edital.id}`} className="lab-edital-row__link">
+                        <strong>{truncateText(edital.titulo, 88)}</strong>
+                        <span>
+                          {edital.numero ? `#${edital.numero}` : `ID ${edital.id}`}
+                          {edital.orgao ? ` · ${truncateText(edital.orgao, 42)}` : ""}
+                        </span>
+                        {edital.modalidade ? (
+                          <em>{edital.modalidade}</em>
+                        ) : null}
+                      </Link>
+                    </td>
+                    <td>
+                      <span className="lab-edital-row__prazo">{formatPrazo(edital)}</span>
+                      <span className="lab-app-muted">
+                        Atualizado {formatDate(edital.updated_at) || "—"}
+                      </span>
+                    </td>
+                    <td>{formatCurrency(edital.valor_estimado) || "—"}</td>
+                    <td>
+                      <StatusBadge status={edital.status} />
+                    </td>
+                    <td>
+                      {edital.ultima_analise ? (
+                        <StatusBadge status={edital.ultima_analise.status} />
+                      ) : (
+                        <span className="lab-app-muted">Pendente</span>
+                      )}
+                    </td>
+                    <td className="lab-app-table__actions-cell">
+                      <div className="lab-app-table__actions">
+                        <AppActionButton
+                          as={Link}
+                          to={`/app/editais/${edital.id}`}
+                          variant="view"
+                          title="Abrir edital"
+                          aria-label="Abrir edital"
+                        >
+                          Abrir
+                        </AppActionButton>
+                        <DeleteEditalButton
+                          edital={edital}
+                          onDeleted={loadEditais}
+                          variant="compact"
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+    </>
   );
 };

@@ -22,7 +22,8 @@ Chaves de topo OBRIGATÓRIAS (snake_case) — mantenha compatibilidade com o sis
 
 - resumo: string — resumo executivo em até 8 frases: objeto, órgão, modalidade, critério de julgamento, prazo de execução/entrega, valor estimado (em R$ se houver), forma de fornecimento quando existir, principais riscos; fiel ao edital
 - objeto: string — objeto da contratação (descrição completa)
-- data_licitacao: string | null — data da licitação no formato ISO 8601 (YYYY-MM-DD) se identificável
+- data_licitacao: string | null — data da abertura/sessão pública do certame no formato ISO 8601 (YYYY-MM-DD), apenas a data, se identificável
+- horario_licitacao: string | null — horário da abertura/sessão pública (abertura de propostas, início do pregão, sessão pública etc.) no formato HH:MM (24h). Se o edital usar "14h", "14h30" ou "às 14:00", normalize para HH:MM
 - valor_estimado: string | null — quando existir no texto: valor estimado / referência / preço global / DOT / orçamento / valor total. Formato como no edital (ex.: "R$ 51.606,24"). Só null se sigiloso ou inexistente
 - documentos_habilitacao: string[] — lista sintética dos documentos de habilitação exigidos (uma linha por documento ou agrupamento)
 - forma_pagamento: string | null

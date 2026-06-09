@@ -22,6 +22,7 @@ class UpdateEditalRequest extends FormRequest
             'objeto' => ['nullable', 'string'],
             'valor_estimado' => ['nullable', 'numeric', 'min:0'],
             'data_abertura' => ['nullable', 'date'],
+            'hora_abertura' => ['nullable', 'date_format:H:i'],
             'data_encerramento' => ['nullable', 'date'],
             'status' => ['nullable', Rule::in(['rascunho', 'publicado', 'encerrado', 'cancelado'])],
             'observacoes' => ['nullable', 'string'],

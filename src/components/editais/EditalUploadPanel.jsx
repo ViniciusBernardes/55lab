@@ -86,7 +86,7 @@ export const EditalUploadPanel = ({
         </div>
       ) : null}
       {error ? (
-        <div className="lab-editais-alert lab-editais-alert--error">{error}</div>
+        <div className="lab-app-alert lab-app-alert--error">{error}</div>
       ) : null}
     </div>
   );

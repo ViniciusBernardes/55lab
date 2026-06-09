@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { createPortal } from "react-dom";
 
 export const ConfirmModal = ({
   open,
@@ -31,9 +32,9 @@ export const ConfirmModal = ({
 
   if (!open) return null;
 
-  return (
+  return createPortal(
     <div
-      className="lab-modal"
+      className="lab-modal lab-modal--app"
       role="presentation"
       onClick={loading ? undefined : onCancel}
     >
@@ -57,7 +58,7 @@ export const ConfirmModal = ({
         <footer className="lab-modal__footer">
           <button
             type="button"
-            className="lab-btn lab-btn--ghost"
+            className="lab-app-btn lab-app-btn--ghost"
             onClick={onCancel}
             disabled={loading}
           >
@@ -65,7 +66,9 @@ export const ConfirmModal = ({
           </button>
           <button
             type="button"
-            className={`lab-btn lab-btn--${variant === "danger" ? "danger" : "primary"}`}
+            className={`lab-app-btn ${
+              variant === "danger" ? "lab-app-btn--danger" : "lab-app-btn--primary"
+            }`}
             onClick={onConfirm}
             disabled={loading}
           >
@@ -73,6 +76,7 @@ export const ConfirmModal = ({
           </button>
         </footer>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };

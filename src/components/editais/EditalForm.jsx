@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const EMPTY = {
   titulo: "",
@@ -8,15 +8,26 @@ const EMPTY = {
   objeto: "",
   valor_estimado: "",
   data_abertura: "",
+  hora_abertura: "",
   data_encerramento: "",
   status: "rascunho",
   observacoes: "",
 };
 
-export const EditalForm = ({ initial, onSubmit, onCancel, submitLabel }) => {
+export const EditalForm = ({
+  initial,
+  onSubmit,
+  onCancel,
+  submitLabel = "Salvar",
+}) => {
   const [form, setForm] = useState({ ...EMPTY, ...initial });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    setForm({ ...EMPTY, ...initial });
+    setError("");
+  }, [initial]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -31,10 +42,9 @@ export const EditalForm = ({ initial, onSubmit, onCancel, submitLabel }) => {
     try {
       const payload = {
         ...form,
-        valor_estimado: form.valor_estimado
-          ? Number(form.valor_estimado)
-          : null,
+        valor_estimado: form.valor_estimado !== "" ? Number(form.valor_estimado) : null,
         data_abertura: form.data_abertura || null,
+        hora_abertura: form.hora_abertura || null,
         data_encerramento: form.data_encerramento || null,
       };
 
@@ -47,11 +57,11 @@ export const EditalForm = ({ initial, onSubmit, onCancel, submitLabel }) => {
   };
 
   return (
-    <form className="lab-editais-form" onSubmit={handleSubmit}>
-      {error ? <div className="lab-editais-alert lab-editais-alert--error">{error}</div> : null}
+    <form className="lab-app-form" onSubmit={handleSubmit}>
+      {error ? <div className="lab-app-alert lab-app-alert--error">{error}</div> : null}
 
-      <div className="lab-editais-form__grid">
-        <label className="lab-editais-field lab-editais-field--full">
+      <div className="lab-app-form__grid">
+        <label className="lab-app-field lab-app-field--full">
           <span>Título *</span>
           <input
             name="titulo"
@@ -62,7 +72,7 @@ export const EditalForm = ({ initial, onSubmit, onCancel, submitLabel }) => {
           />
         </label>
 
-        <label className="lab-editais-field">
+        <label className="lab-app-field">
           <span>Número</span>
           <input
             name="numero"
@@ -72,7 +82,7 @@ export const EditalForm = ({ initial, onSubmit, onCancel, submitLabel }) => {
           />
         </label>
 
-        <label className="lab-editais-field">
+        <label className="lab-app-field">
           <span>Status</span>
           <select name="status" value={form.status} onChange={handleChange}>
             <option value="rascunho">Rascunho</option>
@@ -82,7 +92,7 @@ export const EditalForm = ({ initial, onSubmit, onCancel, submitLabel }) => {
           </select>
         </label>
 
-        <label className="lab-editais-field">
+        <label className="lab-app-field">
           <span>Órgão</span>
           <input
             name="orgao"
@@ -92,7 +102,7 @@ export const EditalForm = ({ initial, onSubmit, onCancel, submitLabel }) => {
           />
         </label>
 
-        <label className="lab-editais-field">
+        <label className="lab-app-field">
           <span>Modalidade</span>
           <input
             name="modalidade"
@@ -102,7 +112,7 @@ export const EditalForm = ({ initial, onSubmit, onCancel, submitLabel }) => {
           />
         </label>
 
-        <label className="lab-editais-field">
+        <label className="lab-app-field">
           <span>Valor estimado (R$)</span>
           <input
             name="valor_estimado"
@@ -115,7 +125,7 @@ export const EditalForm = ({ initial, onSubmit, onCancel, submitLabel }) => {
           />
         </label>
 
-        <label className="lab-editais-field">
+        <label className="lab-app-field">
           <span>Data de abertura</span>
           <input
             name="data_abertura"
@@ -125,7 +135,17 @@ export const EditalForm = ({ initial, onSubmit, onCancel, submitLabel }) => {
           />
         </label>
 
-        <label className="lab-editais-field">
+        <label className="lab-app-field">
+          <span>Horário de abertura</span>
+          <input
+            name="hora_abertura"
+            type="time"
+            value={form.hora_abertura}
+            onChange={handleChange}
+          />
+        </label>
+
+        <label className="lab-app-field">
           <span>Data de encerramento</span>
           <input
             name="data_encerramento"
@@ -135,41 +155,42 @@ export const EditalForm = ({ initial, onSubmit, onCancel, submitLabel }) => {
           />
         </label>
 
-        <label className="lab-editais-field lab-editais-field--full">
+        <label className="lab-app-field lab-app-field--full">
           <span>Objeto</span>
           <textarea
             name="objeto"
-            rows="3"
+            rows="4"
             value={form.objeto}
             onChange={handleChange}
             placeholder="Descrição do objeto da licitação"
           />
         </label>
 
-        <label className="lab-editais-field lab-editais-field--full">
+        <label className="lab-app-field lab-app-field--full">
           <span>Observações</span>
           <textarea
             name="observacoes"
-            rows="2"
+            rows="3"
             value={form.observacoes}
             onChange={handleChange}
+            placeholder="Resumo ou notas sobre o edital"
           />
         </label>
       </div>
 
-      <div className="lab-editais-form__actions">
+      <div className="lab-app-form__actions">
         {onCancel ? (
           <button
             type="button"
-            className="lab-btn lab-btn--ghost"
+            className="lab-app-btn lab-app-btn--ghost"
             onClick={onCancel}
             disabled={saving}
           >
             Cancelar
           </button>
         ) : null}
-        <button type="submit" className="lab-btn lab-btn--primary" disabled={saving}>
-          {saving ? "Salvando…" : submitLabel || "Salvar"}
+        <button type="submit" className="lab-app-btn lab-app-btn--primary" disabled={saving}>
+          {saving ? "Salvando…" : submitLabel}
         </button>
       </div>
     </form>

@@ -18,6 +18,7 @@ class Edital extends Model
         'objeto',
         'valor_estimado',
         'data_abertura',
+        'hora_abertura',
         'data_encerramento',
         'status',
         'arquivo_path',

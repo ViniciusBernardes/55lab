@@ -135,6 +135,7 @@ class EditalAiService
             'resumo' => 'Resumo executivo',
             'objeto' => 'Objeto',
             'data_licitacao' => 'Data da licitação',
+            'horario_licitacao' => 'Horário da licitação',
             'valor_estimado' => 'Valor estimado',
             'tipo_licitacao' => 'Tipo de licitação',
             'orgao_responsavel' => 'Órgão responsável',
@@ -194,6 +195,13 @@ class EditalAiService
             $updates['data_abertura'] = (string) $data;
         }
 
+        if (filled($horario = Arr::get($analysis, 'horario_licitacao'))) {
+            $parsedHorario = $this->parseHorario((string) $horario);
+            if ($parsedHorario !== null) {
+                $updates['hora_abertura'] = $parsedHorario;
+            }
+        }
+
         if (filled($valor = Arr::get($analysis, 'valor_estimado'))) {
             $parsed = $this->parseMoney((string) $valor);
             if ($parsed !== null) {
@@ -222,5 +230,33 @@ class EditalAiService
         }
 
         return is_numeric($clean) ? (float) $clean : null;
+    }
+
+    private function parseHorario(string $value): ?string
+    {
+        $value = trim($value);
+        if ($value === '') {
+            return null;
+        }
+
+        if (preg_match('/^(\d{1,2}):(\d{2})(?::\d{2})?$/', $value, $matches)) {
+            $hour = (int) $matches[1];
+            $minute = (int) $matches[2];
+
+            if ($hour >= 0 && $hour <= 23 && $minute >= 0 && $minute <= 59) {
+                return sprintf('%02d:%02d', $hour, $minute);
+            }
+        }
+
+        if (preg_match('/(\d{1,2})\s*h(?:\s*(\d{2}))?/i', $value, $matches)) {
+            $hour = (int) $matches[1];
+            $minute = isset($matches[2]) ? (int) $matches[2] : 0;
+
+            if ($hour >= 0 && $hour <= 23 && $minute >= 0 && $minute <= 59) {
+                return sprintf('%02d:%02d', $hour, $minute);
+            }
+        }
+
+        return null;
     }
 }

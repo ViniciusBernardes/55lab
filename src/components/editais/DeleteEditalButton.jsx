@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { deleteEdital } from "../../api/licitacaoApi";
+import { AppActionButton } from "../app/AppActionButton";
 import { ConfirmModal } from "./ConfirmModal";
 
 export const DeleteEditalButton = ({
@@ -31,20 +32,43 @@ export const DeleteEditalButton = ({
     }
   };
 
+  const buttonClass =
+    variant === "compact"
+      ? null
+      : variant === "danger"
+        ? "lab-app-btn lab-app-btn--danger"
+        : "lab-app-btn lab-app-btn--ghost";
+
   return (
     <>
-      <button
-        type="button"
-        className={`lab-btn lab-btn--${variant === "danger" ? "danger" : "ghost"} lab-editais-delete-btn`}
-        onClick={() => {
-          setError("");
-          setOpen(true);
-        }}
-        disabled={deleting}
-      >
-        <i className="fa fa-trash-o" aria-hidden="true" />
-        {label}
-      </button>
+      {variant === "compact" ? (
+        <AppActionButton
+          variant="delete"
+          title={label}
+          aria-label={label}
+          disabled={deleting}
+          onClick={() => {
+            setError("");
+            setOpen(true);
+          }}
+        >
+          {label}
+        </AppActionButton>
+      ) : (
+        <button
+          type="button"
+          className={buttonClass}
+          onClick={() => {
+            setError("");
+            setOpen(true);
+          }}
+          disabled={deleting}
+          title={label}
+          aria-label={label}
+        >
+          {label}
+        </button>
+      )}
 
       <ConfirmModal
         open={open}
@@ -59,9 +83,7 @@ export const DeleteEditalButton = ({
               permanentemente. Esta ação não pode ser desfeita.
             </p>
             {error ? (
-              <div className="lab-editais-alert lab-editais-alert--error">
-                {error}
-              </div>
+              <div className="lab-app-alert lab-app-alert--error">{error}</div>
             ) : null}
           </>
         }

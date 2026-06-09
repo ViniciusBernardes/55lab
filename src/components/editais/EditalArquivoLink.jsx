@@ -23,7 +23,7 @@ export const EditalArquivoLink = ({ edital, variant = "button" }) => {
         href={url}
         target="_blank"
         rel="noreferrer"
-        className="lab-editais-arquivo-inline"
+        className="lab-edital-file-link"
       >
         <i className="fa fa-file-pdf-o" aria-hidden="true" />
         <span>{nome}</span>
@@ -38,10 +38,10 @@ export const EditalArquivoLink = ({ edital, variant = "button" }) => {
       href={url}
       target="_blank"
       rel="noreferrer"
-      className="lab-btn lab-btn--ghost lab-editais-arquivo-btn"
+      className="lab-app-btn lab-app-btn--ghost"
     >
       <i className="fa fa-external-link" aria-hidden="true" />
-      Abrir arquivo
+      Abrir PDF
     </a>
   );
 };

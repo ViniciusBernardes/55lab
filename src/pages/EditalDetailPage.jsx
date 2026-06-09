@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
   getEdital,
   listAnalises,
@@ -9,18 +9,26 @@ import {
 import { DeleteEditalButton } from "../components/editais/DeleteEditalButton";
 import { EditalArquivoLink } from "../components/editais/EditalArquivoLink";
 import { EditalAnalysisView } from "../components/editais/EditalAnalysisView";
-import { EditalUploadPanel } from "../components/editais/EditalUploadPanel";
-import { EditaisNav } from "../components/editais/EditaisNav";
-import { StatusBadge } from "../components/editais/StatusBadge";
+import { EditalBreadcrumb } from "../components/editais/EditalBreadcrumb";
+import { EditalDocumentTab } from "../components/editais/EditalDocumentTab";
+import { EditalEditTab } from "../components/editais/EditalEditTab";
+import { EditalOverviewCard } from "../components/editais/EditalOverviewCard";
+import { truncateText } from "../utils/editalFormat";
 
 export const EditalDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const tabsRef = useRef(null);
   const [edital, setEdital] = useState(null);
   const [analises, setAnalises] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [analyzing, setAnalyzing] = useState(false);
+  const [activeTab, setActiveTab] = useState(() => {
+    const tab = searchParams.get("tab");
+    return tab === "dados" || tab === "documento" ? tab : "analise";
+  });
 
   const loadAll = useCallback(async () => {
     setLoading(true);
@@ -79,137 +87,142 @@ export const EditalDetailPage = () => {
     }
   };
 
+  const goToEditTab = () => {
+    setActiveTab("dados");
+    tabsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   if (loading && !edital) {
     return (
-      <div className="lab-site lab-editais">
-        <EditaisNav />
-        <main className="lab-editais-main">
-          <div className="lab-container">
-            <p className="lab-editais-empty">Carregando edital…</p>
-          </div>
-        </main>
+      <div className="lab-app-loading-block">
+        <i className="fa fa-spinner fa-spin" aria-hidden="true" />
+        <span>Carregando edital…</span>
       </div>
     );
   }
 
   if (!edital) {
     return (
-      <div className="lab-site lab-editais">
-        <EditaisNav />
-        <main className="lab-editais-main">
-          <div className="lab-container">
-            <div className="lab-editais-alert lab-editais-alert--error">
-              {error || "Edital não encontrado."}
-            </div>
-            <Link to="/editais" className="lab-editais-back">
-              <i className="fa fa-arrow-left" aria-hidden="true" /> Voltar
-            </Link>
-          </div>
-        </main>
-      </div>
+      <>
+        <EditalBreadcrumb
+          items={[
+            { to: "/app/editais", label: "Editais" },
+            { label: "Edital não encontrado" },
+          ]}
+        />
+        <div className="lab-app-alert lab-app-alert--error">
+          {error || "Edital não encontrado."}
+        </div>
+        <Link to="/app/editais" className="lab-app-back">
+          <i className="fa fa-arrow-left" aria-hidden="true" /> Voltar para editais
+        </Link>
+      </>
     );
   }
 
   return (
-    <div className="lab-site lab-editais">
-      <EditaisNav />
+    <>
+      <EditalBreadcrumb
+        items={[
+          { to: "/app/editais", label: "Editais" },
+          { label: truncateText(edital.titulo, 56) },
+        ]}
+      />
 
-      <main className="lab-editais-main">
-        <div className="lab-container">
-          <Link to="/editais" className="lab-editais-back">
-            <i className="fa fa-arrow-left" aria-hidden="true" /> Todos os editais
-          </Link>
+      <EditalOverviewCard
+        edital={edital}
+        ultimaAnalise={ultimaAnalise}
+        actions={
+          <>
+            <button
+              type="button"
+              className="lab-app-btn lab-app-btn--ghost"
+              onClick={goToEditTab}
+            >
+              Editar
+            </button>
+            {edital.arquivo_nome_original ? (
+              <EditalArquivoLink edital={edital} variant="button" />
+            ) : null}
+            <button
+              type="button"
+              className="lab-app-btn lab-app-btn--primary"
+              onClick={handleAnalyze}
+              disabled={analyzing || isProcessing || !edital.arquivo_path}
+            >
+              <i className="fa fa-magic" aria-hidden="true" />
+              {isProcessing
+                ? "Analisando…"
+                : analyzing
+                  ? "Enfileirando…"
+                  : "Reanalisar com IA"}
+            </button>
+            <DeleteEditalButton
+              edital={edital}
+              variant="danger"
+              label="Excluir"
+              onDeleted={() => navigate("/app/editais")}
+            />
+          </>
+        }
+      />
 
-          <header className="lab-editais-detail-header">
-            <div>
-              <span className="lab-eyebrow">Edital #{edital.id}</span>
-              <h1 className="lab-heading">{edital.titulo}</h1>
-              <div className="lab-editais-detail-meta">
-                <StatusBadge status={edital.status} />
-                {ultimaAnalise ? (
-                  <StatusBadge status={ultimaAnalise.status} />
-                ) : null}
-                {edital.orgao ? <span>{edital.orgao}</span> : null}
-                {edital.modalidade ? <span>{edital.modalidade}</span> : null}
-              </div>
-            </div>
-            <div className="lab-editais-detail-actions">
-              {edital.arquivo_nome_original ? (
-                <EditalArquivoLink edital={edital} />
-              ) : null}
-              <button
-                type="button"
-                className="lab-btn lab-btn--primary"
-                onClick={handleAnalyze}
-                disabled={analyzing || isProcessing || !edital.arquivo_path}
-              >
-                <i className="fa fa-magic" aria-hidden="true" />
-                {isProcessing
-                  ? "Analisando…"
-                  : analyzing
-                    ? "Enfileirando…"
-                    : "Reanalisar com IA"}
-              </button>
-              <DeleteEditalButton
-                edital={edital}
-                variant="danger"
-                label="Excluir edital"
-                onDeleted={() => navigate("/editais")}
-              />
-            </div>
-          </header>
+      {error ? <div className="lab-app-alert lab-app-alert--error">{error}</div> : null}
 
-          {error ? (
-            <div className="lab-editais-alert lab-editais-alert--error">{error}</div>
-          ) : null}
-
-          {isProcessing ? (
-            <div className="lab-editais-alert lab-editais-alert--info">
-              <i className="fa fa-spinner fa-spin" aria-hidden="true" /> A IA está
-              analisando o documento. Esta página atualiza automaticamente.
-            </div>
-          ) : null}
-
-          <div className="lab-editais-detail-grid">
-            <section className="lab-editais-panel">
-              <h2 className="lab-editais-panel__title">Arquivo</h2>
-              {edital.arquivo_nome_original ? (
-                <div className="lab-editais-file">
-                  <i className="fa fa-file-pdf-o" aria-hidden="true" />
-                  <div>
-                    <strong>{edital.arquivo_nome_original}</strong>
-                    <span>
-                      {edital.arquivo_tamanho
-                        ? `${Math.round(edital.arquivo_tamanho / 1024)} KB`
-                        : "Arquivo anexado"}
-                    </span>
-                  </div>
-                  <EditalArquivoLink edital={edital} />
-                </div>
-              ) : (
-                <p className="lab-editais-muted">
-                  Nenhum arquivo anexado. Envie o PDF do edital abaixo.
-                </p>
-              )}
-              <EditalUploadPanel
-                onUpload={handleReupload}
-                label="Substituir arquivo e reanalisar"
-                hint="Envie um novo PDF — a análise será disparada automaticamente."
-              />
-            </section>
-
-            <section className="lab-editais-panel lab-editais-panel--wide">
-              <h2 className="lab-editais-panel__title">Resultado da análise</h2>
-              {ultimaAnalise?.error_message ? (
-                <div className="lab-editais-alert lab-editais-alert--error">
-                  {ultimaAnalise.error_message}
-                </div>
-              ) : null}
-              <EditalAnalysisView snapshot={ultimaAnalise?.result_snapshot} />
-            </section>
-          </div>
+      {isProcessing ? (
+        <div className="lab-app-alert lab-app-alert--info">
+          <i className="fa fa-spinner fa-spin" aria-hidden="true" /> A IA está
+          analisando o documento. Esta página atualiza automaticamente.
         </div>
-      </main>
-    </div>
+      ) : null}
+
+      <div className="lab-edital-tabs" ref={tabsRef}>
+        {[
+          ["analise", "Análise IA"],
+          ["dados", "Dados"],
+          ["documento", "Documento"],
+        ].map(([key, label]) => (
+          <button
+            key={key}
+            type="button"
+            className={`lab-edital-tab${activeTab === key ? " is-active" : ""}`}
+            onClick={() => setActiveTab(key)}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {activeTab === "analise" ? (
+        <section className="lab-app-panel">
+          <div className="lab-app-panel__head">
+            <div>
+              <h2 className="lab-app-panel__title">Resultado da análise</h2>
+              <p className="lab-app-panel__subtitle">
+                Resumo executivo, riscos e checklist extraídos automaticamente do edital.
+              </p>
+            </div>
+          </div>
+          {ultimaAnalise?.error_message ? (
+            <div className="lab-app-alert lab-app-alert--error">
+              {ultimaAnalise.error_message}
+            </div>
+          ) : null}
+          <EditalAnalysisView snapshot={ultimaAnalise?.result_snapshot} />
+        </section>
+      ) : null}
+
+      {activeTab === "dados" ? (
+        <EditalEditTab
+          edital={edital}
+          analysisSnapshot={ultimaAnalise?.result_snapshot}
+          onSaved={loadAll}
+        />
+      ) : null}
+
+      {activeTab === "documento" ? (
+        <EditalDocumentTab edital={edital} onUpload={handleReupload} />
+      ) : null}
+    </>
   );
 };

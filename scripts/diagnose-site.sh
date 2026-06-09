@@ -26,6 +26,10 @@ echo "=== Docker ==="
 docker compose ps 2>/dev/null || docker compose --profile production ps 2>/dev/null || true
 echo ""
 
+echo "=== Containers com problema ==="
+docker compose ps 2>/dev/null | grep -E 'Restarting|Exit|unhealthy' || echo "Nenhum container em erro aparente"
+echo ""
+
 echo "=== Nginx (container web) ==="
 docker compose logs web 2>/dev/null | grep '\[nginx\]' | tail -3 || true
 echo ""
@@ -43,9 +47,17 @@ else
 fi
 echo ""
 
+echo "=== Correção rápida (se web/api parados) ==="
+echo "git pull"
+echo "docker compose --profile production up -d --build web mysql api queue"
+echo "./scripts/fix-api-restart.sh   # se api/queue em Restarting"
+echo ""
+
 echo "=== O que verificar na AWS ==="
-echo "1. EC2 → Security Group → Inbound rules:"
+echo "1. EC2 → instância deve estar Running"
+echo "2. EC2 → Security Group → Inbound rules:"
 echo "   - HTTP  80  Source 0.0.0.0/0"
 echo "   - HTTPS 443 Source 0.0.0.0/0"
-echo "2. Se o site redireciona para HTTPS mas 443 está fechado, o navegador trava."
-echo "3. Teste externo: curl -sI https://${DOMAIN}"
+echo "3. DNS A de ${DOMAIN} deve apontar para o IP público desta instância (${PUBLIC_IP})"
+echo "4. Se HTTP redireciona para HTTPS mas 443 está fechado, o navegador trava."
+echo "5. Teste externo: curl -sI https://${DOMAIN}"

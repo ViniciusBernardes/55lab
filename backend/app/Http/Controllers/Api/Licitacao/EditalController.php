@@ -37,6 +37,18 @@ class EditalController extends Controller
             });
         }
 
+        if ($request->filled('data_de') || $request->filled('data_ate')) {
+            $query->whereNotNull('data_abertura');
+        }
+
+        if ($dataDe = $request->date('data_de')?->toDateString()) {
+            $query->where('data_abertura', '>=', $dataDe);
+        }
+
+        if ($dataAte = $request->date('data_ate')?->toDateString()) {
+            $query->where('data_abertura', '<=', $dataAte);
+        }
+
         $editais = $query->latest()->paginate($request->integer('per_page', 15));
 
         return response()->json($editais);

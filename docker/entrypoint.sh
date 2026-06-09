@@ -11,7 +11,12 @@ if [ -z "${DOMAIN}" ]; then
   echo "[nginx] Modo desenvolvimento (sem SSL, DOMAIN não definido)"
 elif [ -f "/etc/letsencrypt/live/${DOMAIN}/fullchain.pem" ]; then
   envsubst '${DOMAIN}' < "${SSL_TEMPLATE}" > "${CONF}"
-  echo "[nginx] HTTPS ativo para ${DOMAIN}"
+  if nginx -t 2>/dev/null; then
+    echo "[nginx] HTTPS ativo para ${DOMAIN}"
+  else
+    echo "[nginx] Certificado inválido — voltando para HTTP temporário"
+    envsubst '${DOMAIN}' < "${HTTP_BOOT}" > "${CONF}"
+  fi
 else
   envsubst '${DOMAIN}' < "${HTTP_BOOT}" > "${CONF}"
   echo "[nginx] HTTP apenas — rode scripts/init-ssl.sh para emitir o certificado"
