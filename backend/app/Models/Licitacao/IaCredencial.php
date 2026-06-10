@@ -39,6 +39,26 @@ class IaCredencial extends Model
         $this->attributes['api_key_encrypted'] = Crypt::encryptString($value);
     }
 
+    public function hasEncryptedApiKey(): bool
+    {
+        return filled($this->api_key_encrypted);
+    }
+
+    public function apiKeyDecryptFailed(): bool
+    {
+        if (! $this->hasEncryptedApiKey()) {
+            return false;
+        }
+
+        try {
+            Crypt::decryptString($this->api_key_encrypted);
+
+            return false;
+        } catch (\Throwable) {
+            return true;
+        }
+    }
+
     public function getApiKey(): ?string
     {
         if (blank($this->api_key_encrypted)) {

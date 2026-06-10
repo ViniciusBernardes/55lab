@@ -50,9 +50,7 @@ services:
       DB_USERNAME: ${MYSQL_USER:-55lab}
       DB_PASSWORD: ${MYSQL_PASSWORD:-55lab_secret}
       QUEUE_CONNECTION: database
-      EDITAL_AI_ENABLED: "true"
-      EDITAL_AI_PROVIDER: ${EDITAL_AI_PROVIDER:-mock}
-      # Helpdesk: use apenas backend/.env (env_file). Não sobrescrever com variável vazia da raiz.
+      # OpenAI / Helpdesk: variáveis sensíveis vêm de backend/.env (env_file).
     ports:
       - "8000:8000"
     volumes:
@@ -76,9 +74,7 @@ services:
       DB_USERNAME: ${MYSQL_USER:-55lab}
       DB_PASSWORD: ${MYSQL_PASSWORD:-55lab_secret}
       QUEUE_CONNECTION: database
-      EDITAL_AI_ENABLED: "true"
-      EDITAL_AI_PROVIDER: ${EDITAL_AI_PROVIDER:-mock}
-      # Helpdesk: use apenas backend/.env (env_file). Não sobrescrever com variável vazia da raiz.
+      # OpenAI / Helpdesk: variáveis sensíveis vêm de backend/.env (env_file).
     command: ["php", "artisan", "queue:work", "--sleep=3", "--tries=3", "--timeout=360"]
     volumes:
       - backend_config:/persist

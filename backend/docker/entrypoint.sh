@@ -38,8 +38,6 @@ sync_env DB_DATABASE "${DB_DATABASE}"
 sync_env DB_USERNAME "${DB_USERNAME}"
 sync_env DB_PASSWORD "${DB_PASSWORD}"
 sync_env QUEUE_CONNECTION "${QUEUE_CONNECTION}"
-sync_env OPENAI_API_KEY "${OPENAI_API_KEY}"
-sync_env EDITAL_AI_PROVIDER "${EDITAL_AI_PROVIDER}"
 sync_env EXTERNAL_HELPDESK_API_KEY "${EXTERNAL_HELPDESK_API_KEY}"
 sync_env EXTERNAL_HELPDESK_WEBHOOK_URL "${EXTERNAL_HELPDESK_WEBHOOK_URL}"
 sync_env EXTERNAL_HELPDESK_WEBHOOK_TIMEOUT "${EXTERNAL_HELPDESK_WEBHOOK_TIMEOUT}"
@@ -49,8 +47,18 @@ sync_env EXTERNAL_HELPDESK_ATTACHMENT_MAX_BYTES "${EXTERNAL_HELPDESK_ATTACHMENT_
 if [ -n "${APP_KEY}" ]; then
   sync_env APP_KEY "${APP_KEY}"
 elif ! grep -qE '^APP_KEY=base64:.+' .env; then
-  php artisan key:generate --force
+  if [ -f "$PERSIST_ENV" ] && grep -qE '^APP_KEY=base64:.+' "$PERSIST_ENV"; then
+    sync_env APP_KEY "$(grep '^APP_KEY=' "$PERSIST_ENV" | cut -d= -f2-)"
+  else
+    php artisan key:generate --force
+  fi
 fi
+
+sync_env OPENAI_API_KEY "${OPENAI_API_KEY}"
+sync_env OPENAI_BASE_URL "${OPENAI_BASE_URL}"
+sync_env EDITAL_AI_ENABLED "${EDITAL_AI_ENABLED}"
+sync_env EDITAL_AI_PROVIDER "${EDITAL_AI_PROVIDER}"
+sync_env EDITAL_AI_MODEL "${EDITAL_AI_MODEL}"
 
 cp .env "$PERSIST_ENV"
 

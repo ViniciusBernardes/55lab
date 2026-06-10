@@ -24,14 +24,48 @@ class IaCredencialService
     {
         $credencial = $this->getOpenAi();
 
-        return $credencial->is_active && filled($this->resolveApiKey($credencial));
+        if (! $credencial->is_active) {
+            return false;
+        }
+
+        if ($credencial->apiKeyDecryptFailed()) {
+            return filled(config('edital_ai.openai.api_key'));
+        }
+
+        return filled($this->resolveApiKey($credencial));
     }
 
     public function resolveApiKey(?IaCredencial $credencial = null): ?string
     {
         $credencial ??= $this->getOpenAi();
 
+        if ($credencial->apiKeyDecryptFailed()) {
+            return config('edital_ai.openai.api_key') ?: null;
+        }
+
         return $credencial->getApiKey() ?: config('edital_ai.openai.api_key');
+    }
+
+    public function assertOpenAiReady(?IaCredencial $credencial = null): void
+    {
+        $credencial ??= $this->getOpenAi();
+
+        if (! $credencial->is_active) {
+            throw new RuntimeException('Credencial OpenAI está inativa. Ative em /editais/credenciais.');
+        }
+
+        if ($credencial->apiKeyDecryptFailed()) {
+            throw new RuntimeException(
+                'A API Key salva não pode ser lida (APP_KEY do servidor mudou). '
+                .'Salve a chave novamente em /editais/credenciais ou defina OPENAI_API_KEY no backend/.env.',
+            );
+        }
+
+        if (! filled($this->resolveApiKey($credencial))) {
+            throw new RuntimeException(
+                'Credenciais OpenAI não configuradas. Cadastre a API Key em /editais/credenciais.',
+            );
+        }
     }
 
     /** @return array<string, mixed> */

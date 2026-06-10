@@ -22,11 +22,8 @@ class OpenAiEditalAiProvider implements EditalAiProvider
     public function analyzeEdital(Edital $edital, EditalAiConfig $config): array
     {
         $credencial = $this->credencialService->getOpenAi();
-        $apiKey = $credencial->getApiKey() ?: config('edital_ai.openai.api_key');
-
-        if (! $apiKey) {
-            throw new RuntimeException('Credenciais OpenAI não configuradas. Cadastre a API Key em /editais/credenciais.');
-        }
+        $this->credencialService->assertOpenAiReady($credencial);
+        $apiKey = $this->credencialService->resolveApiKey($credencial);
 
         $systemPrompt = $config->system_prompt ?: EditalAnalysisPrompt::SYSTEM;
         $model = $config->model ?: $credencial->model;
