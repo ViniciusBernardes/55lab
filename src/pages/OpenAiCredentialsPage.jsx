@@ -13,7 +13,12 @@ export const OpenAiCredentialsPage = () => {
     model: "gpt-4o-mini",
     is_active: true,
   });
-  const [meta, setMeta] = useState({ has_api_key: false, api_key_masked: null });
+  const [meta, setMeta] = useState({
+    has_api_key: false,
+    api_key_masked: null,
+    api_key_decrypt_failed: false,
+    api_key_source: null,
+  });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [testing, setTesting] = useState(false);
@@ -35,6 +40,8 @@ export const OpenAiCredentialsPage = () => {
       setMeta({
         has_api_key: data.has_api_key,
         api_key_masked: data.api_key_masked,
+        api_key_decrypt_failed: Boolean(data.api_key_decrypt_failed),
+        api_key_source: data.api_key_source || null,
       });
     } catch (err) {
       setError(err.message || "Não foi possível carregar as credenciais.");
@@ -75,6 +82,8 @@ export const OpenAiCredentialsPage = () => {
       setMeta({
         has_api_key: data.has_api_key,
         api_key_masked: data.api_key_masked,
+        api_key_decrypt_failed: Boolean(data.api_key_decrypt_failed),
+        api_key_source: data.api_key_source || null,
       });
       setForm((prev) => ({ ...prev, api_key: "" }));
       setMessage("Credenciais salvas com sucesso.");
@@ -116,6 +125,19 @@ export const OpenAiCredentialsPage = () => {
             ) : null}
             {message ? (
               <div className="lab-app-alert lab-app-alert--success">{message}</div>
+            ) : null}
+            {meta.api_key_decrypt_failed ? (
+              <div className="lab-app-alert lab-app-alert--warning">
+                A chave salva no banco não pode ser lida (APP_KEY do servidor mudou).
+                Cole a API Key novamente abaixo e clique em Salvar, ou defina{" "}
+                <code>OPENAI_API_KEY</code> no <code>backend/.env</code> do servidor.
+              </div>
+            ) : null}
+            {meta.api_key_source === "env" && meta.has_api_key ? (
+              <div className="lab-app-alert lab-app-alert--success">
+                Usando <code>OPENAI_API_KEY</code> do ambiente do servidor.
+                Salve no painel para gravar no banco com o APP_KEY atual.
+              </div>
             ) : null}
 
             <div className="lab-app-form__grid">

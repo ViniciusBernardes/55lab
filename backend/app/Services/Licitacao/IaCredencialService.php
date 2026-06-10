@@ -54,6 +54,10 @@ class IaCredencialService
             throw new RuntimeException('Credencial OpenAI está inativa. Ative em /editais/credenciais.');
         }
 
+        if (filled($this->resolveApiKey($credencial))) {
+            return;
+        }
+
         if ($credencial->apiKeyDecryptFailed()) {
             throw new RuntimeException(
                 'A API Key salva não pode ser lida (APP_KEY do servidor mudou). '
@@ -61,25 +65,32 @@ class IaCredencialService
             );
         }
 
-        if (! filled($this->resolveApiKey($credencial))) {
-            throw new RuntimeException(
-                'Credenciais OpenAI não configuradas. Cadastre a API Key em /editais/credenciais.',
-            );
-        }
+        throw new RuntimeException(
+            'Credenciais OpenAI não configuradas. Cadastre a API Key em /editais/credenciais.',
+        );
     }
 
     /** @return array<string, mixed> */
     public function toPublicArray(IaCredencial $credencial): array
     {
+        $decryptFailed = $credencial->apiKeyDecryptFailed();
+        $envKey = config('edital_ai.openai.api_key');
+
         return [
             'provider' => $credencial->provider,
             'base_url' => $credencial->base_url,
             'model' => $credencial->model,
             'is_active' => $credencial->is_active,
             'has_api_key' => filled($this->resolveApiKey($credencial)),
-            'api_key_masked' => $credencial->maskedApiKey() ?: (
-                filled(config('edital_ai.openai.api_key')) ? 'env (OPENAI_API_KEY)' : null
-            ),
+            'api_key_decrypt_failed' => $decryptFailed && ! filled($envKey),
+            'api_key_source' => $decryptFailed && filled($envKey)
+                ? 'env'
+                : ($credencial->hasEncryptedApiKey() ? 'database' : (filled($envKey) ? 'env' : null)),
+            'api_key_masked' => $decryptFailed && filled($envKey)
+                ? 'env (OPENAI_API_KEY)'
+                : ($credencial->maskedApiKey() ?: (
+                    filled($envKey) ? 'env (OPENAI_API_KEY)' : null
+                )),
             'updated_at' => $credencial->updated_at,
         ];
     }
