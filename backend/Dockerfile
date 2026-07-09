@@ -6,8 +6,12 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libpng-dev \
     libonig-dev \
+    libfreetype6-dev \
+    libjpeg-dev \
+    fonts-dejavu-core \
     poppler-utils \
-    && docker-php-ext-install pdo_mysql zip \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo_mysql zip gd \
     && rm -rf /var/lib/apt/lists/* \
     && printf "upload_max_filesize=64M\npost_max_size=64M\nmemory_limit=512M\nmax_execution_time=360\n" \
        > /usr/local/etc/php/conf.d/uploads.ini

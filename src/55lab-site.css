@@ -2653,6 +2653,23 @@ img {
   color: #991b1b;
 }
 
+.lab-app-action-btn--open {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+}
+
+.lab-app-action-btn--open:hover {
+  background: #dbeafe;
+  border-color: #60a5fa;
+  color: #1e40af;
+}
+
+.lab-app-action-btn:not(:has(span)) {
+  min-width: 34px;
+  padding: 0;
+}
+
 .lab-app-action-btn:disabled {
   opacity: 0.55;
   cursor: not-allowed;
@@ -3841,4 +3858,847 @@ img {
   background: #f1f5f9;
   color: #0f172a;
   font-size: 0.8125rem;
+}
+
+/* ── Assinatura Digital ICP-Brasil ── */
+
+.lab-assinatura-panel {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.lab-assinatura-panel__header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.lab-assinatura-panel__header h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.lab-assinatura-panel__body {
+  padding: 20px;
+}
+
+.lab-assinatura-signatarios {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lab-assinatura-signatario {
+  padding: 12px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.lab-assinatura-signatario:last-child {
+  border-bottom: none;
+}
+
+.lab-assinatura-signatario strong {
+  color: #0f172a;
+}
+
+.lab-assinatura-signatario span {
+  color: #64748b;
+}
+
+.lab-assinatura-signatario small {
+  display: block;
+  margin-top: 4px;
+  color: #94a3b8;
+  font-size: 0.8125rem;
+}
+
+.lab-app-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.lab-assinatura-module {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.lab-assinatura-tabs {
+  margin-bottom: 0;
+}
+
+.lab-assinatura-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.lab-assinatura-toolbar .lab-app-input {
+  max-width: 280px;
+}
+
+.lab-assinatura-toolbar select.lab-app-input {
+  max-width: 180px;
+}
+
+.lab-assinatura-empty-card {
+  text-align: center;
+  padding: 48px 24px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 16px;
+  background: #f8fafc;
+}
+
+.lab-assinatura-empty-card i {
+  font-size: 2.5rem;
+  color: #94a3b8;
+  margin-bottom: 12px;
+}
+
+.lab-assinatura-empty-card h3 {
+  margin: 0 0 8px;
+  color: #0f172a;
+}
+
+.lab-assinatura-empty-card p {
+  margin: 0 0 20px;
+  color: #64748b;
+}
+
+.lab-assinatura-doc-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lab-assinatura-doc-table {
+  margin-top: 4px;
+}
+
+.lab-assinatura-doc-row__link {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.lab-assinatura-doc-row__link:hover strong {
+  color: #1d4ed8;
+}
+
+.lab-assinatura-doc-row__icon {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #fef2f2;
+  color: #dc2626;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+}
+
+.lab-assinatura-doc-row__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.lab-assinatura-doc-row__text strong {
+  color: #0f172a;
+  font-size: 0.9375rem;
+  line-height: 1.35;
+}
+
+.lab-assinatura-doc-row__text span {
+  color: #64748b;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.lab-assinatura-doc-row__text code {
+  font-size: 0.75rem;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.lab-assinatura-doc-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 16px;
+  align-items: center;
+  padding: 18px 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  background: #fff;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.lab-assinatura-doc-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+}
+
+.lab-assinatura-doc-card__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #fef2f2;
+  color: #dc2626;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.lab-assinatura-doc-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.lab-assinatura-doc-card__head a {
+  font-weight: 600;
+  color: #0f172a;
+  text-decoration: none;
+}
+
+.lab-assinatura-doc-card__head a:hover {
+  color: #1d4ed8;
+}
+
+.lab-assinatura-doc-card__code {
+  margin: 0 0 8px;
+  font-size: 0.8125rem;
+  color: #64748b;
+}
+
+.lab-assinatura-doc-card__code span {
+  margin-right: 6px;
+}
+
+.lab-assinatura-doc-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 0.8125rem;
+  color: #94a3b8;
+}
+
+.lab-assinatura-doc-card__actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.lab-assinatura-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.lab-assinatura-section-head h2 {
+  margin: 0 0 6px;
+  font-size: 1.125rem;
+  color: #0f172a;
+}
+
+.lab-assinatura-section-head p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.lab-assinatura-cert-form {
+  padding: 24px;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  background: #f8fafc;
+  margin-bottom: 24px;
+}
+
+.lab-assinatura-cert-form__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.lab-assinatura-cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.lab-assinatura-cert-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.lab-assinatura-cert-card.is-padrao {
+  border-color: #86efac;
+  background: linear-gradient(135deg, #fff 0%, #f0fdf4 100%);
+}
+
+.lab-assinatura-cert-card.is-expirado {
+  opacity: 0.75;
+}
+
+.lab-assinatura-cert-card__icon img {
+  display: block;
+  width: 36px;
+  height: auto;
+}
+
+.lab-assinatura-cert-card__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.lab-assinatura-cert-card__holder {
+  margin: 0 0 10px;
+  font-size: 0.875rem;
+  color: #334155;
+}
+
+.lab-assinatura-cert-card__meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+
+.lab-assinatura-cert-card__meta dt {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #94a3b8;
+}
+
+.lab-assinatura-cert-card__meta dd {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #475569;
+}
+
+.lab-assinatura-cert-card__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.lab-assinatura-sign-panel {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.lab-assinatura-sign-panel__header {
+  padding: 20px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 50%, #fff 100%);
+  border-bottom: 1px solid #d1fae5;
+}
+
+.lab-assinatura-sign-panel__brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.lab-assinatura-sign-panel__brand img {
+  display: block;
+  width: 40px;
+  height: auto;
+}
+
+.lab-assinatura-sign-panel__brand h3 {
+  margin: 0 0 2px;
+  font-size: 1.0625rem;
+  color: #0f172a;
+}
+
+.lab-assinatura-sign-panel__brand p {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: #64748b;
+}
+
+.lab-assinatura-sign-panel__body {
+  padding: 20px;
+}
+
+.lab-assinatura-sign-modes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.lab-assinatura-sign-mode {
+  padding: 10px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #475569;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.lab-assinatura-sign-mode.is-active {
+  border-color: #16a34a;
+  background: #f0fdf4;
+  color: #15803d;
+  font-weight: 600;
+}
+
+.lab-assinatura-cert-preview {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding: 12px;
+  margin-bottom: 14px;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.lab-assinatura-cert-preview span {
+  display: block;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #94a3b8;
+  margin-bottom: 2px;
+}
+
+.lab-assinatura-cert-preview strong {
+  font-size: 0.8125rem;
+  color: #0f172a;
+}
+
+.lab-assinatura-sign-submit {
+  width: 100%;
+  margin-top: 8px;
+  justify-content: center;
+}
+
+.lab-assinatura-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.lab-assinatura-detail-hero {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px 28px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 55%, #f1f5f9 100%);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+  color: #0f172a;
+}
+
+.lab-assinatura-detail-hero h1 {
+  margin: 0 0 8px;
+  font-size: 1.5rem;
+  color: #0f172a;
+}
+
+.lab-assinatura-detail-hero__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.lab-assinatura-detail-hero__file {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.lab-assinatura-detail-hero__file span {
+  color: #94a3b8;
+}
+
+.lab-assinatura-detail-hero__code {
+  min-width: 220px;
+  padding: 16px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #dbeafe;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.lab-assinatura-detail-hero__code span {
+  display: block;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.lab-assinatura-detail-hero__code code {
+  display: block;
+  font-size: 1rem;
+  color: #0f172a;
+  background: transparent;
+  padding: 0;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.lab-assinatura-detail-hero__copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 38px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 10px;
+  background: #0f766e;
+  color: #fff;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.lab-assinatura-detail-hero__copy-btn:hover {
+  background: #0d9488;
+}
+
+.lab-assinatura-detail-hero__copy-btn:active {
+  transform: translateY(1px);
+}
+
+.lab-assinatura-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(300px, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.lab-assinatura-detail-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.lab-assinatura-info-card {
+  padding: 22px 24px;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.lab-assinatura-info-card h2,
+.lab-assinatura-info-card h3 {
+  margin: 0 0 16px;
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.lab-assinatura-info-card--hint {
+  background: #f8fafc;
+}
+
+.lab-assinatura-info-card--hint ol {
+  margin: 0 0 14px;
+  padding-left: 18px;
+  color: #475569;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.lab-assinatura-file-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lab-assinatura-file-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.lab-assinatura-file-list li:last-child {
+  border-bottom: none;
+}
+
+.lab-assinatura-file-list strong {
+  display: block;
+  color: #0f172a;
+  margin-bottom: 2px;
+}
+
+.lab-assinatura-file-list span,
+.lab-assinatura-file-list a {
+  font-size: 0.8125rem;
+}
+
+.lab-assinatura-history {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.lab-assinatura-history__item {
+  display: flex;
+  gap: 14px;
+  padding: 14px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.lab-assinatura-history__icon {
+  color: #16a34a;
+  font-size: 1.25rem;
+  padding-top: 2px;
+}
+
+.lab-assinatura-history__item strong {
+  display: block;
+  color: #0f172a;
+}
+
+.lab-assinatura-history__item span {
+  display: block;
+  font-size: 0.8125rem;
+  color: #64748b;
+}
+
+.lab-assinatura-history__item small {
+  display: block;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+
+.lab-assinatura-history__item p {
+  margin: 6px 0 0;
+  font-size: 0.75rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .lab-assinatura-cert-form__grid,
+  .lab-assinatura-cert-card__meta,
+  .lab-assinatura-cert-preview {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-assinatura-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-assinatura-doc-card {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-assinatura-doc-card__actions {
+    justify-content: flex-start;
+  }
+}
+
+/* Página pública de verificação (estilo ICP-Brasil) */
+
+.lab-verificacao {
+  min-height: 100vh;
+  background: #f1f5f9;
+  padding: 40px 20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.lab-verificacao__page {
+  max-width: 700px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 40px 48px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.lab-verificacao__header {
+  display: grid;
+  grid-template-columns: 64px 1fr 80px;
+  align-items: start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.lab-verificacao__logo {
+  flex-shrink: 0;
+}
+
+.lab-verificacao__logo img {
+  display: block;
+  width: 64px;
+  height: auto;
+}
+
+.lab-verificacao__title {
+  margin: 8px 0 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-align: center;
+  color: #000;
+  letter-spacing: 0.02em;
+}
+
+.lab-verificacao__qr {
+  justify-self: end;
+  border: 1px solid #e2e8f0;
+}
+
+.lab-verificacao__codigo {
+  text-align: center;
+  font-size: 0.9375rem;
+  margin: 0 0 24px;
+  color: #1e293b;
+}
+
+.lab-verificacao__alert {
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  color: #92400e;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 0.875rem;
+}
+
+.lab-verificacao__intro {
+  font-size: 0.875rem;
+  color: #334155;
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+.lab-verificacao__signatarios {
+  list-style: none;
+  margin: 0 0 32px;
+  padding: 0;
+}
+
+.lab-verificacao__signatario {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  align-items: flex-start;
+}
+
+.lab-verificacao__check {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.lab-verificacao__signatario-nome {
+  margin: 0 0 4px;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #0f172a;
+}
+
+.lab-verificacao__signatario-papel {
+  margin: 0 0 4px;
+  font-size: 0.8125rem;
+  color: #475569;
+}
+
+.lab-verificacao__signatario-cadeia {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.lab-verificacao__footer {
+  text-align: center;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 24px;
+}
+
+.lab-verificacao__footer p {
+  font-size: 0.8125rem;
+  color: #475569;
+  margin: 0 0 8px;
+}
+
+.lab-verificacao__link {
+  color: #1d4ed8;
+  text-decoration: underline;
+  font-size: 0.8125rem;
+  word-break: break-all;
+}
+
+.lab-verificacao__loading,
+.lab-verificacao__error {
+  max-width: 500px;
+  margin: 80px auto;
+  text-align: center;
+  color: #64748b;
+}
+
+.lab-verificacao__error h2 {
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 600px) {
+  .lab-verificacao__page {
+    padding: 24px 20px;
+  }
+
+  .lab-verificacao__header {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .lab-verificacao__qr {
+    justify-self: center;
+  }
 }

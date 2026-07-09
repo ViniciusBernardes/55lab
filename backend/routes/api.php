@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\Licitacao\EditalAiConfigController;
 use App\Http\Controllers\Api\Licitacao\EditalAnaliseController;
 use App\Http\Controllers\Api\Licitacao\EditalController;
 use App\Http\Controllers\Api\Licitacao\IaCredencialController;
+use App\Http\Controllers\Api\Assinatura\CertificadoDigitalController;
+use App\Http\Controllers\Api\Assinatura\DocumentoAssinaturaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/csrf-cookie', fn () => response()->noContent())->middleware('web');
@@ -42,6 +44,24 @@ Route::prefix('licitacao')->middleware(['web', 'auth'])->group(function () {
 
     Route::get('analises/{analise}', [EditalAnaliseController::class, 'show']);
     Route::post('analises/{analise}/revisar', [EditalAnaliseController::class, 'review']);
+});
+
+Route::get('assinatura/verificacao/{codigo}', [DocumentoAssinaturaController::class, 'verificar']);
+
+Route::prefix('assinatura')->middleware(['web', 'auth'])->group(function () {
+    Route::get('certificados', [CertificadoDigitalController::class, 'index']);
+    Route::post('certificados', [CertificadoDigitalController::class, 'store']);
+    Route::delete('certificados/{certificado}', [CertificadoDigitalController::class, 'destroy']);
+    Route::patch('certificados/{certificado}/padrao', [CertificadoDigitalController::class, 'setPadrao']);
+
+    Route::get('papeis', [DocumentoAssinaturaController::class, 'papeis']);
+    Route::get('documentos', [DocumentoAssinaturaController::class, 'index']);
+    Route::post('documentos', [DocumentoAssinaturaController::class, 'store']);
+    Route::get('documentos/{documento}', [DocumentoAssinaturaController::class, 'show']);
+    Route::post('documentos/{documento}/assinar', [DocumentoAssinaturaController::class, 'assinar']);
+    Route::get('documentos/{documento}/original', [DocumentoAssinaturaController::class, 'downloadOriginal']);
+    Route::get('documentos/{documento}/assinado', [DocumentoAssinaturaController::class, 'downloadAssinado']);
+    Route::delete('documentos/{documento}', [DocumentoAssinaturaController::class, 'destroy']);
 });
 
 Route::prefix('helpdesk')->group(function () {

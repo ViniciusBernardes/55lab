@@ -26,6 +26,18 @@ const icons = {
       />
     </svg>
   ),
+  open: (
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M14 3h7v7M10 14 21 3M5 10v11h11"
+      />
+    </svg>
+  ),
 };
 
 export function AppActionButton({

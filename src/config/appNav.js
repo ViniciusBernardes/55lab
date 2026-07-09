@@ -24,6 +24,12 @@ export const appNavItems = [
   },
   {
     type: "link",
+    label: "Assinatura Digital",
+    to: "/app/assinatura",
+    icon: "fa-certificate",
+  },
+  {
+    type: "link",
     label: "Integrações",
     to: "/app/tickets/integracoes",
     icon: "fa-plug",

@@ -11,6 +11,9 @@ import { LandingPage } from "./pages/LandingPage";
 import { LoginPage } from "./pages/LoginPage";
 import { OpenAiCredentialsPage } from "./pages/OpenAiCredentialsPage";
 import { HelpdeskIntegrationsPage } from "./pages/HelpdeskIntegrationsPage";
+import { AssinaturaPage } from "./pages/AssinaturaPage";
+import { AssinaturaDetailPage } from "./pages/AssinaturaDetailPage";
+import { VerificacaoPage } from "./pages/VerificacaoPage";
 import { TicketDetailPage } from "./pages/TicketDetailPage";
 import { TicketsPage } from "./pages/TicketsPage";
 
@@ -32,6 +35,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/editais/login" element={<LoginPage />} />
+            <Route path="/verificacao/:codigo" element={<VerificacaoPage />} />
 
             <Route
               path="/app"
@@ -48,6 +52,8 @@ const App = () => {
               <Route path="tickets" element={<TicketsPage />} />
               <Route path="tickets/integracoes" element={<HelpdeskIntegrationsPage />} />
               <Route path="tickets/:id" element={<TicketDetailPage />} />
+              <Route path="assinatura" element={<AssinaturaPage />} />
+              <Route path="assinatura/:id" element={<AssinaturaDetailPage />} />
             </Route>
 
             <Route path="/editais" element={<Navigate to="/app/editais" replace />} />
