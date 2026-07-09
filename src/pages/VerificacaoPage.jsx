@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { verificarDocumento } from "../api/assinaturaApi";
+import { verificarDocumento, buildVerificacaoUrl } from "../api/assinaturaApi";
 import { VerificacaoView } from "../components/assinatura/VerificacaoView";
 
 export const VerificacaoPage = () => {
@@ -18,7 +18,7 @@ export const VerificacaoPage = () => {
         const result = await verificarDocumento(codigo);
         setDados({
           ...result,
-          url_verificacao: result.url_verificacao || `${window.location.origin}/verificacao/${codigo}`,
+          url_verificacao: buildVerificacaoUrl(codigo, result.url_verificacao),
         });
       } catch (err) {
         setError(err.message || "Código de verificação não encontrado.");

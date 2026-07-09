@@ -113,3 +113,13 @@ export function viewDocumentoUrl(documento) {
 
   return downloadOriginalUrl(documento.id);
 }
+
+export function buildVerificacaoUrl(codigo, urlFromApi) {
+  if (urlFromApi) {
+    return urlFromApi;
+  }
+
+  const base = (process.env.REACT_APP_SITE_URL || window.location.origin).replace(/\/$/, "");
+
+  return `${base}/verificacao/${codigo}`;
+}

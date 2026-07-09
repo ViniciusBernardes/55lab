@@ -83,7 +83,9 @@ export const AssinaturaDetailPage = () => {
     );
   }
 
-  const verificacaoUrl = `${window.location.origin}/verificacao/${documento.codigo_verificacao}`;
+  const verificacaoUrl =
+    documento.url_verificacao ||
+    `${window.location.origin}/verificacao/${documento.codigo_verificacao}`;
   const isAssinado = documento.status === "assinado";
 
   return (

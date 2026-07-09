@@ -50,6 +50,9 @@ services:
       DB_USERNAME: ${MYSQL_USER:-55lab}
       DB_PASSWORD: ${MYSQL_PASSWORD:-55lab_secret}
       QUEUE_CONNECTION: database
+      DOMAIN: ${DOMAIN:-}
+      FRONTEND_URL: ${FRONTEND_URL:-}
+      ASSINATURA_FRONTEND_URL: ${ASSINATURA_FRONTEND_URL:-}
       # OpenAI / Helpdesk: variáveis sensíveis vêm de backend/.env (env_file).
     ports:
       - "8000:8000"
@@ -74,6 +77,9 @@ services:
       DB_USERNAME: ${MYSQL_USER:-55lab}
       DB_PASSWORD: ${MYSQL_PASSWORD:-55lab_secret}
       QUEUE_CONNECTION: database
+      DOMAIN: ${DOMAIN:-}
+      FRONTEND_URL: ${FRONTEND_URL:-}
+      ASSINATURA_FRONTEND_URL: ${ASSINATURA_FRONTEND_URL:-}
       # OpenAI / Helpdesk: variáveis sensíveis vêm de backend/.env (env_file).
     command: ["php", "artisan", "queue:work", "--sleep=3", "--tries=3", "--timeout=360"]
     volumes:

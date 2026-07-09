@@ -24,6 +24,10 @@ class DocumentoAssinatura extends Model
         'status',
     ];
 
+    protected $appends = [
+        'url_verificacao',
+    ];
+
     protected function casts(): array
     {
         return [
@@ -49,7 +53,7 @@ class DocumentoAssinatura extends Model
 
     public function getUrlVerificacaoAttribute(): string
     {
-        $frontendUrl = rtrim(config('assinatura.frontend_url', config('app.url')), '/');
+        $frontendUrl = rtrim((string) config('assinatura.frontend_url'), '/');
 
         return "{$frontendUrl}/verificacao/{$this->codigo_verificacao}";
     }
