@@ -43,6 +43,10 @@ sync_env EXTERNAL_HELPDESK_WEBHOOK_URL "${EXTERNAL_HELPDESK_WEBHOOK_URL}"
 sync_env EXTERNAL_HELPDESK_WEBHOOK_TIMEOUT "${EXTERNAL_HELPDESK_WEBHOOK_TIMEOUT}"
 sync_env EXTERNAL_HELPDESK_WEBHOOK_RETRIES "${EXTERNAL_HELPDESK_WEBHOOK_RETRIES}"
 sync_env EXTERNAL_HELPDESK_ATTACHMENT_MAX_BYTES "${EXTERNAL_HELPDESK_ATTACHMENT_MAX_BYTES}"
+sync_env DOMAIN "${DOMAIN}"
+sync_env FRONTEND_URL "${FRONTEND_URL}"
+sync_env ASSINATURA_FRONTEND_URL "${ASSINATURA_FRONTEND_URL}"
+sync_env ASSINATURA_FRONTEND_SCHEME "${ASSINATURA_FRONTEND_SCHEME}"
 
 if [ -n "${APP_KEY}" ]; then
   sync_env APP_KEY "${APP_KEY}"
@@ -51,6 +55,13 @@ elif ! grep -qE '^APP_KEY=base64:.+' .env; then
     sync_env APP_KEY "$(grep '^APP_KEY=' "$PERSIST_ENV" | cut -d= -f2-)"
   else
     php artisan key:generate --force
+  fi
+fi
+
+# env_file do Docker pode injetar APP_KEY= vazio; Laravel prioriza variáveis de ambiente sobre .env
+if ! echo "${APP_KEY}" | grep -qE '^base64:.+'; then
+  if grep -qE '^APP_KEY=base64:.+' .env; then
+    export APP_KEY="$(grep '^APP_KEY=' .env | head -1 | cut -d= -f2-)"
   fi
 fi
 

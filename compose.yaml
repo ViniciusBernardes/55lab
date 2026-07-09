@@ -43,6 +43,7 @@ services:
     environment:
       APP_ENV: local
       APP_DEBUG: "true"
+      APP_KEY: ${APP_KEY:-}
       DB_CONNECTION: mysql
       DB_HOST: mysql
       DB_PORT: 3306
@@ -70,6 +71,7 @@ services:
       - ./backend/.env
     environment:
       APP_ENV: local
+      APP_KEY: ${APP_KEY:-}
       DB_CONNECTION: mysql
       DB_HOST: mysql
       DB_PORT: 3306
