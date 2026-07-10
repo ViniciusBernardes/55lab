@@ -7,7 +7,6 @@ use App\Models\Assinatura\DocumentoAssinatura;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use RuntimeException;
 
 class DocumentoAssinaturaService
@@ -74,25 +73,15 @@ class DocumentoAssinaturaService
         $tempDir = $certInfo['temp_dir'] ?? null;
 
         try {
-            return DB::transaction(function () use ($documento, $certInfo, $papel) {
+            return DB::transaction(function () use ($documento, $certInfo, $papel, $pfxContent, $senha) {
                 $originalPath = Storage::disk('local')->path($documento->arquivo_original_path);
                 $assinadoEm = now();
-
-                $signatureContent = $this->pdfSignerService->sign(
-                    $originalPath,
-                    $certInfo['cert_path'],
-                    $certInfo['key_path'],
-                    $certInfo['extra_certs_path'],
-                );
-
-                $signaturePath = "assinatura/pkcs7/{$documento->id}_".time().'.p7s';
-                Storage::disk('local')->put($signaturePath, $signatureContent);
 
                 $signatarioData = [
                     'nome' => $certInfo['nome'],
                     'cpf_mascarado' => $certInfo['cpf_mascarado'],
                     'papel' => $papel,
-                    'assinado_em' => $assinadoEm->format('d/m/Y H:i:s').' GMT'. $assinadoEm->format('P'),
+                    'assinado_em' => $assinadoEm->format('d/m/Y H:i:s').' GMT'.$assinadoEm->format('P'),
                     'cadeia' => $certInfo['cadeia'],
                     'icp_brasil' => $certInfo['icp_brasil'],
                 ];
@@ -108,19 +97,41 @@ class DocumentoAssinaturaService
 
                 $allSignatarios = array_merge($existingSignatures, [$signatarioData]);
 
-                $signedPdfPath = sys_get_temp_dir().'/signed_'.bin2hex(random_bytes(8)).'.pdf';
-
+                // 1) Monta o PDF visual (tarja + página de verificação)
+                $visualPdfPath = sys_get_temp_dir().'/visual_'.bin2hex(random_bytes(8)).'.pdf';
                 $this->verificationPageService->appendToPdf(
                     $originalPath,
-                    $signedPdfPath,
+                    $visualPdfPath,
                     $documento->codigo_verificacao,
                     $documento->url_verificacao,
                     $allSignatarios,
                 );
 
+                $visualContent = file_get_contents($visualPdfPath);
+                @unlink($visualPdfPath);
+
+                if ($visualContent === false || $visualContent === '') {
+                    throw new RuntimeException('Não foi possível gerar o PDF visual para assinatura.');
+                }
+
+                // 2) Embute assinatura PAdES no PDF (exigido pelo Validador ITI)
+                $signedPdfContent = $this->pdfSignerService->signPdf(
+                    $visualContent,
+                    $pfxContent,
+                    $senha,
+                    [
+                        'name' => $certInfo['nome'],
+                        'reason' => 'Assinatura digital ICP-Brasil',
+                        'location' => 'Brasil',
+                    ],
+                );
+
+                if (! $this->pdfSignerService->hasEmbeddedSignature($signedPdfContent)) {
+                    throw new RuntimeException('A assinatura digital não foi embutida corretamente no PDF.');
+                }
+
                 $storagePath = "assinatura/assinados/{$documento->id}_".time().'.pdf';
-                Storage::disk('local')->put($storagePath, file_get_contents($signedPdfPath));
-                @unlink($signedPdfPath);
+                Storage::disk('local')->put($storagePath, $signedPdfContent);
 
                 AssinaturaDocumento::create([
                     'documento_assinatura_id' => $documento->id,
@@ -133,7 +144,7 @@ class DocumentoAssinaturaService
                     'serial_certificado' => $certInfo['serial'],
                     'validade_certificado' => $certInfo['validade'],
                     'icp_brasil' => $certInfo['icp_brasil'],
-                    'assinatura_pkcs7_path' => $signaturePath,
+                    'assinatura_pkcs7_path' => null,
                 ]);
 
                 $documento->update([

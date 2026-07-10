@@ -198,7 +198,7 @@ export const AssinaturaDetailPage = () => {
             </h3>
             <ol>
               <li>Selecione um certificado cadastrado ou envie um .pfx</li>
-              <li>O PDF recebe assinatura PKCS#7 e tarja lateral ICP-Brasil</li>
+              <li>O PDF recebe assinatura PAdES (ICP-Brasil) embutida e tarja lateral</li>
               <li>Uma página de verificação é anexada ao documento</li>
             </ol>
             <Link to="/app/assinatura?tab=certificados" className="lab-app-link">

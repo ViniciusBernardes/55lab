@@ -3,81 +3,69 @@
 namespace App\Services\Assinatura;
 
 use RuntimeException;
+use SignerPHP\Application\DTO\SignatureActorDto;
+use SignerPHP\Application\DTO\SignatureMetadataDto;
+use SignerPHP\Domain\Exception\SignerException;
+use SignerPHP\Presentation\Signer;
+use Throwable;
 
 class PdfSignerService
 {
     /**
-     * Assina o conteúdo do documento com PKCS#7 (padrão CMS) usando certificado ICP-Brasil A1.
+     * Assina o PDF embutindo assinatura PAdES Baseline-B (ETSI.CAdES.detached),
+     * reconhecível pelo Validador ITI.
+     *
+     * @param  array{name?: string, reason?: string, location?: string, contact?: string}  $meta
      */
-    public function sign(
-        string $documentPath,
-        string $certPath,
-        string $keyPath,
-        ?string $extraCertsPath = null,
+    public function signPdf(
+        string $pdfContent,
+        string $pfxContent,
+        string $password,
+        array $meta = [],
     ): string {
-        if (! file_exists($documentPath)) {
-            throw new RuntimeException('Arquivo do documento não encontrado.');
+        if ($pdfContent === '') {
+            throw new RuntimeException('Conteúdo do PDF está vazio.');
         }
 
-        $outputDir = sys_get_temp_dir().'/pkcs7_'.bin2hex(random_bytes(8));
-        if (! mkdir($outputDir, 0700, true) && ! is_dir($outputDir)) {
-            throw new RuntimeException('Não foi possível criar diretório temporário para assinatura.');
+        if ($pfxContent === '') {
+            throw new RuntimeException('Conteúdo do certificado PFX está vazio.');
         }
 
-        $signaturePath = "{$outputDir}/signature.p7s";
-
-        $flags = PKCS7_DETACHED | PKCS7_BINARY;
-        $extraCerts = $extraCertsPath && file_exists($extraCertsPath) ? $extraCertsPath : null;
-
-        $success = openssl_pkcs7_sign(
-            $documentPath,
-            $signaturePath,
-            "file://{$certPath}",
-            ["file://{$keyPath}", ''],
-            [],
-            $flags,
-            $extraCerts,
+        $metadata = new SignatureMetadataDto(
+            reason: $meta['reason'] ?? 'Assinatura digital ICP-Brasil',
+            location: $meta['location'] ?? 'Brasil',
+            actor: new SignatureActorDto(
+                name: $meta['name'] ?? 'Signatário',
+                contactInfo: $meta['contact'] ?? null,
+            ),
         );
 
-        if (! $success) {
-            $this->cleanupDir($outputDir);
-            throw new RuntimeException('Falha ao assinar o documento: '.openssl_error_string());
+        try {
+            return Signer::signer()
+                ->withPdfContent($pdfContent)
+                ->withCertificateContent($pfxContent, $password)
+                ->withMetadata($metadata)
+                ->withPadesBaselineB()
+                ->withoutDefaultAppearance()
+                ->sign();
+        } catch (SignerException $e) {
+            throw new RuntimeException('Falha ao assinar o PDF: '.$e->getMessage(), 0, $e);
+        } catch (Throwable $e) {
+            throw new RuntimeException(
+                'Falha inesperada ao assinar o PDF: '.$e->getMessage(),
+                0,
+                $e,
+            );
         }
-
-        $signatureContent = file_get_contents($signaturePath);
-        if ($signatureContent === false) {
-            $this->cleanupDir($outputDir);
-            throw new RuntimeException('Não foi possível ler a assinatura gerada.');
-        }
-
-        $this->cleanupDir($outputDir);
-
-        return $signatureContent;
     }
 
-    public function verify(string $documentPath, string $signaturePath): bool
+    /**
+     * Verifica se o PDF contém ao menos uma assinatura digital embutida.
+     */
+    public function hasEmbeddedSignature(string $pdfContent): bool
     {
-        if (! file_exists($documentPath) || ! file_exists($signaturePath)) {
-            return false;
-        }
-
-        $certs = [];
-        $result = openssl_pkcs7_verify(
-            $documentPath,
-            PKCS7_NOVERIFY,
-            $signaturePath,
-            [],
-            $certs,
-        );
-
-        return $result === true || $result === 1;
-    }
-
-    private function cleanupDir(string $dir): void
-    {
-        foreach (glob("{$dir}/*") ?: [] as $file) {
-            @unlink($file);
-        }
-        @rmdir($dir);
+        return str_contains($pdfContent, '/Type /Sig')
+            || str_contains($pdfContent, '/Type/Sig')
+            || str_contains($pdfContent, '/ByteRange');
     }
 }
