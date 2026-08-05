@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Helpdesk\TicketController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\Licitacao\EditalAiConfigController;
+use App\Http\Controllers\Api\Licitacao\EditalAlertaImportController;
 use App\Http\Controllers\Api\Licitacao\EditalAnaliseController;
 use App\Http\Controllers\Api\Licitacao\EditalController;
 use App\Http\Controllers\Api\Licitacao\IaCredencialController;
@@ -31,6 +32,9 @@ Route::prefix('licitacao')->middleware(['web', 'auth'])->group(function () {
     Route::post('credenciais/openai/testar', [IaCredencialController::class, 'testOpenAi']);
 
     Route::post('editais/importar', [EditalController::class, 'importar']);
+    Route::get('editais/alerta/segmentos', [EditalAlertaImportController::class, 'segmentos']);
+    Route::post('editais/importar-alerta', [EditalAlertaImportController::class, 'store']);
+    Route::get('editais/alerta-imports/{alertaImport}', [EditalAlertaImportController::class, 'show']);
     Route::apiResource('editais', EditalController::class);
 
     Route::get('editais/{edital}/arquivo', [EditalController::class, 'downloadArquivo']);

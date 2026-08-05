@@ -4,6 +4,7 @@ export function listEditais(params = {}) {
   const query = new URLSearchParams();
   if (params.q) query.set("q", params.q);
   if (params.status) query.set("status", params.status);
+  if (params.segmento) query.set("segmento", params.segmento);
   if (params.data_de) query.set("data_de", params.data_de);
   if (params.data_ate) query.set("data_ate", params.data_ate);
   if (params.page) query.set("page", String(params.page));
@@ -31,6 +32,25 @@ export function importEdital(file) {
     method: "POST",
     body: form,
   });
+}
+
+export function getAlertaSegmentos() {
+  return apiRequest("/api/licitacao/editais/alerta/segmentos");
+}
+
+export function importAlertaEditais(file, segmentos = []) {
+  const form = new FormData();
+  form.append("arquivo", file);
+  segmentos.forEach((segmento) => form.append("segmentos[]", segmento));
+
+  return apiRequest("/api/licitacao/editais/importar-alerta", {
+    method: "POST",
+    body: form,
+  });
+}
+
+export function getAlertaImport(id) {
+  return apiRequest(`/api/licitacao/editais/alerta-imports/${id}`);
 }
 
 export function getOpenAiCredentials() {

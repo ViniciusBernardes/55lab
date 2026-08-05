@@ -3,10 +3,23 @@ import { formatCurrency, formatDate, formatPrazo } from "../../utils/editalForma
 import { StatusBadge } from "./StatusBadge";
 
 export function EditalOverviewCard({ edital, ultimaAnalise, actions }) {
+  const segmentoLabels = {
+    software: "Software",
+    protocolo: "Protocolo",
+    gestao_educacional: "Gestão educacional",
+    cesta_de_preco: "Cesta de preço",
+  };
+
   const infoItems = [
     { label: "Número", value: edital.numero },
     { label: "Órgão", value: edital.orgao },
     { label: "Modalidade", value: edital.modalidade },
+    {
+      label: "Segmento",
+      value: edital.segmento
+        ? segmentoLabels[edital.segmento] || edital.segmento
+        : null,
+    },
     { label: "Prazo", value: formatPrazo(edital) },
     { label: "Valor estimado", value: formatCurrency(edital.valor_estimado) },
     { label: "Cadastro", value: formatDate(edital.created_at) },

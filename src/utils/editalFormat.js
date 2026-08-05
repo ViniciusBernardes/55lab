@@ -69,6 +69,52 @@ export const formatPrazo = (edital) => {
   return "Sem prazo";
 };
 
+/**
+ * Relative urgency for closing date (or opening as fallback).
+ * @returns {{ label: string, tone: 'ok'|'soon'|'today'|'late'|'none', days: number|null, date: string|null }}
+ */
+export const formatPrazoRelativo = (edital, today = new Date()) => {
+  const raw = edital?.data_encerramento || edital?.data_abertura;
+  const date = toLocalCalendarDate(raw);
+  if (!date) {
+    return { label: "Sem prazo", tone: "none", days: null, date: null };
+  }
+
+  const startToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const diffMs = date.getTime() - startToday.getTime();
+  const days = Math.round(diffMs / 86400000);
+  const formatted = formatDate(raw);
+
+  if (days < 0) {
+    const n = Math.abs(days);
+    return {
+      label: n === 1 ? "Atrasado 1 dia" : `Atrasado ${n} dias`,
+      tone: "late",
+      days,
+      date: formatted,
+    };
+  }
+  if (days === 0) {
+    return { label: "Encerra hoje", tone: "today", days, date: formatted };
+  }
+  if (days === 1) {
+    return { label: "Encerra amanhã", tone: "soon", days, date: formatted };
+  }
+  if (days <= 2) {
+    return { label: `Em ${days} dias`, tone: "soon", days, date: formatted };
+  }
+  return { label: `Em ${days} dias`, tone: "ok", days, date: formatted };
+};
+
+export const SEGMENTO_LABELS = {
+  software: "Software",
+  protocolo: "Protocolo",
+  gestao_educacional: "Gestão educacional",
+  cesta_de_preco: "Cesta de preço",
+};
+
+export const segmentoLabel = (key) => SEGMENTO_LABELS[key] || key || "—";
+
 export const truncateText = (text, max = 72) => {
   if (!text) return "";
   if (text.length <= max) return text;

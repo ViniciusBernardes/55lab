@@ -3,6 +3,7 @@
 namespace App\Models\Licitacao;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -11,10 +12,14 @@ class Edital extends Model
     protected $table = 'editais';
 
     protected $fillable = [
+        'alerta_import_id',
         'titulo',
         'numero',
         'orgao',
         'modalidade',
+        'segmento',
+        'fonte',
+        'link_origem',
         'objeto',
         'valor_estimado',
         'data_abertura',
@@ -36,6 +41,11 @@ class Edital extends Model
             'data_encerramento' => 'date',
             'arquivo_tamanho' => 'integer',
         ];
+    }
+
+    public function alertaImport(): BelongsTo
+    {
+        return $this->belongsTo(EditalAlertaImport::class, 'alerta_import_id');
     }
 
     public function aiConfig(): HasOne

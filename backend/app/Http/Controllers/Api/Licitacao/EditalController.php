@@ -29,11 +29,16 @@ class EditalController extends Controller
             $query->where('status', $status);
         }
 
+        if ($segmento = $request->string('segmento')->toString()) {
+            $query->where('segmento', $segmento);
+        }
+
         if ($search = $request->string('q')->toString()) {
             $query->where(function ($q) use ($search) {
                 $q->where('titulo', 'like', "%{$search}%")
                     ->orWhere('numero', 'like', "%{$search}%")
-                    ->orWhere('orgao', 'like', "%{$search}%");
+                    ->orWhere('orgao', 'like', "%{$search}%")
+                    ->orWhere('segmento', 'like', "%{$search}%");
             });
         }
 
