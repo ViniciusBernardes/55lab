@@ -8,6 +8,10 @@ return new class extends Migration
 {
     public function up(): void
     {
+        if (Schema::hasColumn('editais', 'destacado')) {
+            return;
+        }
+
         Schema::table('editais', function (Blueprint $table) {
             $table->boolean('destacado')->default(false)->after('status');
             $table->index('destacado');
@@ -16,6 +20,10 @@ return new class extends Migration
 
     public function down(): void
     {
+        if (! Schema::hasColumn('editais', 'destacado')) {
+            return;
+        }
+
         Schema::table('editais', function (Blueprint $table) {
             $table->dropIndex(['destacado']);
             $table->dropColumn('destacado');

@@ -74,6 +74,8 @@ sync_env EDITAL_AI_MODEL "${EDITAL_AI_MODEL}"
 cp .env "$PERSIST_ENV"
 
 php artisan config:clear --quiet 2>/dev/null || true
-php artisan migrate --force
+
+# api e queue sobem em paralelo; migrate não pode derrubar o container.
+php artisan migrate --force || echo "[entrypoint] Aviso: migrate retornou erro (schema pode já estar atualizado)."
 
 exec "$@"
