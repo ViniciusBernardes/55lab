@@ -2651,6 +2651,69 @@ img {
   gap: 8px;
 }
 
+.lab-edital-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.lab-edital-star {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-top: 2px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #fff;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.lab-edital-star:hover:not(:disabled) {
+  color: #d97706;
+  border-color: #fcd34d;
+  background: #fffbeb;
+}
+
+.lab-edital-star.is-active {
+  color: #d97706;
+  border-color: #fbbf24;
+  background: #fffbeb;
+}
+
+.lab-edital-star:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.lab-app-table--editais tr.is-destacado {
+  background: #fffbeb;
+}
+
+.lab-edital-row__pin {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  color: #b45309;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.lab-app-panel--destaques .lab-app-panel__title .fa {
+  margin-right: 8px;
+  color: #d97706;
+}
+
 @media (max-width: 980px) {
   .lab-app-module-grid,
   .lab-app-shortcuts,

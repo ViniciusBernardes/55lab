@@ -23,7 +23,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-55lab_secret}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_secret}
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     healthcheck:
@@ -94,8 +94,8 @@ services:
     environment:
       DOMAIN: ${DOMAIN:-}
     ports:
-      - "80:80"
-      - "443:443"
+      - "3080:80"
+      - "3443:443"
     volumes:
       - certbot_etc:/etc/letsencrypt
       - certbot_www:/var/www/certbot

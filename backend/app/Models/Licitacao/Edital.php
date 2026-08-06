@@ -26,6 +26,7 @@ class Edital extends Model
         'hora_abertura',
         'data_encerramento',
         'status',
+        'destacado',
         'arquivo_path',
         'arquivo_nome_original',
         'arquivo_mime',
@@ -40,6 +41,7 @@ class Edital extends Model
             'data_abertura' => 'date',
             'data_encerramento' => 'date',
             'arquivo_tamanho' => 'integer',
+            'destacado' => 'boolean',
         ];
     }
 

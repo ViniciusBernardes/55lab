@@ -54,7 +54,10 @@ class EditalController extends Controller
             $query->where('data_abertura', '<=', $dataAte);
         }
 
-        $editais = $query->latest()->paginate($request->integer('per_page', 15));
+        $editais = $query
+            ->orderByDesc('destacado')
+            ->latest()
+            ->paginate($request->integer('per_page', 15));
 
         return response()->json($editais);
     }
@@ -83,6 +86,17 @@ class EditalController extends Controller
 
         return response()->json(
             $editai->fresh()->load(['aiConfig', 'ultimaAnalise']),
+        );
+    }
+
+    public function toggleDestaque(Edital $edital): JsonResponse
+    {
+        $edital->update([
+            'destacado' => ! $edital->destacado,
+        ]);
+
+        return response()->json(
+            $edital->fresh()->load(['aiConfig', 'ultimaAnalise']),
         );
     }
 

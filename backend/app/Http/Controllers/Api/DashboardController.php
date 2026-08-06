@@ -53,7 +53,15 @@ class DashboardController extends Controller
             'modalidade',
             'data_abertura',
             'data_encerramento',
+            'destacado',
         ];
+
+        $editaisDestacados = Edital::query()
+            ->where('destacado', true)
+            ->orderByRaw('CASE WHEN COALESCE(data_encerramento, data_abertura) IS NULL THEN 1 ELSE 0 END')
+            ->orderByRaw('COALESCE(data_encerramento, data_abertura) ASC')
+            ->limit(10)
+            ->get($editalColumns);
 
         $proximosEditais = Edital::query()
             ->whereNotIn('status', ['encerrado', 'cancelado'])
@@ -139,6 +147,7 @@ class DashboardController extends Controller
             ],
             'proximos_editais' => $proximosEditais,
             'atencao_editais' => $atencaoEditais,
+            'editais_destacados' => $editaisDestacados,
             'total_editais' => $totalEditais,
         ]);
     }

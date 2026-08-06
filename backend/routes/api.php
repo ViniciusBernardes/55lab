@@ -35,6 +35,7 @@ Route::prefix('licitacao')->middleware(['web', 'auth'])->group(function () {
     Route::get('editais/alerta/segmentos', [EditalAlertaImportController::class, 'segmentos']);
     Route::post('editais/importar-alerta', [EditalAlertaImportController::class, 'store']);
     Route::get('editais/alerta-imports/{alertaImport}', [EditalAlertaImportController::class, 'show']);
+    Route::post('editais/{edital}/destacar', [EditalController::class, 'toggleDestaque']);
     Route::apiResource('editais', EditalController::class);
 
     Route::get('editais/{edital}/arquivo', [EditalController::class, 'downloadArquivo']);

@@ -6,6 +6,7 @@ import {
   importAlertaEditais,
   importEdital,
   listEditais,
+  toggleEditalDestaque,
 } from "../api/licitacaoApi";
 import { AppPageHeader } from "../components/app/AppPageHeader";
 import { DeleteEditalButton } from "../components/editais/DeleteEditalButton";
@@ -41,6 +42,7 @@ export const EditaisPage = () => {
   const [showUpload, setShowUpload] = useState(false);
   const [uploadMode, setUploadMode] = useState("alerta");
   const [alertaStatus, setAlertaStatus] = useState(null);
+  const [togglingId, setTogglingId] = useState(null);
 
   const loadEditais = useCallback(async () => {
     setLoading(true);
@@ -133,6 +135,25 @@ export const EditaisPage = () => {
     setSegmentoFilter("");
     setDateFrom("");
     setDateTo("");
+  };
+
+  const handleToggleDestaque = async (edital) => {
+    setTogglingId(edital.id);
+    setError("");
+    try {
+      const updated = await toggleEditalDestaque(edital.id);
+      setEditais((prev) =>
+        prev.map((item) =>
+          item.id === edital.id
+            ? { ...item, destacado: !!updated.destacado }
+            : item,
+        ),
+      );
+    } catch (err) {
+      setError(err.message || "Não foi possível atualizar o destaque.");
+    } finally {
+      setTogglingId(null);
+    }
   };
 
   const hasActiveFilters = Boolean(
@@ -415,22 +436,59 @@ export const EditaisPage = () => {
                 <tbody>
                   {editais.map((edital) => {
                     const prazo = formatPrazoRelativo(edital);
+                    const destacado = !!edital.destacado;
                     return (
-                      <tr key={edital.id}>
+                      <tr
+                        key={edital.id}
+                        className={destacado ? "is-destacado" : undefined}
+                      >
                         <td className="lab-app-table__primary">
-                          <Link
-                            to={`/app/editais/${edital.id}`}
-                            className="lab-edital-row__link"
-                          >
-                            <strong>{truncateText(edital.titulo, 96)}</strong>
-                            <span>
-                              {edital.numero ? `#${edital.numero}` : `ID ${edital.id}`}
-                              {edital.orgao
-                                ? ` · ${truncateText(edital.orgao, 48)}`
-                                : ""}
-                            </span>
-                            {edital.modalidade ? <em>{edital.modalidade}</em> : null}
-                          </Link>
+                          <div className="lab-edital-row">
+                            <button
+                              type="button"
+                              className={`lab-edital-star${
+                                destacado ? " is-active" : ""
+                              }`}
+                              title={
+                                destacado
+                                  ? "Remover destaque do dashboard"
+                                  : "Destacar no dashboard"
+                              }
+                              aria-label={
+                                destacado
+                                  ? "Remover destaque do dashboard"
+                                  : "Destacar no dashboard"
+                              }
+                              aria-pressed={destacado}
+                              disabled={togglingId === edital.id}
+                              onClick={() => handleToggleDestaque(edital)}
+                            >
+                              <i
+                                className={`fa ${
+                                  destacado ? "fa-star" : "fa-star-o"
+                                }`}
+                                aria-hidden="true"
+                              />
+                            </button>
+                            <Link
+                              to={`/app/editais/${edital.id}`}
+                              className="lab-edital-row__link"
+                            >
+                              <strong>
+                                {destacado ? (
+                                  <span className="lab-edital-row__pin">Destacado</span>
+                                ) : null}
+                                {truncateText(edital.titulo, 96)}
+                              </strong>
+                              <span>
+                                {edital.numero ? `#${edital.numero}` : `ID ${edital.id}`}
+                                {edital.orgao
+                                  ? ` · ${truncateText(edital.orgao, 48)}`
+                                  : ""}
+                              </span>
+                              {edital.modalidade ? <em>{edital.modalidade}</em> : null}
+                            </Link>
+                          </div>
                         </td>
                         <td>
                           {edital.segmento ? (

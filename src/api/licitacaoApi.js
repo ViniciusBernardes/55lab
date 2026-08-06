@@ -77,6 +77,12 @@ export function updateEdital(id, payload) {
   });
 }
 
+export function toggleEditalDestaque(id) {
+  return apiRequest(`/api/licitacao/editais/${id}/destacar`, {
+    method: "POST",
+  });
+}
+
 export function deleteEdital(id) {
   return apiRequest(`/api/licitacao/editais/${id}`, { method: "DELETE" });
 }

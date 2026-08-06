@@ -174,6 +174,42 @@ export function DashboardPage() {
         ))}
       </div>
 
+      <section className="lab-app-panel lab-app-panel--destaques">
+        <div className="lab-app-panel__head">
+          <div>
+            <h2 className="lab-app-panel__title">
+              <i className="fa fa-star" aria-hidden="true" /> Editais destacados
+            </h2>
+            <p className="lab-app-panel__subtitle">
+              Marcados na listagem de editais para acompanhamento rápido
+            </p>
+          </div>
+          <Link to="/app/editais" className="lab-app-link">
+            Gerenciar
+          </Link>
+        </div>
+
+        {loading ? (
+          <p className="lab-app-empty">Carregando…</p>
+        ) : !data?.editais_destacados?.length ? (
+          <div className="lab-app-empty">
+            <p>
+              Nenhum edital destacado. Na lista de editais, use a estrela para
+              fixar aqui.
+            </p>
+            <Link to="/app/editais" className="lab-app-link">
+              Ir para editais
+            </Link>
+          </div>
+        ) : (
+          <div className="lab-app-list">
+            {data.editais_destacados.map((edital) => (
+              <EditalListItem key={edital.id} edital={edital} />
+            ))}
+          </div>
+        )}
+      </section>
+
       <div className="lab-app-dashboard-cols">
         <section className="lab-app-panel">
           <div className="lab-app-panel__head">
