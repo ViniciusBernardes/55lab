@@ -29,18 +29,22 @@ return [
                 'sistema integrado',
                 'sistema de gestão',
                 'sistema de gestao',
-                'gestão pública',
-                'gestao publica',
                 'ambiente web',
                 'google workspace',
                 'servidor de nuvem',
                 'em nuvem',
+                'whatsapp',
+                'api whatsapp',
+                'api do whatsapp',
             ],
         ],
         'protocolo' => [
             'label' => 'Protocolo',
             'keywords' => [
                 'protocolo',
+                'protocolo eletrônico',
+                'protocolo eletronico',
+                'protocolo digital',
                 'protocolos administrativos',
                 'tramitação digital',
                 'tramitacao digital',
@@ -116,6 +120,14 @@ return [
         'sistema de registro de precos',
         'formação de ata de registro',
         'formacao de ata de registro',
+        'gestão pública',
+        'gestao publica',
+        'software de gestão pública',
+        'software de gestao publica',
+        'sistema de gestão pública',
+        'sistema de gestao publica',
+        'sistemas de gestão pública',
+        'sistemas de gestao publica',
         'aquisição de material',
         'aquisicao de material',
         'aquisição de materiais',
@@ -126,8 +138,41 @@ return [
         'aquisicao de material permanente',
         'compra de material',
         'compra de materiais',
+        'fornecimento de material',
+        'fornecimento de materiais',
         'fornecimento de material de consumo',
         'fornecimento de materiais de consumo',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Destaque automático no dashboard
+    |--------------------------------------------------------------------------
+    |
+    | Oportunidades cujo objeto contiver estes termos são importadas já
+    | marcadas como destacadas (aparecem no dashboard).
+    |
+    */
+    'destacar_keywords' => [
+        'protocolo eletrônico',
+        'protocolo eletronico',
+        'protocolo digital',
+        'protocolos eletrônicos',
+        'protocolos eletronicos',
+        'sistema de protocolo eletrônico',
+        'sistema de protocolo eletronico',
+        'whatsapp',
+        'api whatsapp',
+        'api do whatsapp',
+        'api de whatsapp',
+        'whatsapp business',
+        'whatsapp business api',
+        'integração whatsapp',
+        'integracao whatsapp',
+        'integração com whatsapp',
+        'integracao com whatsapp',
+        'canal whatsapp',
+        'atendimento via whatsapp',
     ],
 
     /*

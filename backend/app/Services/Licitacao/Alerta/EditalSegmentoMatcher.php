@@ -42,25 +42,16 @@ class EditalSegmentoMatcher
 
     public function shouldExclude(string $texto): bool
     {
-        $normalized = $this->normalize($texto);
-        if ($normalized === '') {
+        return $this->containsAnyKeyword($texto, config('edital_alerta.excluir_keywords', []));
+    }
+
+    public function shouldHighlight(string $texto): bool
+    {
+        if ($this->shouldExclude($texto)) {
             return false;
         }
 
-        $compact = str_replace(' ', '', $normalized);
-
-        foreach (config('edital_alerta.excluir_keywords', []) as $keyword) {
-            $needle = $this->normalize((string) $keyword);
-            if ($needle === '') {
-                continue;
-            }
-
-            if (str_contains($normalized, $needle) || str_contains($compact, str_replace(' ', '', $needle))) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->containsAnyKeyword($texto, config('edital_alerta.destacar_keywords', []));
     }
 
     public function primary(string $texto, ?array $allowedSegmentos = null): ?string
@@ -73,6 +64,30 @@ class EditalSegmentoMatcher
     public function label(string $segmento): string
     {
         return (string) (config("edital_alerta.segmentos.{$segmento}.label") ?: $segmento);
+    }
+
+    /** @param  list<string>  $keywords */
+    private function containsAnyKeyword(string $texto, array $keywords): bool
+    {
+        $normalized = $this->normalize($texto);
+        if ($normalized === '') {
+            return false;
+        }
+
+        $compact = str_replace(' ', '', $normalized);
+
+        foreach ($keywords as $keyword) {
+            $needle = $this->normalize((string) $keyword);
+            if ($needle === '') {
+                continue;
+            }
+
+            if (str_contains($normalized, $needle) || str_contains($compact, str_replace(' ', '', $needle))) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function normalize(string $value): string

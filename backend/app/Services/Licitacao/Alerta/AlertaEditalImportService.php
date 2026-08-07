@@ -202,7 +202,7 @@ class AlertaEditalImportService
                 ->where('link_origem', $opportunity->linkProcesso)
                 ->first();
             if ($existing) {
-                return $existing;
+                return $this->applyAutoHighlight($existing, $opportunity->objeto);
             }
         }
 
@@ -218,7 +218,7 @@ class AlertaEditalImportService
                     ->where('link_origem', $pncpUrl)
                     ->first();
                 if ($existing) {
-                    return $existing;
+                    return $this->applyAutoHighlight($existing, $opportunity->objeto);
                 }
             }
         }
@@ -231,6 +231,11 @@ class AlertaEditalImportService
         }
         if ($opportunity->pncpControle) {
             $observacoes[] = 'PNCP: '.$opportunity->pncpControle;
+        }
+
+        $destacado = $this->segmentos->shouldHighlight($opportunity->objeto);
+        if ($destacado) {
+            $observacoes[] = 'Destaque automático: protocolo eletrônico / WhatsApp';
         }
 
         $edital = Edital::create([
@@ -247,6 +252,7 @@ class AlertaEditalImportService
             'hora_abertura' => $opportunity->horaAbertura,
             'data_encerramento' => $opportunity->dataEncerramento,
             'status' => 'rascunho',
+            'destacado' => $destacado,
             'observacoes' => $observacoes !== [] ? implode(' | ', $observacoes) : null,
         ]);
 
@@ -262,6 +268,15 @@ class AlertaEditalImportService
 
         $this->aiService->ensureConfig($edital->fresh());
         $this->aiService->queueAnalysis($edital->fresh());
+
+        return $edital->fresh()->load(['aiConfig', 'ultimaAnalise']);
+    }
+
+    private function applyAutoHighlight(Edital $edital, string $objeto): Edital
+    {
+        if (! $edital->destacado && $this->segmentos->shouldHighlight($objeto)) {
+            $edital->update(['destacado' => true]);
+        }
 
         return $edital->fresh()->load(['aiConfig', 'ultimaAnalise']);
     }

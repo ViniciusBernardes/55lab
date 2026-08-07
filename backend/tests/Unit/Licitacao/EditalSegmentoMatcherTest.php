@@ -62,6 +62,50 @@ class EditalSegmentoMatcherTest extends TestCase
         $this->assertSame([], $matcher->match($texto));
     }
 
+    public function test_excludes_gestao_publica(): void
+    {
+        $matcher = new EditalSegmentoMatcher;
+        $texto = 'Locação de software de gestão pública (programas de informática) na área administrativa';
+
+        $this->assertTrue($matcher->shouldExclude($texto));
+        $this->assertSame([], $matcher->match($texto));
+    }
+
+    public function test_keeps_software_without_gestao_publica(): void
+    {
+        $matcher = new EditalSegmentoMatcher;
+        $texto = 'Contratação de licenças de software Adobe Creative Cloud em modelo SaaS';
+
+        $this->assertFalse($matcher->shouldExclude($texto));
+        $this->assertContains('software', $matcher->match($texto));
+    }
+
+    public function test_highlights_protocolo_eletronico(): void
+    {
+        $matcher = new EditalSegmentoMatcher;
+        $texto = 'Contratação de sistema de protocolo eletrônico para tramitação digital de processos';
+
+        $this->assertTrue($matcher->shouldHighlight($texto));
+        $this->assertContains('protocolo', $matcher->match($texto));
+    }
+
+    public function test_highlights_api_whatsapp(): void
+    {
+        $matcher = new EditalSegmentoMatcher;
+        $texto = 'Solução tecnológica com integração WhatsApp Business API para atendimento ao cidadão';
+
+        $this->assertTrue($matcher->shouldHighlight($texto));
+        $this->assertContains('software', $matcher->match($texto));
+    }
+
+    public function test_does_not_highlight_generic_software(): void
+    {
+        $matcher = new EditalSegmentoMatcher;
+        $texto = 'Contratação de licenças de software Adobe Creative Cloud em modelo SaaS';
+
+        $this->assertFalse($matcher->shouldHighlight($texto));
+    }
+
     public function test_keeps_cesta_de_preco_without_registro(): void
     {
         $matcher = new EditalSegmentoMatcher;
