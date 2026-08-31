@@ -46,6 +46,9 @@ export const Navigation = (props) => {
           <a href="#sobre" onClick={close}>
             Sobre
           </a>
+          <a href="#clientes" onClick={close}>
+            Clientes
+          </a>
           <a href="#contato" className="lab-nav__cta" onClick={close}>
             Fale com vendas
           </a>

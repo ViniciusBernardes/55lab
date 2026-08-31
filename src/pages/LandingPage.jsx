@@ -4,6 +4,7 @@ import { Header } from "../components/header";
 import { Stats } from "../components/stats";
 import { Products } from "../components/products";
 import { Sectors } from "../components/sectors";
+import { Clients } from "../components/clients";
 import { About } from "../components/about";
 import { Testimonials } from "../components/testimonials";
 import { Contact } from "../components/contact";
@@ -23,6 +24,7 @@ export const LandingPage = () => {
       <Stats data={data.Stats} />
       <Products data={data.ProductsSection} items={data.Products} />
       <Sectors data={data.Sectors} />
+      <Clients data={data.Clients} />
       <About data={data.About} />
       <Testimonials data={data.Testimonials} />
       <Contact data={data.Contact} products={data.Products} />

@@ -881,6 +881,54 @@ img {
   line-height: 1.55;
 }
 
+/* Clients */
+.lab-clients__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lab-client {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.lab-client__logo {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 24px;
+  background: #fff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  box-sizing: border-box;
+}
+
+.lab-client__logo img {
+  max-width: 100%;
+  max-height: 84px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.lab-client__name {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--heading-dark);
+  line-height: 1.35;
+  max-width: 16rem;
+}
+
 /* Service cards */
 .lab-services__grid {
   display: grid;
@@ -1337,6 +1385,7 @@ img {
 #servicos,
 #produtos,
 #areas,
+#clientes,
 #stack,
 #processo,
 #sobre,
@@ -1365,7 +1414,8 @@ img {
 
   .lab-products__grid,
   .lab-services__grid,
-  .lab-sectors__grid {
+  .lab-sectors__grid,
+  .lab-clients__grid {
     grid-template-columns: 1fr 1fr;
   }
   .lab-projects__grid {
@@ -1455,6 +1505,7 @@ img {
   .lab-products__grid,
   .lab-services__grid,
   .lab-sectors__grid,
+  .lab-clients__grid,
   .lab-projects__grid,
   .lab-quotes__grid,
   .lab-process__grid {

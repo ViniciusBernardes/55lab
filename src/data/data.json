@@ -92,6 +92,28 @@
       }
     ]
   },
+  "Clients": {
+    "eyebrow": "Clientes",
+    "title": "Órgãos com sistemas 55LAB em operação",
+    "lead": "Prefeituras e entidades públicas que já utilizam nossas soluções no dia a dia.",
+    "items": [
+      {
+        "slug": "sertaozinho",
+        "name": "Prefeitura de Sertãozinho/SP",
+        "logo": "/img/clients/sertaozinho.webp"
+      },
+      {
+        "slug": "pariquera-acu",
+        "name": "Câmara Municipal de Pariquera-Açu/SP",
+        "logo": "/img/clients/pariquera-acu.webp"
+      },
+      {
+        "slug": "semasa",
+        "name": "SEMASA",
+        "logo": "/img/clients/semasa.webp"
+      }
+    ]
+  },
   "About": {
     "eyebrow": "Sobre a 55LAB",
     "title": "Tecnologia pensada para quem atende o cidadão",
