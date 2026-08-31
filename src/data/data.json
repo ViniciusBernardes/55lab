@@ -1,217 +1,137 @@
 {
   "Header": {
-    "eyebrow": "Desenvolvimento de sistemas",
-    "title": "Software sob medida para",
-    "titleAccent": "operações que não podem parar",
-    "paragraph": "Construímos APIs, integrações, portais e automações com arquitetura clara, testes e deploy previsível — do discovery ao go-live.",
-    "ctaPrimary": "Solicitar orçamento",
-    "ctaSecondary": "Ver produtos",
-    "techLabel": "Principais tecnologias",
-    "techStack": [
-      "TypeScript",
-      "JavaScript",
-      "React",
-      "React Native",
-      "Angular",
-      "Node.js",
-      "Laravel",
-      "PHP",
-      ".NET",
-      "Java",
-      "Flutter",
-      "PostgreSQL",
-      "MySQL",
-      "Redis",
-      "Docker",
-      "AWS",
-      "S3",
-      "Git",
-      "REST",
-      "GraphQL"
-    ]
+    "brand": "55LAB",
+    "eyebrow": "Soluções digitais para o setor público",
+    "title": "Transformação digital com foco no cidadão",
+    "paragraph": "Sistemas que tornam a gestão pública mais ágil, transparente e eficiente — da tramitação eletrônica ao atendimento digital.",
+    "ctaPrimary": "Falar com o comercial",
+    "ctaSecondary": "Conhecer as soluções",
+    "image": "/img/hero-civic.webp",
+    "imageAlt": "Fachada moderna de edifício institucional ao entardecer"
   },
   "Stats": [
-    { "value": "API-first", "label": "Integrações e microsserviços" },
-    { "value": "CI/CD", "label": "Pipeline e ambientes" },
-    { "value": "LGPD-ready", "label": "Segurança e logs" },
-    { "value": "Remoto BR", "label": "Squads distribuídas" }
-  ],
-  "Services": [
-    {
-      "icon": "fa fa-terminal",
-      "name": "Sistemas web e APIs",
-      "text": "Back-end, front-end e contratos REST/GraphQL com versionamento, documentação OpenAPI e monitoramento.",
-      "tags": ["Node", "React", ".NET", "PostgreSQL"]
-    },
-    {
-      "icon": "fa fa-random",
-      "name": "Integração de sistemas",
-      "text": "ERP, CRM, PDV, marketplaces e legados — filas, webhooks, retries e reconciliação de dados.",
-      "tags": ["ETL", "Filas", "Webhooks"]
-    },
-    {
-      "icon": "fa fa-cogs",
-      "name": "Automação de processos",
-      "text": "Fluxos de aprovação, conciliação, faturamento e rotinas administrativas com menos intervenção manual.",
-      "tags": ["BPM", "Jobs", "Notificações"]
-    },
-    {
-      "icon": "fa fa-cloud",
-      "name": "Cloud & DevOps",
-      "text": "Containers, IaC, ambientes segregados e releases com rollback — AWS, Azure ou on-premise híbrido.",
-      "tags": ["Docker", "Terraform", "K8s"]
-    },
-    {
-      "icon": "fa fa-shield",
-      "name": "Qualidade & segurança",
-      "text": "Testes automatizados, code review, autenticação, autorização e trilhas de auditoria.",
-      "tags": ["Testes", "OAuth", "Logs"]
-    },
-    {
-      "icon": "fa fa-wrench",
-      "name": "Sustentação evolutiva",
-      "text": "Correções, refatoração guiada por métricas e roadmap técnico alinhado ao produto.",
-      "tags": ["SLA", "Observabilidade", "Suporte"]
-    }
+    { "value": "Processos", "label": "Gestão eletrônica e tramitação digital" },
+    { "value": "Saúde", "label": "Clínicas e comunicação via WhatsApp" },
+    { "value": "Atendimento", "label": "Chatbot para o cidadão, 24 horas" },
+    { "value": "Educação", "label": "Secretarias e redes de ensino" }
   ],
   "ProductsSection": {
-    "eyebrow": "Portfólio de produtos",
-    "title": "Soluções em operação no mercado",
-    "lead": "Plataformas SaaS da 55LAB para administração pública: educação, finanças e processos urbanísticos — multi-tenant, em nuvem e com governança de acesso.",
-    "note": "Implantação, integração com legados e sustentação evolutiva disponíveis para órgãos municipais e parceiros."
+    "eyebrow": "Nossas soluções",
+    "title": "Mais agilidade, transparência e eficiência nos processos",
+    "lead": "Conheça os sistemas que a 55LAB oferece para prefeituras, secretarias e órgãos públicos.",
+    "note": "Implantação, capacitação e sustentação evolutiva para órgãos públicos e parceiros."
   },
   "Products": [
     {
-      "slug": "educacao",
-      "icon": "fa fa-graduation-cap",
-      "name": "55 Educação",
-      "text": "ERP educacional multi-tenant para secretarias: matrículas, turmas, diário, merenda, transporte e indicadores com RBAC e auditoria.",
-      "tags": ["Laravel", "React", "PostgreSQL", "Redis"],
-      "domain": "55educacao.com.br",
-      "url": "https://55educacao.com.br"
-    },
-    {
-      "slug": "conta",
-      "icon": "fa fa-line-chart",
-      "name": "55Conta",
-      "text": "Automação financeira e contábil: extratos, classificação de receitas, conciliação e integrações bancárias para tesouraria municipal.",
-      "tags": ["Laravel", "React", "MySQL", "Docker"],
-      "domain": "55conta.com.br",
-      "url": "https://www.55conta.com.br"
-    },
-    {
       "slug": "doc",
       "icon": "fa fa-file-text-o",
-      "name": "55DOC",
-      "text": "Licenciamento urbanístico e portal do cidadão: fluxos de processo, exigências, documentos em nuvem e filas para relatórios.",
-      "tags": ["Laravel", "React", "PostgreSQL", "MinIO"],
-      "domain": "55doc.com.br",
-      "url": "https://55doc.com.br"
+      "name": "55 Doc",
+      "category": "Processos digitais",
+      "text": "Gestão de processos eletrônicos: tramitação digital, documentos, exigências e portal do cidadão com rastreabilidade e auditoria.",
+      "tags": ["Processos", "Documentos", "Portal"],
+      "cover": "/img/products/55-doc-cover.webp",
+      "domain": "sistema.55doc.com.br",
+      "url": "https://sistema.55doc.com.br"
+    },
+    {
+      "slug": "iclinica",
+      "icon": "fa fa-heartbeat",
+      "name": "iClinica",
+      "category": "Saúde",
+      "text": "Gestão de clínica e atendimento com disparo de mensagens via WhatsApp — agendamentos, comunicação e operação no dia a dia.",
+      "tags": ["Clínica", "WhatsApp", "Atendimento"],
+      "cover": "/img/products/iclinica-cover.webp",
+      "domain": "iclinica.app.br",
+      "url": "https://iclinica.app.br"
+    },
+    {
+      "slug": "chat",
+      "icon": "fa fa-comments",
+      "name": "55 Chat",
+      "category": "Atendimento",
+      "text": "Chatbot voltado ao setor público: atendimento automatizado, informações institucionais e triagem de demandas 24 horas.",
+      "tags": ["Chatbot", "Omnichannel", "IA"],
+      "cover": "/img/products/55-chat-cover.webp",
+      "domain": "chat.55lab.com.br",
+      "url": "https://chat.55lab.com.br"
+    },
+    {
+      "slug": "educa",
+      "icon": "fa fa-graduation-cap",
+      "name": "55 Educa",
+      "category": "Educação",
+      "text": "Sistema de educação para o setor público: matrículas, turmas, diário, merenda, transporte e indicadores com governança de acesso.",
+      "tags": ["Secretarias", "Escolas", "Indicadores"],
+      "cover": "/img/products/55-educa-cover.webp"
     }
   ],
-  "TechStack": {
-    "title": "Stack e práticas que usamos no dia a dia",
+  "Sectors": {
+    "eyebrow": "Áreas de atuação",
+    "title": "Tecnologia para as diversas necessidades dos governos",
+    "lead": "Soluções pensadas para modernizar processos administrativos, atendimento ao cidadão, saúde e educação pública.",
     "items": [
-      "TypeScript", "Node.js", "React", "PostgreSQL", "Redis",
-      "Docker", "GitHub Actions", "AWS", "REST", "GraphQL",
-      "RabbitMQ", "Kafka", "Elasticsearch", "Prometheus", "Grafana"
+      {
+        "icon": "fa fa-sitemap",
+        "name": "Processos digitais",
+        "text": "Tramitação eletrônica, documentos e governança de fluxos administrativos."
+      },
+      {
+        "icon": "fa fa-comments-o",
+        "name": "Atendimento ao cidadão",
+        "text": "Canais digitais, chatbot e comunicação que aproximam o poder público da população."
+      },
+      {
+        "icon": "fa fa-medkit",
+        "name": "Saúde",
+        "text": "Gestão de clínicas e comunicação via WhatsApp para equipes e pacientes."
+      },
+      {
+        "icon": "fa fa-university",
+        "name": "Educação",
+        "text": "Gestão educacional completa para secretarias e redes de ensino."
+      }
     ]
   },
-  "Process": [
-    {
-      "step": "01",
-      "title": "Discovery técnico",
-      "text": "Mapeamos sistemas, integrações, riscos e critérios de sucesso com quem opera o negócio."
-    },
-    {
-      "step": "02",
-      "title": "Arquitetura & backlog",
-      "text": "Definimos limites de serviço, contratos de API e priorização por valor e dependência."
-    },
-    {
-      "step": "03",
-      "title": "Desenvolvimento",
-      "text": "Sprints com revisão de código, testes e demos em ambiente de homologação espelhado."
-    },
-    {
-      "step": "04",
-      "title": "Go-live & operação",
-      "text": "Deploy assistido, monitoramento, runbook e handover para o seu time interno."
-    }
-  ],
   "About": {
-    "eyebrow": "Quem somos",
-    "title": "55LAB — engenharia aplicada ao seu contexto",
-    "paragraph": "Somos um estúdio de desenvolvimento focado em sistemas que conectam operações, financeiro e canais digitais. Atuamos como braço técnico do seu time: menos slide, mais código entregue com transparência de escopo e prazo.",
+    "eyebrow": "Sobre a 55LAB",
+    "title": "Tecnologia pensada para quem atende o cidadão",
+    "paragraph": "Somos uma empresa de software em Montes Claros/MG especializada em soluções para o setor público. Unimos produto maduro, implantação assistida e suporte próximo para que prefeituras, secretarias e órgãos modernizem processos com segurança, transparência e resultado no dia a dia.",
     "highlights": [
-      "Squads enxutas com devs seniores na linha de frente",
-      "Documentação de arquitetura e ADRs quando a decisão importa",
-      "Comunicação direta — você fala com quem implementa",
-      "Atendimento remoto para empresas em todo o Brasil"
-    ]
+      "Soluções prontas para o setor público, com implantação e capacitação",
+      "Integração com legados, portais do cidadão e canais digitais",
+      "Sustentação evolutiva alinhada à rotina do órgão",
+      "Atendimento comercial e técnico em todo o Brasil"
+    ],
+    "image": "/img/about.webp",
+    "imageAlt": "Equipe de TI em reunião de projeto analisando sistemas em notebook e monitor"
   },
-  "Gallery": [
-    {
-      "title": "Portal corporativo responsivo",
-      "tag": "Front-end",
-      "largeImage": "img/portfolio/01-large.jpg",
-      "smallImage": "img/portfolio/01-small.jpg"
-    },
-    {
-      "title": "Integração ERP e e-commerce",
-      "tag": "Integração",
-      "largeImage": "img/portfolio/02-large.jpg",
-      "smallImage": "img/portfolio/02-small.jpg"
-    },
-    {
-      "title": "Dashboard operacional em tempo real",
-      "tag": "Dados",
-      "largeImage": "img/portfolio/03-large.jpg",
-      "smallImage": "img/portfolio/03-small.jpg"
-    },
-    {
-      "title": "API de faturamento e conciliação",
-      "tag": "API",
-      "largeImage": "img/portfolio/04-large.jpg",
-      "smallImage": "img/portfolio/04-small.jpg"
-    },
-    {
-      "title": "App web para times internos",
-      "tag": "Sistema interno",
-      "largeImage": "img/portfolio/05-large.jpg",
-      "smallImage": "img/portfolio/05-small.jpg"
-    },
-    {
-      "title": "Automação de fluxos administrativos",
-      "tag": "Automação",
-      "largeImage": "img/portfolio/06-large.jpg",
-      "smallImage": "img/portfolio/06-small.jpg"
-    }
-  ],
   "Testimonials": [
     {
-      "text": "Entregas previsíveis, APIs documentadas e integração fluida com nosso time interno.",
-      "name": "Diretora de Operações",
-      "sector": "Varejo"
+      "text": "A digitalização dos processos trouxe agilidade e controle que antes dependiam de planilhas e papel.",
+      "name": "Gestão municipal",
+      "sector": "Administração pública"
     },
     {
-      "text": "ERP e e-commerce integrados com monitoração e tratamento de falhas bem desenhados.",
-      "name": "Gerente de TI",
-      "sector": "Indústria"
+      "text": "O atendimento digital aproximou o cidadão do serviço público, com menos filas e mais previsibilidade.",
+      "name": "Secretaria de atendimento",
+      "sector": "Serviços ao cidadão"
     },
     {
-      "text": "Code review e testes automatizados elevaram a qualidade do release no go-live.",
-      "name": "CTO",
-      "sector": "Healthtech"
+      "text": "Implantação acompanhada de perto e suporte que entende a rotina do órgão público.",
+      "name": "Coordenação de TI",
+      "sector": "Governo municipal"
     }
   ],
   "Contact": {
-    "sectionTitle": "Vamos desenhar seu sistema",
-    "sectionLead": "Conte o cenário atual (legado, integrações, prazo). Retornamos em horário comercial com próximos passos técnicos.",
-    "address": "Montes Claros, MG — atendimento remoto em todo o Brasil",
+    "sectionTitle": "Fale com o time comercial",
+    "sectionLead": "Conte o cenário do seu órgão ou secretaria. Retornamos em horário comercial com próximos passos.",
+    "address": "Rua Engenheiro Eugênio Benjamin Silva, 305 — Morada da Serra — Montes Claros — MG",
+    "email": "comercial@55lab.com.br",
     "whatsappDisplay": "(38) 99209-9888",
-    "whatsappUrl": "https://wa.me/5538992099888?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%2055LAB%20e%20gostaria%20de%20falar%20sobre%20um%20projeto%20de%20software.",
+    "whatsappUrl": "https://wa.me/5538992099888?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%2055LAB%20e%20gostaria%20de%20conhecer%20as%20solu%C3%A7%C3%B5es%20para%20o%20setor%20p%C3%BAblico.",
     "linkedin": "https://www.linkedin.com/company/55lab",
-    "instagram": "https://www.instagram.com/55lab"
+    "instagram": "https://www.instagram.com/55lab",
+    "companyName": "55 Lab Soluções Tecnilógicas LTDA",
+    "cnpj": "34.971.287/0001-19"
   }
 }

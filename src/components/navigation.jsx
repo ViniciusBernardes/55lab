@@ -1,16 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export const Navigation = (props) => {
   const logoSrc = props.logoSrc || "/img/55lab-logo.svg";
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const close = () => setOpen(false);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="lab-nav">
+    <header
+      className={`lab-nav lab-nav--hero${scrolled || open ? " is-solid" : ""}`}
+    >
       <div className="lab-container lab-nav__inner">
         <a className="lab-nav__brand" href="#page-top" onClick={close}>
-          <img src={logoSrc} alt="55LAB" width="220" height="44" />
+          <img src={logoSrc} alt="55LAB" width="180" height="36" />
         </a>
         <button
           type="button"
@@ -27,28 +37,19 @@ export const Navigation = (props) => {
           className={`lab-nav__menu${open ? " is-open" : ""}`}
           aria-label="Principal"
         >
-          <a href="#servicos" onClick={close}>
-            Serviços
-          </a>
           <a href="#produtos" onClick={close}>
-            Produtos
+            Soluções
           </a>
-          <a href="#stack" onClick={close}>
-            Stack
-          </a>
-          <a href="#processo" onClick={close}>
-            Processo
+          <a href="#areas" onClick={close}>
+            Áreas
           </a>
           <a href="#sobre" onClick={close}>
             Sobre
           </a>
-          <a href="#projetos" onClick={close}>
-            Projetos
-          </a>
           <a href="#contato" className="lab-nav__cta" onClick={close}>
-            Contato
+            Fale com vendas
           </a>
-          <a href="/editais/login" onClick={close}>
+          <a href="/editais/login" className="lab-nav__login" onClick={close}>
             Entrar
           </a>
         </nav>

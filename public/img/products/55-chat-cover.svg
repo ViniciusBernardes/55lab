@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="title">
+  <title id="title">55 Chat  chatbot para o setor público</title>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f18"/>
+      <stop offset="100%" stop-color="#132a4a"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#1e90ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#bg)"/>
+  <circle cx="520" cy="80" r="120" fill="#1e90ff" opacity="0.08"/>
+  <rect x="80" y="56" width="340" height="288" rx="16" fill="#111827" stroke="#1e3a5f"/>
+  <rect x="80" y="56" width="340" height="44" rx="16" fill="#151d2e"/>
+  <circle cx="108" cy="78" r="10" fill="url(#blue)"/>
+  <text x="128" y="83" fill="#e2e8f0" font-size="13" font-family="system-ui,sans-serif" font-weight="600">55 Chat · Prefeitura</text>
+  <rect x="104" y="124" width="220" height="48" rx="12" fill="#1e3a5f"/>
+  <text x="120" y="145" fill="#bae6fd" font-size="12" font-family="system-ui,sans-serif">Olá! Sou o assistente digital</text>
+  <text x="120" y="163" fill="#7dd3fc" font-size="11" font-family="system-ui,sans-serif">Como posso ajudar?</text>
+  <rect x="176" y="188" width="220" height="40" rx="12" fill="#0c1222" stroke="#334155"/>
+  <text x="192" y="213" fill="#94a3b8" font-size="12" font-family="system-ui,sans-serif">Quero consultar um protocolo</text>
+  <rect x="104" y="244" width="200" height="36" rx="12" fill="#1e3a5f"/>
+  <text x="120" y="267" fill="#bae6fd" font-size="12" font-family="system-ui,sans-serif">Informe o número do protocolo</text>
+  <rect x="104" y="296" width="110" height="28" rx="14" fill="rgba(56,189,248,0.15)" stroke="#38bdf8"/>
+  <text x="122" y="315" fill="#7dd3fc" font-size="11" font-family="system-ui,sans-serif">Protocolos</text>
+  <rect x="226" y="296" width="110" height="28" rx="14" fill="rgba(56,189,248,0.15)" stroke="#38bdf8"/>
+  <text x="246" y="315" fill="#7dd3fc" font-size="11" font-family="system-ui,sans-serif">Horários</text>
+  <rect x="460" y="120" width="120" height="160" rx="20" fill="#0c1222" stroke="#334155"/>
+  <circle cx="520" cy="170" r="28" fill="url(#blue)" opacity="0.35"/>
+  <path d="M508 170h24M520 158v24" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+  <text x="488" y="230" fill="#94a3b8" font-size="11" font-family="system-ui,sans-serif">24h online</text>
+  <text x="478" y="250" fill="#64748b" font-size="10" font-family="system-ui,sans-serif">Setor público</text>
+</svg>

@@ -4,7 +4,7 @@ export const Stats = (props) => {
   if (!props.data?.length) return null;
 
   return (
-    <section className="lab-stats" aria-label="Diferenciais">
+    <section className="lab-stats lab-stats--pillars" aria-label="Áreas de solução">
       <div className="lab-container">
         <div className="lab-stats__grid">
           {props.data.map((item, i) => (

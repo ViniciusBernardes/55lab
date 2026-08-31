@@ -5,12 +5,13 @@ export const About = (props) => {
   if (!d) return null;
 
   return (
-    <section id="sobre" className="lab-section lab-section--dark">
+    <section id="sobre" className="lab-section lab-section--light">
       <div className="lab-container lab-about__grid">
         <div className="lab-about__visual">
           <img
-            src="img/about.jpg"
-            alt="Equipe em revisão de arquitetura e código"
+            src={d.image || "/img/about.webp"}
+            alt={d.imageAlt || "Equipe 55LAB em reunião de tecnologia"}
+            loading="lazy"
           />
         </div>
         <div>
