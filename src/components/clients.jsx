@@ -17,7 +17,11 @@ export const Clients = (props) => {
         <ul className="lab-clients__grid">
           {d.items.map((item) => (
             <li key={item.slug} className="lab-client">
-              <div className="lab-client__logo">
+              <div
+                className={`lab-client__logo${
+                  item.logoSize === "lg" ? " lab-client__logo--lg" : ""
+                }`}
+              >
                 <img src={item.logo} alt={item.name} loading="lazy" />
               </div>
               <span className="lab-client__name">{item.name}</span>

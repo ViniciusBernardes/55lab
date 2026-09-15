@@ -105,12 +105,24 @@
       {
         "slug": "pariquera-acu",
         "name": "Câmara Municipal de Pariquera-Açu/SP",
-        "logo": "/img/clients/pariquera-acu.webp"
+        "logo": "/img/clients/pariquera-acu.webp",
+        "logoSize": "lg"
       },
       {
         "slug": "semasa",
         "name": "SEMASA",
         "logo": "/img/clients/semasa.webp"
+      },
+      {
+        "slug": "santa-casa",
+        "name": "Santa Casa de Sertãozinho/SP",
+        "logo": "/img/clients/santa-casa.webp"
+      },
+      {
+        "slug": "rondinha",
+        "name": "Prefeitura de Rondinha/RS",
+        "logo": "/img/clients/rondinha-brasao.webp",
+        "logoSize": "lg"
       }
     ]
   },

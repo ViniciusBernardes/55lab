@@ -884,11 +884,14 @@ img {
 /* Clients */
 .lab-clients__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 20px;
   list-style: none;
   margin: 0;
   padding: 0;
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .lab-client {
@@ -919,6 +922,15 @@ img {
   height: auto;
   object-fit: contain;
   display: block;
+}
+
+.lab-client__logo--lg {
+  padding: 8px 12px;
+}
+
+.lab-client__logo--lg img {
+  max-height: 104px;
+  max-width: 100%;
 }
 
 .lab-client__name {
