@@ -110,7 +110,7 @@
       },
       {
         "slug": "semasa",
-        "name": "SEMASA",
+        "name": "Serviço Municipal de Água, Saneamento Básico e Infraestrutura — Itajaí/SC",
         "logo": "/img/clients/semasa.webp"
       },
       {
@@ -122,6 +122,12 @@
         "slug": "rondinha",
         "name": "Prefeitura de Rondinha/RS",
         "logo": "/img/clients/rondinha-brasao.webp",
+        "logoSize": "lg"
+      },
+      {
+        "slug": "sao-sebastiao-oeste",
+        "name": "Câmara Municipal de São Sebastião do Oeste/MG",
+        "logo": "/img/clients/sao-sebastiao-oeste.webp",
         "logoSize": "lg"
       }
     ]
